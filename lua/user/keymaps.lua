@@ -34,7 +34,7 @@ keymap("n", "<A-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<A-Right>", ":vertical resize +2<CR>", opts)
 
 -- [[ Save shortcut ]]
-keymap("n", "<C-s>", ":w<CR>", opts)
+keymap("n", "<C-s>", ":wa<CR>", opts)
 keymap("n", "<C-c>", ":q<CR>", opts)
 
 -- Visual --
@@ -61,3 +61,6 @@ keymap("n", "gp", ":Lspsaga preview_definition<cr>", opts)
 
 -- Nvim-tree
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+
+-- Emmet
+vim.g.user_emmet_leader_key = "<leader>t"
