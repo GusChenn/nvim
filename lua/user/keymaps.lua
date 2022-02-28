@@ -64,3 +64,4 @@ keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
 -- Emmet
 vim.g.user_emmet_leader_key = "<leader>t"
+
