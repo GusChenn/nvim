@@ -6,16 +6,16 @@ local keymap = vim.api.nvim_set_keymap
 keymap("", "<Space>", "<Nop>", opts)
 keymap("n", "<C-l>", ":noh<cr>", opts)
 keymap("n", "<C-s>", ":w<cr>", opts)
-keymap("n", "<C-x>", ":q<cr>", opts)
+keymap("n", "<C-x>", ":bd<cr>", opts)
 
 -- Nvim tree
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
 
 -- Navigation
-keymap("n", "<leader>k", ":wincmd k<cr>", opts)
-keymap("n", "<leader>h", ":wincmd h<cr>", opts)
-keymap("n", "<leader>j", ":wincmd j<cr>", opts)
-keymap("n", "<leader>l", ":wincmd l<cr>", opts)
+keymap("n", "<A-k>", ":wincmd k<cr>", opts)
+keymap("n", "<A-h>", ":wincmd h<cr>", opts)
+keymap("n", "<A-j>", ":wincmd j<cr>", opts)
+keymap("n", "<A-l>", ":wincmd l<cr>", opts)
 keymap("n", "<A-w>v", ":vsplit<cr>", opts)
 keymap("n", "<A-w>h", ":split<cr>", opts)
 keymap("n", "ff", ":Telescope find_files<cr>", opts)
@@ -69,3 +69,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 ---------------------------------------
+
+-- BufferLine
+vim.keymap.set('n', '<leader>1', ":lua require('bufferline').go_to(1, true)<cr>", opts)
+vim.keymap.set('n', '<leader>2', ":lua require('bufferline').go_to(2, true)<cr>", opts)
+vim.keymap.set('n', '<leader>3', ":lua require('bufferline').go_to(3, true)<cr>", opts)
+vim.keymap.set('n', '<leader>4', ":lua require('bufferline').go_to(4, true)<cr>", opts)
+vim.keymap.set('n', '<leader>5', ":lua require('bufferline').go_to(5, true)<cr>", opts)
+vim.keymap.set('n', '<leader>6', ":lua require('bufferline').go_to(6, true)<cr>", opts)
+vim.keymap.set('n', '<leader>7', ":lua require('bufferline').go_to(7, true)<cr>", opts)
+vim.keymap.set('n', '<leader>l', ":BufferLineCycleNext<cr>", opts)
+vim.keymap.set('n', '<leader>h', ":BufferLineCyclePrev<cr>", opts)
+vim.keymap.set('n', '<leader>p', ":BufferLineTogglePin<cr>", opts)

@@ -69,7 +69,7 @@ cmp.setup {
             col_offset = -3,
             side_padding = 0,
             scrollbar = false,
-            max_height = 40,
+            max_height = 25,
         },
         documentation = {
             winhighlight = "Normal:CmpWindowBg,FloatBorder:CmpWindowBg,Search:None",

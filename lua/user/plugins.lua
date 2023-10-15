@@ -69,6 +69,7 @@ return packer.startup(function(use)
     use 'neovim/nvim-lspconfig'
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
+    use 'folke/lsp-colors.nvim'
     -----------------
 
     use {
@@ -107,6 +108,11 @@ return packer.startup(function(use)
     	tag = "v2.*",
         dependencies = { "rafamadriz/friendly-snippets" },
     	run = "make install_jsregexp"
+    }
+    use {
+      'akinsho/bufferline.nvim',
+      tag = "*",
+      requires = 'nvim-tree/nvim-web-devicons'
     }
 
     if packer_bootstrap then

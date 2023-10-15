@@ -6,8 +6,10 @@
 [x] Adicionar bufferline
 [x] Configurar o telescope pra mostrar o preview mesmo quando a tela é pequena
 [x] Configurar nvim-cmp pra gerar as opcoes de autocomplete
-[ ] Adicionar lspkind pra deixar o dropdown de auto completion bonitinho
-[ ] LuaSnip pros custom snippets
+[x] Adicionar lspkind pra deixar o dropdown de auto completion bonitinho
+[x] LuaSnip pros custom snippets
+[ ] lsp colors pra deixar erros mais bonitinhos
 [ ] Configurar LSP
+  [ ] Tentar mexer no meu portfolio e ver o q sinto falta
 [ ] Ver o que é o diaglist.nvim e ver se vale a pena usar
 
