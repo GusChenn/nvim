@@ -1,0 +1,13 @@
+# o que eu preciso:
+
+[x] Configurar o autopairs
+[x] Ver se da pra dar highlight no que esta sendo yanked igual no vscode
+[x] Adicionar minha cheat sheet pessoal
+[x] Adicionar bufferline
+[x] Configurar o telescope pra mostrar o preview mesmo quando a tela é pequena
+[x] Configurar nvim-cmp pra gerar as opcoes de autocomplete
+[ ] Adicionar lspkind pra deixar o dropdown de auto completion bonitinho
+[ ] LuaSnip pros custom snippets
+[ ] Configurar LSP
+[ ] Ver o que é o diaglist.nvim e ver se vale a pena usar
+
