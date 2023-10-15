@@ -31,7 +31,7 @@ vim.opt.wrap = false -- No Wrap lines
 vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
 vim.opt.wildignore:append { '*/node_modules/*' }
-vim.opt.signcolumn = "yes:2"
+vim.opt.signcolumn = "yes:1"
 
 -- Define gutter icons
 vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
@@ -41,10 +41,16 @@ vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSig
 
 -- Customize how diagnostics are displayed
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = false,
   signs = true,
   underline = true,
-  update_in_insert = false,
-  severity_sort = true,
+  update_in_insert = true,
+  severity_sort = false,
+  float = {
+    show_header = true,
+    source = 'if_many',
+    border = 'single',
+    focusable = false,
+  }
 })
 

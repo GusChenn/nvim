@@ -1,12 +1,16 @@
 local status, bufferline = pcall(require, 'bufferline')
 if (not status) then
-    print("Somthing went wrong with bufferline")
-    return
+  print("Somthing went wrong with bufferline")
+  return
 end
 
 bufferline.setup {
   options = {
-    style_preset = bufferline.style_preset.minimal,
+    style_preset = {
+      bufferline.style_preset.minimal,
+      bufferline.style_preset.no_italic,
+      bufferline.style_preset.no_bold,
+    },
     numbers = function(opts)
       return string.format('%s', opts.lower(opts.ordinal))
     end,
@@ -18,8 +22,9 @@ bufferline.setup {
     end,
     groups = {
       items = {
-          require('bufferline.groups').builtin.pinned:with({ icon = "" })
+        require('bufferline.groups').builtin.pinned:with({ icon = "" })
       }
     },
   },
 }
+

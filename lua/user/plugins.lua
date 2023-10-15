@@ -72,6 +72,10 @@ return packer.startup(function(use)
     use 'folke/lsp-colors.nvim'
     -----------------
 
+    -- Git stuff
+    use "lewis6991/gitsigns.nvim"
+    -----------------
+
     use {
         'nvim-telescope/telescope-fzf-native.nvim',
         run = 'make'
@@ -106,7 +110,7 @@ return packer.startup(function(use)
     use {
 	    "L3MON4D3/LuaSnip",
     	tag = "v2.*",
-        dependencies = { "rafamadriz/friendly-snippets" },
+      dependencies = { "rafamadriz/friendly-snippets" },
     	run = "make install_jsregexp"
     }
     use {
@@ -114,8 +118,12 @@ return packer.startup(function(use)
       tag = "*",
       requires = 'nvim-tree/nvim-web-devicons'
     }
+    use {
+      'nvimdev/lspsaga.nvim',
+      after = 'nvim-lspconfig',
+    }
 
     if packer_bootstrap then
-        require('packer').sync()
+      require('packer').sync()
     end
 end)

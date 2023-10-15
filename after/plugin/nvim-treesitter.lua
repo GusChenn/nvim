@@ -36,6 +36,8 @@ ts.setup {
     "javascript",
     "typescript",
     "graphql",
+    "markdown",
+    "markdown_inline",
   },
   autotag = {
     enable = true,

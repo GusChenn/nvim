@@ -5,3 +5,4 @@ if (not status) then
 end
 
 require("user.lsp.lua")
+require("user.lsp.typescript")
