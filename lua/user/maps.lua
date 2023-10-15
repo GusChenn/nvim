@@ -5,7 +5,8 @@ local keymap = vim.api.nvim_set_keymap
 -- Fundamentals
 keymap("", "<Space>", "<Nop>", opts)
 keymap("n", "<C-l>", ":noh<cr>", opts)
-
+keymap("n", "<C-s>", ":w<cr>", opts)
+keymap("n", "<C-x>", ":q<cr>", opts)
 
 -- Nvim tree
 keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
