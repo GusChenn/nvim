@@ -37,6 +37,15 @@ telescope.setup {
             }
           }
         },
+        live_grep = {
+          mappings = {
+            i = {
+              ["<C-j>"] = telescope_actions.move_selection_next,
+              ["<C-k>"] = telescope_actions.move_selection_previous,
+              ["<ESC>"] = telescope_actions.close,
+            }
+          }
+        }
     },
     extensions = {
         fzf = {

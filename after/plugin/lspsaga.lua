@@ -11,7 +11,9 @@ lspsaga.setup {
     }
   },
   ui = {
-    code_action = "☰"
+    enable = false,
+    sign = false,
+    code_action = "☰",
   }
 }
 

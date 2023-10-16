@@ -132,3 +132,17 @@ vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { bg='NONE', fg=colors.bright_blue })
 vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { bg='NONE', fg=colors.bright_blue })
 -- window background
 vim.api.nvim_set_hl(0, 'CmpWindowBg', { bg=colors.menu, fg=colors.fg })
+
+-- Autocmd to make cmp not complete telescope prompt
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('REMOVE_TELESCOPE_PROMPT_CMP', {}),
+  pattern = "TelescopePrompt",
+  callback = function ()
+    local cmp = require('cmp')
+    cmp.setup {
+      completion = {
+        autocomplete = false,
+      }
+    }
+  end
+})
