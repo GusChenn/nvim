@@ -216,6 +216,11 @@ _G.packer_plugins = {
     path = "/home/guschen/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ["resize-mode.nvim"] = {
+    loaded = true,
+    path = "/home/guschen/.local/share/nvim/site/pack/packer/start/resize-mode.nvim",
+    url = "https://github.com/dimfred/resize-mode.nvim"
+  },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
     path = "/home/guschen/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",

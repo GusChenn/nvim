@@ -16,8 +16,8 @@ keymap("n", "<A-k>", ":wincmd k<cr>", opts)
 keymap("n", "<A-h>", ":wincmd h<cr>", opts)
 keymap("n", "<A-j>", ":wincmd j<cr>", opts)
 keymap("n", "<A-l>", ":wincmd l<cr>", opts)
-keymap("n", "<A-w>v", ":vsplit<cr>", opts)
-keymap("n", "<A-w>h", ":split<cr>", opts)
+keymap("n", "<leader>wv", ":vsplit<cr>", opts)
+keymap("n", "<leader>wh", ":split<cr>", opts)
 keymap("n", "ff", ":Telescope find_files<cr>", opts)
 keymap("n", "fg", ":Telescope live_grep<cr>", opts)
 keymap("n", "fb", ":Telescope buffers<cr>", opts)
@@ -90,4 +90,5 @@ vim.keymap.set('n', 'gd', ":Lspsaga peek_definition<cr>", opts)
 vim.keymap.set('n', 'gh', ":Lspsaga hover_doc<cr>", opts)
 vim.keymap.set('n', 'gl', ":Lspsaga diagnostic_jump_next<cr>", opts)
 
-
+-- Resize mode
+vim.keymap.set('n', '<leader>r', ":lua require('resize-mode').start()<cr>", opts)

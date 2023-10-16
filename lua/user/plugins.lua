@@ -54,6 +54,7 @@ return packer.startup(function(use)
     use 'windwp/nvim-ts-autotag'
     use 'onsails/lspkind.nvim'
     use 'mg979/vim-visual-multi'
+    use 'dimfred/resize-mode.nvim'
 
     -- For cmp stuff
     use 'hrsh7th/cmp-nvim-lsp'
