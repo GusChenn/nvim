@@ -1,10 +1,18 @@
-local status, telescope = pcall(require, 'telescope')
-if (not status) then
-    print("Somthing went wrong with telescope")
-    return
+---@diagnostic disable: need-check-nil
+local function safe_require(package_name)
+  local status, package = pcall(require, package_name)
+  if (not status) then
+      print("Somthing went wrong with" .. package_name)
+      return
+  end 
+  return package
 end
 
-local telescope_previewers = require('telescope.previewers')
+local telescope = safe_require('telescope')
+local telescope_actions = safe_require('telescope.actions')
+local telescope_previewers = safe_require('telescope.previewers')
+
+local opts = { nowait = true, silent = true }
 
 telescope.setup {
     defaults = {
@@ -15,15 +23,21 @@ telescope.setup {
                 preview_cutoff = 0,
             },
         },
-        file_previewer = telescope_previewers.vim_buffer_cat.new,
-	    grep_previewer = telescope_previewers.vim_buffer_vimgrep.new,
-	    qflist_previewer = telescope_previewers.vim_buffer_qflist.new,
+        file_previewer = telescope_previewers and telescope_previewers.vim_buffer_cat.new,
+        grep_previewer = telescope_previewers and telescope_previewers.vim_buffer_vimgrep.new,
+        qflist_previewer = telescope_previewers and telescope_previewers.vim_buffer_qflist.new,
     },
-    -- pickers = {
-    --     find_files = {
-    --         theme = "dropdown"
-    --     },
-    -- },
+    pickers = {
+        find_files = {
+          mappings = {
+            i = {
+              ["<C-j>"] = telescope_actions.move_selection_next,
+              ["<C-k>"] = telescope_actions.move_selection_previous,
+              ["<ESC>"] = telescope_actions.close,
+            }
+          }
+        },
+    },
     extensions = {
         fzf = {
             fuzzy = true,                    -- false will only do exact matching
