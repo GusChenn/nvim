@@ -39,9 +39,6 @@ ts.setup {
     "markdown",
     "markdown_inline",
   },
-  autotag = {
-    enable = true,
-  },
 }
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
