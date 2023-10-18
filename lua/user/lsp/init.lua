@@ -6,3 +6,4 @@ end
 
 require("user.lsp.lua")
 require("user.lsp.typescript")
+require("user.lsp.solargraph")

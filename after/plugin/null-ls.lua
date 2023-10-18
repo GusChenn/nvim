@@ -23,6 +23,7 @@ if null_ls then
       formatting.prettierd,
       formatting.eslint_d,
       diagnostics.eslint_d,
+      diagnostics.rubocop,
       -- code_actions.eslint_d,
       -- null_ls.builtins.completion.spell,
     },
