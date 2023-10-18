@@ -246,6 +246,11 @@ _G.packer_plugins = {
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/vim-commentary",
     url = "https://github.com/tpope/vim-commentary"
   },
+  ["vim-styled-components"] = {
+    loaded = true,
+    path = "/home/gchen/.local/share/nvim/site/pack/packer/start/vim-styled-components",
+    url = "https://github.com/styled-components/vim-styled-components"
+  },
   ["vim-visual-multi"] = {
     loaded = true,
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/vim-visual-multi",

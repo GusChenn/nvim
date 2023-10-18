@@ -21,6 +21,7 @@ if null_ls then
     sources = {
       -- code_actions.eslint,
       formatting.prettierd,
+      formatting.eslint_d,
       diagnostics.eslint_d,
       -- code_actions.eslint_d,
       -- null_ls.builtins.completion.spell,

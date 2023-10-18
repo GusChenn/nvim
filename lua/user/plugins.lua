@@ -55,6 +55,7 @@ return packer.startup(function(use)
     use 'onsails/lspkind.nvim'
     use 'mg979/vim-visual-multi'
     use 'dimfred/resize-mode.nvim'
+    use 'styled-components/vim-styled-components'
 
     -- For cmp stuff
     use 'hrsh7th/cmp-nvim-lsp'

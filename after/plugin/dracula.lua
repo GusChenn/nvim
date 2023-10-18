@@ -17,7 +17,7 @@ end
 
 -- List of elements i want to forçe italic so it looks good with VictorMono
 update_hl('@tag.attribute.tsx', { italic = true, fg = "#bd93f9" })
-update_hl('@string.tsx', { italic = true, fg = "#f1fa8c" })
+-- update_hl('@string.tsx', { italic = true, fg = "#f1fa8c" })
 -- update_hl('@property.tsx', { italic = true, fg = "#bd93f9" })
 update_hl('@type.tsx', { italic = true, fg = "#a4ffff" })
 

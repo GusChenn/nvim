@@ -17,7 +17,7 @@ local opts = { nowait = true, silent = true }
 telescope.setup {
     defaults = {
     --     Cheatsheet plugin cant handle flex yet
-        layout_strategy = "vertical",
+        layout_strategy = "horizontal",
         layout_config = {
             vertical = {
                 preview_cutoff = 0,

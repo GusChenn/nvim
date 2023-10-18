@@ -9,7 +9,7 @@ keymap("n", "<C-s>", ":w<cr>", opts)
 keymap("n", "<C-x>", ":bd<cr>", opts)
 
 -- Nvim tree
-keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+keymap("n", "<leader>e", ":NvimTreeFindFileToggle<cr>", opts)
 
 -- Navigation
 keymap("n", "<A-k>", ":wincmd k<cr>", opts)
@@ -25,6 +25,7 @@ keymap("n", "fh", ":Telescope help_tags<cr>", opts)
 keymap("n", "<leader>?", ":lua require'telescope.builtin'.keymaps{}<cr>", opts)
 
 -- Telescope
+keymap('v', 'fg', 'y<ESC>:Telescope live_grep default_text=<c-r>0<CR>', opts)
 
 -- Vim which key
 -- This mapping is made inside the after file
@@ -63,9 +64,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
     -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
   end,
 })
 ---------------------------------------
@@ -81,12 +79,13 @@ vim.keymap.set('n', '<leader>7', ":lua require('bufferline').go_to(7, true)<cr>"
 vim.keymap.set('n', '<leader>l', ":BufferLineCycleNext<cr>", opts)
 vim.keymap.set('n', '<leader>h', ":BufferLineCyclePrev<cr>", opts)
 vim.keymap.set('n', '<leader>p', ":BufferLineTogglePin<cr>", opts)
-vim.keymap.set('n', '<leader>f l', ":BufferLineMoveNext<cr>", opts)
-vim.keymap.set('n', '<leader>f h', ":BufferLineMovePrev<cr>", opts)
+vim.keymap.set('n', '<leader>fl', ":BufferLineMoveNext<cr>", opts)
+vim.keymap.set('n', '<leader>fh', ":BufferLineMovePrev<cr>", opts)
 
 -- Lspsaga
 vim.keymap.set('n', 'gr', ":Lspsaga finder ref<cr>", opts)
-vim.keymap.set('n', 'gd', ":Lspsaga peek_definition<cr>", opts)
+vim.keymap.set('n', 'pd', ":Lspsaga peek_definition<cr>", opts)
+vim.keymap.set('n', 'gd', ":Lspsaga goto_definition<cr>", opts)
 vim.keymap.set('n', 'gh', ":Lspsaga hover_doc<cr>", opts)
 vim.keymap.set('n', 'gl', ":Lspsaga diagnostic_jump_next<cr>", opts)
 
