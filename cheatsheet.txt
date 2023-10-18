@@ -13,3 +13,7 @@
   [ ] Tentar mexer no meu portfolio e ver o q sinto falta
 [ ] Ver o que é o diaglist.nvim e ver se vale a pena usar
 
+Repo do mago: https://github.com/pmizio/typescript-tools.nvim
+
+- seguir o step-by-step do repo
+- instalar ts globalmente no sistema

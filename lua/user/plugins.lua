@@ -72,6 +72,10 @@ return packer.startup(function(use)
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
     use 'folke/lsp-colors.nvim'
+    use {
+      "pmizio/typescript-tools.nvim",
+      requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    }
     -----------------
 
     -- Git stuff
