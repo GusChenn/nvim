@@ -32,7 +32,7 @@ vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
 vim.opt.wildignore:append { '*/node_modules/*' }
 vim.opt.signcolumn = "yes:1"
-vim.opt.termguicolors = true
+vim.wo.wrap = true
 
 -- Define gutter icons
 vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })

@@ -6,7 +6,9 @@ local keymap = vim.api.nvim_set_keymap
 keymap("", "<Space>", "<Nop>", opts)
 keymap("n", "<C-l>", ":noh<cr>", opts)
 keymap("n", "<C-s>", ":w<cr>", opts)
-keymap("n", "<C-x>", ":bd<cr>", opts)
+keymap("n", "<C-x>", ":bd!<cr>", opts)
+keymap("v", "<leader>s", "*<ESC>", opts)
+keymap("v", "Y", '"+y', opts)
 
 -- Nvim tree
 keymap("n", "<leader>e", ":NvimTreeFindFileToggle<cr>", opts)
@@ -26,9 +28,6 @@ keymap("n", "<leader>?", ":lua require'telescope.builtin'.keymaps{}<cr>", opts)
 
 -- Telescope
 keymap('v', 'fg', 'y<ESC>:Telescope live_grep default_text=<c-r>0<CR>', opts)
-
--- Vim which key
--- This mapping is made inside the after file
 
 -- Lsp
 -------------------------------------------
@@ -84,10 +83,13 @@ vim.keymap.set('n', '<leader>fh', ":BufferLineMovePrev<cr>", opts)
 
 -- Lspsaga
 vim.keymap.set('n', 'gr', ":Lspsaga finder ref<cr>", opts)
-vim.keymap.set('n', 'pd', ":Lspsaga peek_definition<cr>", opts)
+vim.keymap.set('n', 'gt', ":Lspsaga peek_definition<cr>", opts)
 vim.keymap.set('n', 'gd', ":Lspsaga goto_definition<cr>", opts)
 vim.keymap.set('n', 'gh', ":Lspsaga hover_doc<cr>", opts)
 vim.keymap.set('n', 'gl', ":Lspsaga diagnostic_jump_next<cr>", opts)
 
 -- Resize mode
 vim.keymap.set('n', '<leader>r', ":lua require('resize-mode').start()<cr>", opts)
+
+-- Cheatsheet
+keymap("n", "cc", ":Cheatsheet!<cr>", opts)

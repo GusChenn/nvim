@@ -31,6 +31,8 @@ telescope.setup {
         find_files = {
           mappings = {
             i = {
+              ["<C-n>"] = telescope_actions.cycle_history_next,
+              ["<C-p>"] = telescope_actions.cycle_history_prev,
               ["<C-j>"] = telescope_actions.move_selection_next,
               ["<C-k>"] = telescope_actions.move_selection_previous,
               ["<ESC>"] = telescope_actions.close,
@@ -40,6 +42,8 @@ telescope.setup {
         live_grep = {
           mappings = {
             i = {
+              ["<C-n>"] = telescope_actions.cycle_history_next,
+              ["<C-p>"] = telescope_actions.cycle_history_prev,
               ["<C-j>"] = telescope_actions.move_selection_next,
               ["<C-k>"] = telescope_actions.move_selection_previous,
               ["<ESC>"] = telescope_actions.close,
