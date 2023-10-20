@@ -93,3 +93,6 @@ vim.keymap.set('n', '<leader>r', ":lua require('resize-mode').start()<cr>", opts
 
 -- Cheatsheet
 keymap("n", "cc", ":Cheatsheet!<cr>", opts)
+
+-- Diffview
+keymap("n", "<leader>g", ":DiffviewFileHistory %<cmd>")
