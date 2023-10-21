@@ -1,6 +1,6 @@
-local helpers = require('user.helpers')
-local ts = helpers.SafeRequire('nvim-treesitter.configs')
-local styled_module = helpers.SafeRequire('user.modules.styled-components')
+local helpers = require("user.helpers")
+local ts = helpers.SafeRequire("nvim-treesitter.configs")
+local styled_module = helpers.SafeRequire("user.modules.styled-components")
 
 -- Workaround for some folds bug while using treesitter with packer.
 -- WARNING: PERFORMANCE ISSUES
@@ -12,32 +12,31 @@ local styled_module = helpers.SafeRequire('user.modules.styled-components')
 --   end
 -- })
 
-
-ts.setup {
-  highlight = {
-    enable = true,
-    disable = {},
-  },
-  indent = {
-    enable = true,
-    disable = {},
-  },
-  ensure_installed = {
-    "tsx",
-    "toml",
-    "json",
-    "yaml",
-    "css",
-    "html",
-    "lua",
-    "ruby",
-    "javascript",
-    "typescript",
-    "graphql",
-    "markdown",
-    "markdown_inline",
-  },
-}
+ts.setup({
+	highlight = {
+		enable = true,
+		disable = {},
+	},
+	indent = {
+		enable = true,
+		disable = {},
+	},
+	ensure_installed = {
+		"tsx",
+		"toml",
+		"json",
+		"yaml",
+		"css",
+		"html",
+		"lua",
+		"ruby",
+		"javascript",
+		"typescript",
+		"graphql",
+		"markdown",
+		"markdown_inline",
+	},
+})
 
 -- i disabled this because the styled components plugin appears to be handling syntax highlighting well
 
@@ -48,4 +47,3 @@ ts.setup {
 --   styled_module.directives()
 --   styled_module.queries()
 -- end
-

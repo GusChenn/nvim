@@ -1,13 +1,13 @@
-local status, mason = pcall(require, 'mason')
-if (not status) then
-    print("Somthing went wrong with mason")
-    return
+local status, mason = pcall(require, "mason")
+if not status then
+	print("Somthing went wrong with mason")
+	return
 end
 
-local status, mason_lspconfig = pcall(require, 'mason-lspconfig')
-if (not status) then
-    print("Somthing went wrong with mason-lspconfig")
-    return
+local status, mason_lspconfig = pcall(require, "mason-lspconfig")
+if not status then
+	print("Somthing went wrong with mason-lspconfig")
+	return
 end
 
 local servers = {
@@ -36,10 +36,10 @@ local settings = {
 
 mason.setup(settings)
 
-mason_lspconfig.setup {
+mason_lspconfig.setup({
 	ensure_installed = servers,
 	automatic_installation = true,
-}
+})
 
 -- local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 -- if not lspconfig_status_ok then
