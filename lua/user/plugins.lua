@@ -54,6 +54,8 @@ return packer.startup(function(use)
 	use("mg979/vim-visual-multi")
 	use("dimfred/resize-mode.nvim")
 	use("sindrets/diffview.nvim")
+	use("folke/zen-mode.nvim")
+	use("folke/twilight.nvim")
 
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")

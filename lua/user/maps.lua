@@ -48,33 +48,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		-- Buffer local mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
-		local opts = { buffer = ev.buf }
+		local lsp_opts = { buffer = ev.buf }
+
 		-- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
 		-- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 		-- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-		vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-		vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+		-- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+		-- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, lsp_opts)
+		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, lsp_opts)
+		-- vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, lsp_opts)
+		-- vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, lsp_opts)
+		-- vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, lsp_opts)
+		vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, lsp_opts)
 		vim.keymap.set("n", "<space>wl", function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, opts)
-		-- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-		vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-		vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-		-- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 	end,
 })
 ---------------------------------------
 
 -- BufferLine
-vim.keymap.set("n", "<leader>1", ":lua require('bufferline').go_to(1, true)<cr>", opts)
-vim.keymap.set("n", "<leader>2", ":lua require('bufferline').go_to(2, true)<cr>", opts)
-vim.keymap.set("n", "<leader>3", ":lua require('bufferline').go_to(3, true)<cr>", opts)
-vim.keymap.set("n", "<leader>4", ":lua require('bufferline').go_to(4, true)<cr>", opts)
-vim.keymap.set("n", "<leader>5", ":lua require('bufferline').go_to(5, true)<cr>", opts)
-vim.keymap.set("n", "<leader>6", ":lua require('bufferline').go_to(6, true)<cr>", opts)
-vim.keymap.set("n", "<leader>7", ":lua require('bufferline').go_to(7, true)<cr>", opts)
+
+for i = 1, 20 do
+	local key = "<leader>" .. i
+	local command = ':lua require("bufferline").go_to(' .. i .. ", true)<cr>"
+	vim.keymap.set("n", key, command, opts)
+end
+
 vim.keymap.set("n", "<leader>l", ":BufferLineCycleNext<cr>", opts)
 vim.keymap.set("n", "<leader>h", ":BufferLineCyclePrev<cr>", opts)
 vim.keymap.set("n", "<leader>p", ":BufferLineTogglePin<cr>", opts)
@@ -96,3 +97,6 @@ keymap("n", "cc", ":Cheatsheet!<cr>", opts)
 
 -- Diffview
 keymap("n", "<leader>g", ":DiffviewFileHistory %<cmd>", opts)
+
+-- ZenMode
+keymap("n", "<leader>z", "<cmd>:ZenMode<cr>", opts)

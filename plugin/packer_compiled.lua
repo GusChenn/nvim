@@ -257,6 +257,11 @@ local no_errors, error_msg = pcall(function()
 			path = "/home/guschen/.local/share/nvim/site/pack/packer/start/telescope.nvim",
 			url = "https://github.com/nvim-telescope/telescope.nvim",
 		},
+		["twilight.nvim"] = {
+			loaded = true,
+			path = "/home/guschen/.local/share/nvim/site/pack/packer/start/twilight.nvim",
+			url = "https://github.com/folke/twilight.nvim",
+		},
 		["typescript-tools.nvim"] = {
 			loaded = true,
 			path = "/home/guschen/.local/share/nvim/site/pack/packer/start/typescript-tools.nvim",
@@ -271,6 +276,11 @@ local no_errors, error_msg = pcall(function()
 			loaded = true,
 			path = "/home/guschen/.local/share/nvim/site/pack/packer/start/vim-visual-multi",
 			url = "https://github.com/mg979/vim-visual-multi",
+		},
+		["zen-mode.nvim"] = {
+			loaded = true,
+			path = "/home/guschen/.local/share/nvim/site/pack/packer/start/zen-mode.nvim",
+			url = "https://github.com/folke/zen-mode.nvim",
 		},
 	}
 

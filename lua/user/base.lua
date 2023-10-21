@@ -33,6 +33,7 @@ vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
 vim.opt.wildignore:append({ "*/node_modules/*" })
 vim.opt.signcolumn = "yes:1"
 vim.wo.wrap = true
+vim.opt.timeoutlen = 200
 
 -- Define gutter icons
 vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
@@ -56,8 +57,8 @@ vim.diagnostic.config({
 })
 
 -- User defined commands
-vim.api.nvim_create_user_command("Cppath", function()
-	local path = vim.fn.expand("%:p")
+vim.api.nvim_create_user_command("cppath", function()
+	local path = vim.fn.expand("%:.")
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
