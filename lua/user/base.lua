@@ -57,7 +57,7 @@ vim.diagnostic.config({
 })
 
 -- User defined commands
-vim.api.nvim_create_user_command("cppath", function()
+vim.api.nvim_create_user_command("Cppath", function()
 	local path = vim.fn.expand("%:.")
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')

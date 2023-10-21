@@ -56,6 +56,7 @@ return packer.startup(function(use)
 	use("sindrets/diffview.nvim")
 	use("folke/zen-mode.nvim")
 	use("folke/twilight.nvim")
+	use("skywind3000/asyncrun.vim")
 
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")
