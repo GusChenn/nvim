@@ -1,18 +1,11 @@
----@diagnostic disable: need-check-nil
-local function safe_require(package_name)
-	local status, package = pcall(require, package_name)
-	if not status then
-		print("Somthing went wrong with" .. package_name)
-		return
-	end
-	return package
+local helpers = require("user.helpers")
+local telescope = helpers.SafeRequire("telescope")
+local telescope_actions = helpers.SafeRequire("telescope.actions")
+local telescope_previewers = helpers.SafeRequire("telescope.previewers")
+
+if not (telescope and telescope_actions and telescope_previewers) then
+	return
 end
-
-local telescope = safe_require("telescope")
-local telescope_actions = safe_require("telescope.actions")
-local telescope_previewers = safe_require("telescope.previewers")
-
-local opts = { nowait = true, silent = true }
 
 telescope.setup({
 	defaults = {
@@ -23,9 +16,9 @@ telescope.setup({
 				preview_cutoff = 0,
 			},
 		},
-		file_previewer = telescope_previewers and telescope_previewers.vim_buffer_cat.new,
-		grep_previewer = telescope_previewers and telescope_previewers.vim_buffer_vimgrep.new,
-		qflist_previewer = telescope_previewers and telescope_previewers.vim_buffer_qflist.new,
+		file_previewer = telescope_previewers.vim_buffer_cat.new,
+		grep_previewer = telescope_previewers.vim_buffer_vimgrep.new,
+		qflist_previewer = telescope_previewers.vim_buffer_qflist.new,
 	},
 	pickers = {
 		find_files = {
@@ -62,3 +55,4 @@ telescope.setup({
 })
 
 telescope.load_extension("fzf")
+telescope.load_extension("harpoon")

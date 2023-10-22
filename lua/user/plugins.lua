@@ -22,7 +22,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 -- Boilerplate ------------------
-
 local status, packer = pcall(require, "packer")
 if not status then
 	print("Packer is not installed")
@@ -57,6 +56,7 @@ return packer.startup(function(use)
 	use("folke/zen-mode.nvim")
 	use("folke/twilight.nvim")
 	use("skywind3000/asyncrun.vim")
+	use("ThePrimeagen/harpoon")
 
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")
@@ -81,6 +81,7 @@ return packer.startup(function(use)
 
 	-- Git stuff
 	use("lewis6991/gitsigns.nvim")
+	use("tpope/vim-fugitive")
 	-----------------
 
 	-- Linting and formatting

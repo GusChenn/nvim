@@ -139,6 +139,11 @@ _G.packer_plugins = {
     path = "/home/guschen/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  harpoon = {
+    loaded = true,
+    path = "/home/guschen/.local/share/nvim/site/pack/packer/start/harpoon",
+    url = "https://github.com/ThePrimeagen/harpoon"
+  },
   ["live-server.nvim"] = {
     loaded = true,
     path = "/home/guschen/.local/share/nvim/site/pack/packer/start/live-server.nvim",
@@ -270,6 +275,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/guschen/.local/share/nvim/site/pack/packer/start/vim-commentary",
     url = "https://github.com/tpope/vim-commentary"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/home/guschen/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
   },
   ["vim-visual-multi"] = {
     loaded = true,
