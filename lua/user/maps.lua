@@ -6,10 +6,11 @@ local lua_keymap = vim.keymap.set
 
 -- Fundamentals
 vim_keymap("", "<Space>", "<Nop>", opts)
+vim_keymap("", "s", "<Nop>", opts)
 vim_keymap("n", "<C-l>", ":noh<cr>", opts)
 vim_keymap("n", "<C-s>", ":w<cr>", opts)
 vim_keymap("n", "<C-x>", ":bd!<cr>", opts)
-vim_keymap("v", "<leader>s", "*<ESC>", opts)
+vim_keymap("n", "<leader>s", "viw*<ESC>", opts)
 vim_keymap("v", "Y", '"+y', opts)
 
 -- Nvim tree
@@ -85,7 +86,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Lspsaga
 lua_keymap("n", "gr", ":Lspsaga finder ref<cr>", opts)
-lua_keymap("n", "gt", ":Lspsaga peek_definition<cr>", opts)
+lua_keymap("n", "gdd", ":Lspsaga peek_definition<cr>", opts)
 lua_keymap("n", "gd", ":Lspsaga goto_definition<cr>", opts)
 lua_keymap("n", "gh", ":Lspsaga hover_doc<cr>", opts)
 lua_keymap("n", "gl", ":Lspsaga diagnostic_jump_next<cr>", opts)
@@ -106,8 +107,10 @@ vim_keymap("n", "<leader>z", "<cmd>:ZenMode<cr>", opts)
 lua_keymap("n", "<leader>gs", vim.cmd.Git)
 
 -- Harpoon
-lua_keymap("n", "<leader>p", helpers.SafeRequire("harpoon.mark").add_file)
-lua_keymap("n", "<leader>pp", helpers.SafeRequire("harpoon.ui").toggle_quick_menu)
+lua_keymap("n", "<leader>pp", helpers.SafeRequire("harpoon.mark").add_file)
+lua_keymap("n", "<leader>p", helpers.SafeRequire("harpoon.ui").toggle_quick_menu)
+lua_keymap("n", "<leader>l", helpers.SafeRequire("harpoon.ui").nav_next)
+lua_keymap("n", "<leader>h", helpers.SafeRequire("harpoon.ui").nav_prev)
 
 -- Diaglist
 lua_keymap("n", "<leader>dd", helpers.SafeRequire("diaglist").open_all_diagnostics)
