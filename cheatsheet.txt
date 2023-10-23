@@ -1,19 +1,4 @@
-# o que eu preciso:
+# To-do's de hoje
 
-[x] Configurar o autopairs
-[x] Ver se da pra dar highlight no que esta sendo yanked igual no vscode
-[x] Adicionar minha cheat sheet pessoal
-[x] Adicionar bufferline
-[x] Configurar o telescope pra mostrar o preview mesmo quando a tela é pequena
-[x] Configurar nvim-cmp pra gerar as opcoes de autocomplete
-[x] Adicionar lspkind pra deixar o dropdown de auto completion bonitinho
-[x] LuaSnip pros custom snippets
-[ ] lsp colors pra deixar erros mais bonitinhos
-[ ] Configurar LSP
-  [ ] Tentar mexer no meu portfolio e ver o q sinto falta
-[ ] Ver o que é o diaglist.nvim e ver se vale a pena usar
-
-Repo do mago: https://github.com/pmizio/typescript-tools.nvim
-
-- seguir o step-by-step do repo
-- instalar ts globalmente no sistema
+- [ ] Pré-planning de GPT V2
+- [ ] ver se vale a pena comprar i5-14600KF ao invés do 13600KF

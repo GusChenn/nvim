@@ -77,6 +77,7 @@ return packer.startup(function(use)
 		"pmizio/typescript-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 	})
+	use("onsails/diaglist.nvim")
 	-----------------
 
 	-- Git stuff

@@ -72,16 +72,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- BufferLine
 
-for i = 1, 20 do
-	local key = "<leader>" .. i
-	local command = ':lua require("bufferline").go_to(' .. i .. ", true)<cr>"
-	lua_keymap("n", key, command, opts)
-end
+-- for i = 1, 20 do
+-- 	local key = "<leader>" .. i
+-- 	local command = ':lua require("bufferline").go_to(' .. i .. ", true)<cr>"
+-- 	lua_keymap("n", key, command, opts)
+-- end
 
-lua_keymap("n", "<leader>l", ":BufferLineCycleNext<cr>", opts)
-lua_keymap("n", "<leader>h", ":BufferLineCyclePrev<cr>", opts)
-lua_keymap("n", "<leader>fl", ":BufferLineMoveNext<cr>", opts)
-lua_keymap("n", "<leader>fh", ":BufferLineMovePrev<cr>", opts)
+-- lua_keymap("n", "<leader>l", ":BufferLineCycleNext<cr>", opts)
+-- lua_keymap("n", "<leader>h", ":BufferLineCyclePrev<cr>", opts)
+-- lua_keymap("n", "<leader>fl", ":BufferLineMoveNext<cr>", opts)
+-- lua_keymap("n", "<leader>fh", ":BufferLineMovePrev<cr>", opts)
 
 -- Lspsaga
 lua_keymap("n", "gr", ":Lspsaga finder ref<cr>", opts)
@@ -108,3 +108,7 @@ lua_keymap("n", "<leader>gs", vim.cmd.Git)
 -- Harpoon
 lua_keymap("n", "<leader>p", helpers.SafeRequire("harpoon.mark").add_file)
 lua_keymap("n", "<leader>pp", helpers.SafeRequire("harpoon.ui").toggle_quick_menu)
+
+-- Diaglist
+lua_keymap("n", "<leader>dd", helpers.SafeRequire("diaglist").open_all_diagnostics)
+lua_keymap("n", "<leader>db", helpers.SafeRequire("diaglist").open_buffer_diagnostics)
