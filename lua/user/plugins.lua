@@ -43,7 +43,8 @@ local packer_bootstrap = ensure_packer()
 
 return packer.startup(function(use)
 	use("wbthomason/packer.nvim")
-	use("Mofiqul/dracula.nvim")
+	-- use("Mofiqul/dracula.nvim")
+	use({ "catppuccin/nvim", as = "catppuccin" })
 	use("tpope/vim-commentary")
 	use("norcalli/nvim-colorizer.lua")
 	use("windwp/nvim-autopairs")
@@ -72,7 +73,6 @@ return packer.startup(function(use)
 	use("neovim/nvim-lspconfig")
 	use("williamboman/mason.nvim")
 	use("williamboman/mason-lspconfig.nvim")
-	use("folke/lsp-colors.nvim")
 	use({
 		"pmizio/typescript-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },

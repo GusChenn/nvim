@@ -14,5 +14,6 @@ lspsaga.setup({
 		enable = false,
 		sign = false,
 		code_action = "☰",
+		kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
 	},
 })
