@@ -39,4 +39,7 @@ ts.setup({
 		"markdown",
 		"markdown_inline",
 	},
+	endwise = {
+		enable = true,
+	},
 })
