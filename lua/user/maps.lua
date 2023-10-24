@@ -112,6 +112,5 @@ lua_keymap("n", "<leader>p", helpers.SafeRequire("harpoon.ui").toggle_quick_menu
 lua_keymap("n", "<leader>l", helpers.SafeRequire("harpoon.ui").nav_next)
 lua_keymap("n", "<leader>h", helpers.SafeRequire("harpoon.ui").nav_prev)
 
--- Diaglist
-lua_keymap("n", "<leader>dd", helpers.SafeRequire("diaglist").open_all_diagnostics)
-lua_keymap("n", "<leader>db", helpers.SafeRequire("diaglist").open_buffer_diagnostics)
+-- Trouble
+lua_keymap("n", "<leader>dd", helpers.SafeRequire("trouble").toggle)
