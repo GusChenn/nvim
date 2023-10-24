@@ -10,6 +10,8 @@ vim_keymap("", "s", "<Nop>", opts)
 vim_keymap("n", "<C-l>", ":noh<cr>", opts)
 vim_keymap("n", "<C-s>", ":w<cr>", opts)
 vim_keymap("n", "<C-x>", ":bd!<cr>", opts)
+vim_keymap("n", "<leader>q", ":bd!<cr>", opts)
+vim_keymap("n", "m", "%", opts)
 vim_keymap("n", "<leader>s", "viw*<ESC>", opts)
 vim_keymap("v", "Y", '"+y', opts)
 
@@ -39,7 +41,7 @@ vim_keymap("v", "fg", "y<ESC>:Telescope live_grep default_text=<c-r>0<CR>", opts
 -- lua_keymap('n', '<space>e', vim.diagnostic.open_float)
 lua_keymap("n", "g p", vim.diagnostic.goto_prev)
 lua_keymap("n", "g n", vim.diagnostic.goto_next)
-lua_keymap("n", "<leader>q", vim.diagnostic.setloclist)
+-- lua_keymap("n", "<leader>q", vim.diagnostic.setloclist)
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
