@@ -64,3 +64,5 @@ vim.api.nvim_create_user_command("Cppath", function()
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
+
+vim.api.nvim_create_user_command("CleanBuffers", ":%bd|e#", {})

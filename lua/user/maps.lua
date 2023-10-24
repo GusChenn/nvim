@@ -114,3 +114,6 @@ lua_keymap("n", "<leader>h", helpers.SafeRequire("harpoon.ui").nav_prev)
 
 -- Trouble
 lua_keymap("n", "<leader>dd", helpers.SafeRequire("trouble").toggle)
+
+-- Git blame
+vim_keymap("n", "<leader>gb", "<cmd>:GitBlameToggle<cr>")

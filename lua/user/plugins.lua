@@ -86,6 +86,7 @@ return packer.startup(function(use)
 	-- Git stuff
 	use("lewis6991/gitsigns.nvim")
 	use("tpope/vim-fugitive")
+	use("f-person/git-blame.nvim")
 	-----------------
 
 	-- Linting and formatting
