@@ -1,3 +1,30 @@
+```suggestion
+    if (!allowMissions) {
+      if (allowMultipleSelection) {
+        return t('learning:learning_modal.segment_control.disabled_tooltip.temp_learning_not_avaliable')
+      } else {
+        return t(
+          'learning:learning_modal.segment_control.disabled_tooltip.learning_not_avaliable',
+        );
+      }
+    } else {
+      return t('feedback_learning_item.modal.segmented_control.disabled_tooltip')
+    }
+
+ if (!allowMissions && allowMultipleSelection)
+      return t(
+        'learning:learning_modal.segment_control.disabled_tooltip.temp_learning_not_avaliable',
+      );
+
+    return (allowMissions || !isEmpty(learningItems)) && !allowMultipleSelection
+      ? t('feedback_learning_item.modal.segmented_control.disabled_tooltip')
+      : t(
+          'learning:learning_modal.segment_control.disabled_tooltip.learning_not_avaliable',
+        );
+
+
+```
+
 # To-do's de hoje
 
 - [ ] Pré-planning de GPT V2

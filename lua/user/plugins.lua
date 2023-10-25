@@ -58,6 +58,7 @@ return packer.startup(function(use)
 	use("folke/twilight.nvim")
 	use("skywind3000/asyncrun.vim")
 	use("ThePrimeagen/harpoon")
+	use("NvChad/nvterm")
 
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")

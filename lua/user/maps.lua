@@ -119,3 +119,8 @@ lua_keymap("n", "<leader>dd", helpers.SafeRequire("trouble").toggle)
 
 -- Git blame
 vim_keymap("n", "<leader>gb", "<cmd>:GitBlameToggle<cr>", opts)
+
+-- NvTerm
+-- lua_keymap("n", "tt", helpers.SafeRequire("nvterm.terminal").toggle("vertical"), opts)
+vim_keymap("n", "<C-t><C-t>", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
+vim_keymap("t", "<Esc>", "<C-\\><C-n>", opts)

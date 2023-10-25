@@ -5,15 +5,15 @@ if not status then
 end
 
 lspsaga.setup({
+	lightbulb = {
+		enable = false,
+	},
 	diagnostic = {
 		keys = {
 			quit = { "q", "<ESC>" },
 		},
 	},
 	ui = {
-		enable = false,
-		sign = false,
-		code_action = "☰",
 		kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
 	},
 })
