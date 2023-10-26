@@ -7,6 +7,8 @@ local lua_keymap = vim.keymap.set
 -- Fundamentals
 vim_keymap("", "<Space>", "<Nop>", opts)
 vim_keymap("", "s", "<Nop>", opts)
+vim_keymap("", "<C-p>", "<Nop>", opts)
+vim_keymap("", "<C-n>", "<Nop>", opts)
 vim_keymap("n", "<C-l>", ":noh<cr>", opts)
 vim_keymap("n", "<C-s>", ":w<cr>", opts)
 vim_keymap("n", "<C-x>", ":bd!<cr>", opts)
@@ -118,7 +120,7 @@ lua_keymap("n", "<leader>h", helpers.SafeRequire("harpoon.ui").nav_prev)
 lua_keymap("n", "<leader>dd", helpers.SafeRequire("trouble").toggle)
 
 -- Git blame
-vim_keymap("n", "<leader>gb", "<cmd>:GitBlameToggle<cr>", opts)
+vim_keymap("n", "gb", "<cmd>:GitBlameToggle<cr>", opts)
 
 -- NvTerm
 -- lua_keymap("n", "tt", helpers.SafeRequire("nvterm.terminal").toggle("vertical"), opts)

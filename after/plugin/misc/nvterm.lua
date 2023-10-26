@@ -52,9 +52,19 @@ vim.api.nvim_create_user_command("Storybook", function()
 	nvterm_terminal.send(command, "vertical")
 end, {})
 
-vim.api.nvim_create_user_command("Spec", function()
+vim.api.nvim_create_user_command("FullSpec", function()
 	local path = vim.fn.expand("%:.")
 	local command = "nocorrect RUBYOPT='-W:deprecated' RAISE_DEPRECATIONS=true NOTIFY_DEPRECATION_WARNINGS=true bundle exec rspec "
 		.. path
+	nvterm_terminal.send(command, "vertical")
+end, {})
+
+vim.api.nvim_create_user_command("Spec", function()
+	local path = vim.fn.expand("%:.")
+	local cursor_y, _ = unpack(vim.api.nvim_win_get_cursor(0))
+	local command = "nocorrect RUBYOPT='-W:deprecated' RAISE_DEPRECATIONS=true NOTIFY_DEPRECATION_WARNINGS=true bundle exec rspec "
+		.. path
+		.. ":"
+		.. cursor_y
 	nvterm_terminal.send(command, "vertical")
 end, {})

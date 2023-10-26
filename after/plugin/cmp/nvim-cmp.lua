@@ -1,12 +1,8 @@
-local status, cmp = pcall(require, "cmp")
-if not status then
-	print("Somthing went wrong with cmp")
-	return
-end
+local helpers = require("user.helpers")
+local cmp = helpers.SafeRequire("cmp")
+local lspkind = helpers.SafeRequire("lspkind")
 
-local lspkind_status, lspkind = pcall(require, "lspkind")
-if not lspkind_status then
-	print("Somthing went wrong with lspkind")
+if not (cmp and lspkind) then
 	return
 end
 
@@ -73,6 +69,15 @@ local opts = {
 }
 
 cmp.setup({
+	completion = {
+		autocomplete = {
+			cmp.TriggerEvent.TextChanged,
+			cmp.TriggerEvent.InsertEnter,
+		},
+		-- completeopt = "menuone,noinsert,noselect",
+		keyword_length = 4,
+	},
+
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
@@ -105,6 +110,7 @@ cmp.setup({
 			border = border("rounded", "CmpBorder"),
 		},
 	},
+
 	mapping = cmp.mapping.preset.insert({
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -113,6 +119,7 @@ cmp.setup({
 		["<C-j>"] = cmp.mapping.select_next_item(),
 		["<C-k>"] = cmp.mapping.select_prev_item(),
 	}),
+
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" }, -- For luasnip users.
@@ -133,14 +140,14 @@ cmp.setup({
 })
 
 -- Autocmd to make cmp not complete telescope prompt
-vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("REMOVE_TELESCOPE_PROMPT_CMP", {}),
-	pattern = "TelescopePrompt",
-	callback = function()
-		cmp.setup({
-			completion = {
-				autocomplete = false,
-			},
-		})
-	end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	group = vim.api.nvim_create_augroup("REMOVE_TELESCOPE_PROMPT_CMP", {}),
+-- 	pattern = "TelescopePrompt",
+-- 	callback = function()
+-- 		cmp.setup({
+-- 			completion = {
+-- 				autocomplete = false,
+-- 			},
+-- 		})
+-- 	end,
+-- })
