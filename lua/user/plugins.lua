@@ -59,6 +59,7 @@ return packer.startup(function(use)
 	use("skywind3000/asyncrun.vim")
 	use("ThePrimeagen/harpoon")
 	use("NvChad/nvterm")
+	use("lukas-reineke/indent-blankline.nvim")
 
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")

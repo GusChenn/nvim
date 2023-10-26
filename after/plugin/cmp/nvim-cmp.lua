@@ -38,6 +38,17 @@ local cmp_vscode_kinds = {
 	TypeParameter = "",
 }
 
+local border = {
+	{ "┏", "FloatBorder" },
+	{ "━", "FloatBorder" },
+	{ "┓", "FloatBorder" },
+	{ "┃", "FloatBorder" },
+	{ "┛", "FloatBorder" },
+	{ "━", "FloatBorder" },
+	{ "┗", "FloatBorder" },
+	{ "┃", "FloatBorder" },
+}
+
 local opts = {
 	mode = "symbol_text",
 	maxwidth = 30,
@@ -70,10 +81,12 @@ cmp.setup({
 			side_padding = 0,
 			scrollbar = false,
 			max_height = 25,
+			border = border,
 		},
 		documentation = {
 			winhighlight = "Normal:CmpWindowBg,FloatBorder:CmpWindowBg,Search:None",
 			side_padding = 1,
+			border = border,
 		},
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -103,42 +116,17 @@ cmp.setup({
 	end,
 })
 
--- Add theme to completion menu
--- local colors = require("dracula").colors()
 
--- -- gray
--- vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { bg = colors.selection, strikethrough = true, fg = colors.visual })
--- -- blue
--- vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { bg = colors.selection, fg = colors.bright_blue })
--- vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { link = "CmpIntemAbbrMatch" })
--- -- light blue
--- vim.api.nvim_set_hl(0, "CmpItemKindVariable", { bg = colors.selection, fg = colors.cyan })
--- vim.api.nvim_set_hl(0, "CmpItemKindInterface", { link = "CmpItemKindVariable" })
--- vim.api.nvim_set_hl(0, "CmpItemKindText", { link = "CmpItemKindVariable" })
--- -- pink
--- vim.api.nvim_set_hl(0, "CmpItemKindFunction", { bg = colors.selection, fg = colors.pink })
--- vim.api.nvim_set_hl(0, "CmpItemKindMethod", { link = "CmpItemKindFunction" })
--- -- green
--- vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { bg = colors.selection, fg = colors.green })
--- -- front
--- vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { bg = colors.selection, fg = colors.fg })
--- vim.api.nvim_set_hl(0, "CmpItemKindProperty", { link = "CmpItemKindKeyword" })
--- vim.api.nvim_set_hl(0, "CmpItemKindUnit", { link = "CmpItemKindKeyword" })
--- vim.api.nvim_set_hl(0, "CmpItemKindField", { link = "CmpItemKindKeyword" })
--- -- completion text
--- vim.api.nvim_set_hl(0, "CmpItemAbbr", { bg = "NONE", fg = colors.fg })
--- vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { bg = "NONE", strikethrough = true, fg = colors.fg })
--- vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { bg = "NONE", fg = colors.bright_blue })
--- vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { bg = "NONE", fg = colors.bright_blue })
--- -- window background
--- vim.api.nvim_set_hl(0, "CmpWindowBg", { bg = colors.menu, fg = colors.fg })
+
+
+
+dskalfjdsa
 
 -- Autocmd to make cmp not complete telescope prompt
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("REMOVE_TELESCOPE_PROMPT_CMP", {}),
 	pattern = "TelescopePrompt",
 	callback = function()
-		local cmp = require("cmp")
 		cmp.setup({
 			completion = {
 				autocomplete = false,
