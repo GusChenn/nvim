@@ -38,16 +38,32 @@ local cmp_vscode_kinds = {
 	TypeParameter = "",
 }
 
-local border = {
-	{ "┏", "FloatBorder" },
-	{ "━", "FloatBorder" },
-	{ "┓", "FloatBorder" },
-	{ "┃", "FloatBorder" },
-	{ "┛", "FloatBorder" },
-	{ "━", "FloatBorder" },
-	{ "┗", "FloatBorder" },
-	{ "┃", "FloatBorder" },
-}
+local function border(style, hl_name)
+	local borders = {
+		sharp = {
+			{ "┏", hl_name },
+			{ "━", hl_name },
+			{ "┓", hl_name },
+			{ "┃", hl_name },
+			{ "┛", hl_name },
+			{ "━", hl_name },
+			{ "┗", hl_name },
+			{ "┃", hl_name },
+		},
+		rounded = {
+			{ "╭", hl_name },
+			{ "─", hl_name },
+			{ "╮", hl_name },
+			{ "│", hl_name },
+			{ "╯", hl_name },
+			{ "─", hl_name },
+			{ "╰", hl_name },
+			{ "│", hl_name },
+		},
+	}
+
+	return borders[style]
+end
 
 local opts = {
 	mode = "symbol_text",
@@ -81,12 +97,12 @@ cmp.setup({
 			side_padding = 0,
 			scrollbar = false,
 			max_height = 25,
-			border = border,
+			border = border("rounded", "CmpBorder"),
 		},
 		documentation = {
 			winhighlight = "Normal:CmpWindowBg,FloatBorder:CmpWindowBg,Search:None",
 			side_padding = 1,
-			border = border,
+			border = border("rounded", "CmpBorder"),
 		},
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -115,12 +131,6 @@ cmp.setup({
 		end
 	end,
 })
-
-
-
-
-
-dskalfjdsa
 
 -- Autocmd to make cmp not complete telescope prompt
 vim.api.nvim_create_autocmd("FileType", {
