@@ -36,7 +36,7 @@ nvterm.setup({
 -- Create command to run scripts
 vim.api.nvim_create_user_command("RunScript", function()
 	local path = vim.fn.expand("%:.")
-	local command = "qr console run" .. path
+	local command = "qr console run " .. path
 	nvterm_terminal.send(command, "vertical")
 end, {})
 

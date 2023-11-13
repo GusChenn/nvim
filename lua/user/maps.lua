@@ -10,11 +10,13 @@ vim_keymap("", "s", "<Nop>", opts)
 vim_keymap("", "<C-p>", "<Nop>", opts)
 vim_keymap("", "<C-n>", "<Nop>", opts)
 vim_keymap("n", "<C-l>", ":noh<cr>", opts)
+vim_keymap("n", "<C-w>", ":noautocmd w<cr>", opts)
 vim_keymap("n", "<C-s>", ":w<cr>", opts)
 vim_keymap("n", "<C-x>", ":bd!<cr>", opts)
 vim_keymap("n", "<leader>q", ":bd!<cr>", opts)
-vim_keymap("n", "m", "%", opts)
+vim_keymap("n", "t", "%", opts)
 vim_keymap("n", "<leader>s", "viw*<ESC>", opts)
+vim_keymap("n", "<leader>ss", "*<ESC>", opts)
 vim_keymap("v", "Y", '"+y', opts)
 
 -- Nvim tree
@@ -124,5 +126,6 @@ vim_keymap("n", "gb", "<cmd>:GitBlameToggle<cr>", opts)
 
 -- NvTerm
 -- lua_keymap("n", "tt", helpers.SafeRequire("nvterm.terminal").toggle("vertical"), opts)
-vim_keymap("n", "<C-t><C-t>", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
+vim_keymap("n", "ter", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
+vim_keymap("n", "nter", "<cmd>:lua require('nvterm.terminal').new('horizontal')<cr>", opts)
 vim_keymap("t", "<Esc>", "<C-\\><C-n>", opts)

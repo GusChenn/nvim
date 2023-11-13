@@ -75,7 +75,7 @@ cmp.setup({
 			cmp.TriggerEvent.InsertEnter,
 		},
 		-- completeopt = "menuone,noinsert,noselect",
-		keyword_length = 4,
+		keyword_length = 1,
 	},
 
 	formatting = {

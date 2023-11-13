@@ -7,3 +7,4 @@ end
 require("user.lsp.lua")
 require("user.lsp.typescript-tools")
 require("user.lsp.solargraph")
+require("user.lsp.emmet")
