@@ -16,9 +16,9 @@ telescope.setup({
 				preview_cutoff = 0,
 			},
 		},
-		file_previewer = telescope_previewers.vim_buffer_cat.new,
-		grep_previewer = telescope_previewers.vim_buffer_vimgrep.new,
-		qflist_previewer = telescope_previewers.vim_buffer_qflist.new,
+		-- file_previewer = telescope_previewers.vim_buffer_cat.new,
+		-- grep_previewer = telescope_previewers.vim_buffer_vimgrep.new,
+		-- qflist_previewer = telescope_previewers.vim_buffer_qflist.new,
 	},
 	pickers = {
 		find_files = {

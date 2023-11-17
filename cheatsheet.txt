@@ -1,10 +1,7 @@
 # Passo a passo da task
-1. Criar arquivo da mutation que recebe true/ false da checkbox - done
-2. Yarn types - done
-3. Criar um state pro checkbox - done
-3. Puxar surveyId de algum lugar
-3. Integrar a mutation no modal com useMutation sla
-4. invocar a mutation no save
+# Adicionar eventos do GA
+- Ao abrir o modal
+- Ao salvar a config
 
 # To-do's de hoje
 
