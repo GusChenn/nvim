@@ -97,6 +97,10 @@ return packer.startup(function(use)
 	use("MunifTanjim/prettier.nvim")
 	--
 
+	-- Github copilot
+	use("github/copilot.vim")
+	--
+
 	use({
 		"nvim-telescope/telescope-fzf-native.nvim",
 		run = "make",

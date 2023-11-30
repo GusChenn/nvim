@@ -65,4 +65,9 @@ vim.api.nvim_create_user_command("Cppath", function()
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
 
+vim.api.nvim_create_user_command("Path", function()
+	local path = vim.fn.expand("%:.")
+	vim.notify('Path: "' .. path)
+end, {})
+
 vim.api.nvim_create_user_command("CleanBuffers", ":%bd|e#", {})

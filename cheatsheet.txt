@@ -1,3 +1,27 @@
+O que ta acontecendo?
+- O type LearningContentAndMission foi declarado e só é usado dentro do hook de learning com survey, mas agora que ele foi corrigido, parou de funcionar como antes.
+- Esse tipo servia pra:
+  
+
+# Mapeamento de itens de learning no FE
+
+# Direamente em learning
+ISelectLearningContentOption
+ISelectLearningMissionOption
+LearningContentOrMissionType
+
+# PDI
+
+# Feedback
+
+# Survey
+LearningContentAndMissionTypeWithTableId
+LearningContentAndMissionType
+
+
+# Ponto de atenção:
+IIdpActionLearningItemCard - tipos levam em consideração tanto contents quanto missions
+ILearningItemCardOptionProps - mesma coisa
 # Passo a passo da task
 # Adicionar eventos do GA
 - Ao abrir o modal

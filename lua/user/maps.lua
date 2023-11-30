@@ -39,6 +39,7 @@ vim_keymap("n", "<leader>?", ":lua require'telescope.builtin'.keymaps{}<cr>", op
 
 -- Telescope
 vim_keymap("v", "fg", "y<ESC>:Telescope live_grep default_text=<c-r>0<CR>", opts)
+vim_keymap("v", "ff", "y<ESC>:Telescope find_files default_text=<c-r>0<CR>", opts)
 
 -- Lsp
 -------------------------------------------
@@ -112,7 +113,7 @@ vim_keymap("n", "<leader>g", "<cmd>:DiffviewFileHistory %<cr>", opts)
 vim_keymap("n", "<leader>z", "<cmd>:ZenMode<cr>", opts)
 
 -- Vim fugitite
-lua_keymap("n", "<leader>gs", vim.cmd.Git)
+lua_keymap("n", "gs", vim.cmd.Git)
 
 -- Harpoon
 lua_keymap("n", "<leader>pp", helpers.SafeRequire("harpoon.mark").add_file)
@@ -128,6 +129,11 @@ vim_keymap("n", "gb", "<cmd>:GitBlameToggle<cr>", opts)
 
 -- NvTerm
 -- lua_keymap("n", "tt", helpers.SafeRequire("nvterm.terminal").toggle("vertical"), opts)
-vim_keymap("n", "ter", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
-vim_keymap("n", "nter", "<cmd>:lua require('nvterm.terminal').new('horizontal')<cr>", opts)
+vim_keymap("n", "tt", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
+vim_keymap("n", "nttt", "<cmd>:lua require('nvterm.terminal').new('horizontal')<cr>", opts)
 vim_keymap("t", "<Esc>", "<C-\\><C-n>", opts)
+
+-- Custom command mappings
+vim_keymap("n", "<leader>rs", ":RunScript<cr>", opts)
+vim_keymap("n", "cpp", ":Cppath<cr>", opts)
+vim_keymap("n", "spp", ":Path<cr>", opts)

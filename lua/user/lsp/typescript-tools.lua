@@ -1,7 +1,8 @@
 local helpers = require("user.helpers")
 local ts_tools = helpers.SafeRequire("typescript-tools")
+local api = helpers.SafeRequire("typescript-tools.api")
 
-if ts_tools then
+if ts_tools and api then
 	ts_tools.setup({
 		on_attach = function(client)
 			client.resolved_capabilities.document_formatting = false
@@ -9,14 +10,14 @@ if ts_tools then
 		-- handlers = { ... },
 		settings = {
 			-- spawn additional tsserver instance to calculate diagnostics on it
-			separate_diagnostic_server = true,
+			separate_diagnostic_server = false,
 			-- "change"|"insert_leave" determine when the client asks the server about diagnostic
 			publish_diagnostic_on = "insert_leave",
 			-- array of strings("fix_all"|"add_missing_imports"|"remove_unused"|
 			-- "remove_unused_imports"|"organize_imports") -- or string "all"
 			-- to include all supported code actions
 			-- specify commands exposed as code_actions
-			expose_as_code_action = "all",
+			expose_as_code_action = { "add_missing_imports", "remove_unused_imports" },
 			-- string|nil - specify a custom path to `tsserver.js` file, if this is nil or file under path
 			-- not exists then standard path resolution strategy is applied
 			tsserver_path = nil,
@@ -27,7 +28,7 @@ if ts_tools then
 			},
 			-- this value is passed to: https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes
 			-- memory limit in megabytes or "auto"(basically no limit)
-			tsserver_max_memory = "auto",
+			tsserver_max_memory = "3000",
 			-- described below
 			tsserver_format_options = {},
 			tsserver_file_preferences = {},
@@ -41,6 +42,12 @@ if ts_tools then
 			-- by default code lenses are displayed on all referencable values and for some of you it can
 			-- be too much this option reduce count of them by removing member references from lenses
 			disable_member_code_lens = true,
+			handlers = {
+				["textDocument/publishDiagnostics"] = api.filter_diagnostics(
+					-- Ignore 'This may be converted to an async function' diagnostics.
+					{ 80006 }
+				),
+			},
 		},
 	})
 end
