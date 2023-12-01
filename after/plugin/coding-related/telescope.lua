@@ -7,6 +7,16 @@ if not (telescope and telescope_actions and telescope_previewers) then
 	return
 end
 
+local base_mappings = {
+	i = {
+		["<C-n>"] = telescope_actions.cycle_history_next,
+		["<C-p>"] = telescope_actions.cycle_history_prev,
+		["<C-j>"] = telescope_actions.move_selection_next,
+		["<C-k>"] = telescope_actions.move_selection_previous,
+		-- ["<ESC>"] = telescope_actions.close,
+	},
+}
+
 telescope.setup({
 	defaults = {
 		--     Cheatsheet plugin cant handle flex yet
@@ -16,32 +26,16 @@ telescope.setup({
 				preview_cutoff = 0,
 			},
 		},
-		-- file_previewer = telescope_previewers.vim_buffer_cat.new,
-		-- grep_previewer = telescope_previewers.vim_buffer_vimgrep.new,
-		-- qflist_previewer = telescope_previewers.vim_buffer_qflist.new,
 	},
 	pickers = {
 		find_files = {
-			mappings = {
-				i = {
-					["<C-n>"] = telescope_actions.cycle_history_next,
-					["<C-p>"] = telescope_actions.cycle_history_prev,
-					["<C-j>"] = telescope_actions.move_selection_next,
-					["<C-k>"] = telescope_actions.move_selection_previous,
-					-- ["<ESC>"] = telescope_actions.close,
-				},
-			},
+			mappings = base_mappings,
 		},
 		live_grep = {
-			mappings = {
-				i = {
-					["<C-n>"] = telescope_actions.cycle_history_next,
-					["<C-p>"] = telescope_actions.cycle_history_prev,
-					["<C-j>"] = telescope_actions.move_selection_next,
-					["<C-k>"] = telescope_actions.move_selection_previous,
-					-- ["<ESC>"] = telescope_actions.close,
-				},
-			},
+			mappings = base_mappings,
+		},
+		oldfiles = {
+			mappings = base_mappings,
 		},
 	},
 	extensions = {

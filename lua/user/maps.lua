@@ -32,9 +32,9 @@ vim_keymap("n", "<leader>wv", ":vsplit<cr>", opts)
 vim_keymap("n", "<leader>wh", ":split<cr>", opts)
 vim_keymap("n", "ff", ":lua require('user.telescope-pickers').prettyFilesPicker({ picker = 'find_files' })<cr>", opts)
 vim_keymap("n", "fg", ":lua require('user.telescope-pickers').prettyGrepPicker({ picker = 'live_grep' })<cr>", opts)
-lua_keymap("n", "<leader>pp", helpers.SafeRequire("harpoon.mark").add_file)
+vim_keymap("n", "fh", ":lua require('user.telescope-pickers').prettyFilesPicker({ picker = 'oldfiles' })<cr>", opts)
 vim_keymap("n", "fb", ":Telescope buffers<cr>", opts)
-vim_keymap("n", "fh", ":Telescope help_tags<cr>", opts)
+lua_keymap("n", "<leader>pp", helpers.SafeRequire("harpoon.mark").add_file)
 vim_keymap("n", "<leader>?", ":lua require'telescope.builtin'.keymaps{}<cr>", opts)
 
 -- Telescope
