@@ -27,8 +27,18 @@
 
 -- Catppuccin setup
 
+local hour_of_the_day = tonumber(os.date("%H"))
+
+local function define_theme()
+	if hour_of_the_day <= 17 then
+		return "latte"
+	else
+		return "mocha"
+	end
+end
+
 require("catppuccin").setup({
-	flavour = "mocha", -- latte, frappe, macchiato, mocha
+	flavour = define_theme(), -- latte, frappe, macchiato, mocha
 	background = { -- :h background
 		light = "latte",
 		dark = "mocha",
