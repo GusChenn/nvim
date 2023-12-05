@@ -1,39 +1,14 @@
--- Dracula config
---
--- local status, dracula = pcall(require, "dracula")
--- if not status then
--- 	print("Somthing went wrong with dracula")
--- 	return
--- end
-
--- dracula.setup({
--- 	show_end_of_buffer = false,
--- 	italic_comment = true,
--- })
-
--- local function update_hl(group, tbl)
--- 	local old_hl = vim.api.nvim_get_hl_by_name(group, true)
--- 	local new_hl = vim.tbl_extend("force", old_hl, tbl)
--- 	vim.api.nvim_set_hl(0, group, new_hl)
--- end
-
--- -- List of elements i want to forçe italic so it looks good with VictorMono
--- update_hl("@tag.attribute.tsx", { italic = true, fg = "#bd93f9" })
--- -- update_hl('@string.tsx', { italic = true, fg = "#f1fa8c" })
--- -- update_hl('@property.tsx', { italic = true, fg = "#bd93f9" })
--- update_hl("@type.tsx", { italic = true, fg = "#a4ffff" })
-
--- vim.cmd([[colorscheme dracula]])
+local alacritty_color_matcher = require("user.alacritty-color-matcher")
 
 -- Catppuccin setup
 
 local hour_of_the_day = tonumber(os.date("%H"))
 
 local function define_theme()
-	if hour_of_the_day <= 17 then
+	if hour_of_the_day < 17 then
 		return "latte"
 	else
-		return "mocha"
+		return "macchiato"
 	end
 end
 
@@ -92,3 +67,21 @@ require("catppuccin").setup({
 
 -- setup must be called before loading
 vim.cmd.colorscheme("catppuccin")
+
+if not alacritty_color_matcher then
+	return
+end
+
+-- Add autocmd to invoke add_alacritty_bg_lines on startup
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+	callback = function()
+		alacritty_color_matcher.add_alacritty_bg_lines()
+	end,
+})
+
+-- Add autocmd to invoke remove_alacritty_bg_lines on exit
+vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
+	callback = function()
+		alacritty_color_matcher.remove_alacritty_bg_lines()
+	end,
+})

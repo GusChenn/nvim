@@ -36,6 +36,7 @@ vim.opt.wildignore:append({ "*/node_modules/*" })
 vim.opt.signcolumn = "yes:1"
 vim.wo.wrap = true
 vim.opt.timeoutlen = 200
+vim.opt.undofile = true
 
 -- Define gutter icons
 vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
