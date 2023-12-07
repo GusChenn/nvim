@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["auto-session"] = {
+    loaded = true,
+    path = "/home/gchen/.local/share/nvim/site/pack/packer/start/auto-session",
+    url = "https://github.com/rmagatti/auto-session"
+  },
   catppuccin = {
     loaded = true,
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/catppuccin",

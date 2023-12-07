@@ -61,6 +61,7 @@ return packer.startup(function(use)
 	use("lukas-reineke/indent-blankline.nvim")
 	use("easymotion/vim-easymotion")
 	use("karb94/neoscroll.nvim")
+	use("rmagatti/auto-session")
 
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")

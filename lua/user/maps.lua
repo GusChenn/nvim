@@ -107,9 +107,9 @@ lua_keymap("n", "<leader>r", ":lua require('resize-mode').start()<cr>", opts)
 vim_keymap("n", "cc", ":Cheatsheet!<cr>", opts)
 
 -- Diffview
-vim_keymap("n", "<leader>od", "<cmd>:DiffviewOpen<cr>", opts)
-vim_keymap("n", "<leader>od", "<cmd>:DiffviewClose<cr>", opts)
-vim_keymap("n", "<leader>od", "<cmd>:DiffviewRefresh<cr>", opts)
+vim_keymap("n", "<leader>do", "<cmd>:DiffviewOpen<cr>", opts)
+vim_keymap("n", "<leader>dc", "<cmd>:DiffviewClose<cr>", opts)
+vim_keymap("n", "<leader>dr", "<cmd>:DiffviewRefresh<cr>", opts)
 -- vim_keymap("n", "<leader>od", "<cmd>:DiffviewFileHistory %<cr>", opts)
 
 -- ZenMode
