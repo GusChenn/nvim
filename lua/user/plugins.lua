@@ -60,6 +60,7 @@ return packer.startup(function(use)
 	use("NvChad/nvterm")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("easymotion/vim-easymotion")
+	use("karb94/neoscroll.nvim")
 
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")
