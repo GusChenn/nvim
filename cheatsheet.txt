@@ -1,5 +1,9 @@
-# pre-planning remover uma missao associada
+objective_contribution_id = 1513
+objective_id = 840
 
-1. Criar mutation igual a de conteúdos: recebe o eid de uma missão e a desvincula de um survey_topic?
-2. Invoca ela no front igual a de conteúdos:
-  - Alterar use-hadlers-hook la
+e daí a dúvida quem me motivou a te chamar foi:
+
+A gnt puxa esse status de aprovação no fragment `planning-workflow-header.fragment.gql.ts`, que é feito sobre ObjectiveContribution. Nesse fragment, puxamos planningWorkflowState. Olhando em objective_contributions_type.rb, vejo que esse status é do tipo PlanningWorkflowHistoryStatesEnumType. Mas em que momento o back consulta esse valor pra retornar ele na query?
+
+currentPlanningWorkflowHistory -> usado pra mostrar ou nao o card de dar submit
+objectiveContribution.planningWorkflowState -> usado pra mostrar o status do card

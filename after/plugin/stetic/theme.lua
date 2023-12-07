@@ -73,15 +73,20 @@ if not alacritty_color_matcher then
 end
 
 -- Add autocmd to invoke add_alacritty_bg_lines on startup
+local base_path = "~/.config/alacritty/"
+local alacritty_theme_path = string.format("catppuccin/catppuccin-%s.yml", define_theme())
+local full_path = base_path .. alacritty_theme_path
+
+print(full_path)
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	callback = function()
-		alacritty_color_matcher.add_alacritty_bg_lines()
+		alacritty_color_matcher.add_alacritty_theme_lines(full_path)
 	end,
 })
 
 -- Add autocmd to invoke remove_alacritty_bg_lines on exit
 vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
 	callback = function()
-		alacritty_color_matcher.remove_alacritty_bg_lines()
+		alacritty_color_matcher.remove_alacritty_lines(2)
 	end,
 })

@@ -79,16 +79,6 @@ _G.packer_plugins = {
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  ["asyncrun.vim"] = {
-    loaded = true,
-    path = "/home/gchen/.local/share/nvim/site/pack/packer/start/asyncrun.vim",
-    url = "https://github.com/skywind3000/asyncrun.vim"
-  },
-  ["bufferline.nvim"] = {
-    loaded = true,
-    path = "/home/gchen/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
-    url = "https://github.com/akinsho/bufferline.nvim"
-  },
   catppuccin = {
     loaded = true,
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/catppuccin",
@@ -158,11 +148,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
-  },
-  ["live-server.nvim"] = {
-    loaded = true,
-    path = "/home/gchen/.local/share/nvim/site/pack/packer/start/live-server.nvim",
-    url = "https://github.com/barrett-ruth/live-server.nvim"
   },
   ["lspkind.nvim"] = {
     loaded = true,
@@ -261,11 +246,6 @@ _G.packer_plugins = {
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
-  ["prettier.nvim"] = {
-    loaded = true,
-    path = "/home/gchen/.local/share/nvim/site/pack/packer/start/prettier.nvim",
-    url = "https://github.com/MunifTanjim/prettier.nvim"
-  },
   ["resize-mode.nvim"] = {
     loaded = true,
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/resize-mode.nvim",
@@ -301,15 +281,15 @@ _G.packer_plugins = {
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/vim-commentary",
     url = "https://github.com/tpope/vim-commentary"
   },
+  ["vim-easymotion"] = {
+    loaded = true,
+    path = "/home/gchen/.local/share/nvim/site/pack/packer/start/vim-easymotion",
+    url = "https://github.com/easymotion/vim-easymotion"
+  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/home/gchen/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
-  },
-  ["vim-visual-multi"] = {
-    loaded = true,
-    path = "/home/gchen/.local/share/nvim/site/pack/packer/start/vim-visual-multi",
-    url = "https://github.com/mg979/vim-visual-multi"
   },
   ["zen-mode.nvim"] = {
     loaded = true,

@@ -51,15 +51,15 @@ return packer.startup(function(use)
 	use("nvim-tree/nvim-web-devicons")
 	use("windwp/nvim-ts-autotag")
 	use("onsails/lspkind.nvim")
-	use("mg979/vim-visual-multi")
+	-- use("mg979/vim-visual-multi")
 	use("dimfred/resize-mode.nvim")
-	use("sindrets/diffview.nvim")
 	use("folke/zen-mode.nvim")
 	use("folke/twilight.nvim")
-	use("skywind3000/asyncrun.vim")
+	-- use("skywind3000/asyncrun.vim")
 	use("ThePrimeagen/harpoon")
 	use("NvChad/nvterm")
 	use("lukas-reineke/indent-blankline.nvim")
+	use("easymotion/vim-easymotion")
 
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")
@@ -90,11 +90,12 @@ return packer.startup(function(use)
 	use("lewis6991/gitsigns.nvim")
 	use("tpope/vim-fugitive")
 	use("f-person/git-blame.nvim")
+	use("sindrets/diffview.nvim")
 	-----------------
 
 	-- Linting and formatting
 	use("jose-elias-alvarez/null-ls.nvim")
-	use("MunifTanjim/prettier.nvim")
+	-- use("MunifTanjim/prettier.nvim")
 	--
 
 	-- Github copilot
@@ -139,19 +140,19 @@ return packer.startup(function(use)
 		dependencies = { "rafamadriz/friendly-snippets" },
 		run = "make install_jsregexp",
 	})
-	use({
-		"akinsho/bufferline.nvim",
-		tag = "*",
-		requires = "nvim-tree/nvim-web-devicons",
-	})
+	-- use({
+	-- 	"akinsho/bufferline.nvim",
+	-- 	tag = "*",
+	-- 	requires = "nvim-tree/nvim-web-devicons",
+	-- })
 	use({
 		"nvimdev/lspsaga.nvim",
 		after = "nvim-lspconfig",
 	})
-	use({
-		"barrett-ruth/live-server.nvim",
-		run = "npm i -g live-server",
-	})
+	-- use({
+	-- 	"barrett-ruth/live-server.nvim",
+	-- 	run = "npm i -g live-server",
+	-- })
 	if packer_bootstrap then
 		require("packer").sync()
 	end
