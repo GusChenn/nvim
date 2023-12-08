@@ -84,7 +84,7 @@ cmp.setup({
 			local kind = lspkind.cmp_format(opts)(entry, vim_item)
 			local strings = vim.split(kind.kind, "%s", { trimempty = true })
 			kind.kind = " " .. (strings[1] or "") .. " "
-			kind.menu = "    (" .. (strings[2] or "") .. ")"
+			kind.menu = " " .. (strings[2] or "") .. " "
 
 			return kind
 		end,
@@ -97,17 +97,16 @@ cmp.setup({
 	},
 	window = {
 		completion = {
-			winhighlight = "Normal:CmpWindowBg,FloatBorder:CmpWindowBg,Search:None",
+			winhighlight = "Normal:StatusLine,FloatBorder:CmpWindowBg,Search:None",
 			col_offset = -3,
 			side_padding = 0,
 			scrollbar = false,
 			max_height = 25,
-			border = border("rounded", "CmpBorder"),
 		},
 		documentation = {
-			winhighlight = "Normal:CmpWindowBg,FloatBorder:CmpWindowBg,Search:None",
-			side_padding = 1,
-			border = border("rounded", "CmpBorder"),
+			winhighlight = "Normal:StatusLine,FloatBorder:CmpWindowBg,Search:None",
+			col_offset = 0,
+			side_padding = 0,
 		},
 	},
 
@@ -143,16 +142,3 @@ cmp.setup({
 		end
 	end,
 })
-
--- Autocmd to make cmp not complete telescope prompt
--- vim.api.nvim_create_autocmd("FileType", {
--- 	group = vim.api.nvim_create_augroup("REMOVE_TELESCOPE_PROMPT_CMP", {}),
--- 	pattern = "TelescopePrompt",
--- 	callback = function()
--- 		cmp.setup({
--- 			completion = {
--- 				autocomplete = false,
--- 			},
--- 		})
--- 	end,
--- })

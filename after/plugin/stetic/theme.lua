@@ -77,7 +77,6 @@ local base_path = "~/.config/alacritty/"
 local alacritty_theme_path = string.format("catppuccin/catppuccin-%s.yml", define_theme())
 local full_path = base_path .. alacritty_theme_path
 
-print(full_path)
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	callback = function()
 		alacritty_color_matcher.add_alacritty_theme_lines(full_path)
