@@ -62,6 +62,7 @@ return packer.startup(function(use)
 	use("easymotion/vim-easymotion")
 	use("karb94/neoscroll.nvim")
 	use("rmagatti/auto-session")
+	use("tpope/vim-surround")
 
 	-- For Noice
 	use({ "MunifTanjim/nui.nvim", requires = {

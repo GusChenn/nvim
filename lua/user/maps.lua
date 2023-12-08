@@ -7,18 +7,19 @@ local lua_keymap = vim.keymap.set
 -- Fundamentals
 vim_keymap("", "<Space>", "<Nop>", opts)
 vim_keymap("", "s", "<Nop>", opts)
-vim_keymap("", "<C-p>", "<Nop>", opts)
-vim_keymap("", "<C-n>", "<Nop>", opts)
+-- vim_keymap("", "<C-p>", "<Nop>", opts)
+-- vim_keymap("", "<C-n>", "<Nop>", opts)
 vim_keymap("n", "<C-l>", ":noh<cr>", opts)
 vim_keymap("n", "<C-w>", ":noautocmd w<cr>", opts)
 vim_keymap("n", "<C-s>", ":w<cr>", opts)
-vim_keymap("n", "<C-x>", ":bd!<cr>", opts)
 vim_keymap("n", "<leader>q", ":bd!<cr>", opts)
+vim_keymap("n", "<leader>Q", ":qa!<cr>", opts)
 vim_keymap("n", "t", "%", opts)
-vim_keymap("n", "<leader>s", "viw*<ESC>", opts)
-vim_keymap("n", "<leader>ss", "*<ESC>", opts)
+vim_keymap("n", "<leader>s", "*", opts)
+vim_keymap("n", "<leader>sr", "*:noh<cr>:%s//", opts)
+
+-- Yanking mappings
 vim_keymap("v", "Y", '"+y', opts)
-vim_keymap("n", "<leader>x", ":qa!<cr>", opts)
 
 -- Nvim tree
 vim_keymap("n", "<leader>e", ":NvimTreeFindFileToggle<cr>", opts)
