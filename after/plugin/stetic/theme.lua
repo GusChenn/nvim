@@ -5,7 +5,7 @@ local alacritty_color_matcher = require("user.alacritty-color-matcher")
 local hour_of_the_day = tonumber(os.date("%H"))
 
 local function define_theme()
-	if hour_of_the_day < 17 then
+	if hour_of_the_day < 17 and hour_of_the_day > 8 then
 		return "latte"
 	else
 		return "macchiato"

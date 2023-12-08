@@ -63,6 +63,12 @@ return packer.startup(function(use)
 	use("karb94/neoscroll.nvim")
 	use("rmagatti/auto-session")
 
+	-- For Noice
+	use({ "MunifTanjim/nui.nvim", requires = {
+		"rcarriga/nvim-notify",
+		"folke/noice.nvim",
+	} })
+
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")
 	use("hrsh7th/cmp-buffer")
@@ -155,6 +161,16 @@ return packer.startup(function(use)
 	-- 	"barrett-ruth/live-server.nvim",
 	-- 	run = "npm i -g live-server",
 	-- })
+	use({
+		"SmiteshP/nvim-navbuddy",
+		requires = {
+			"neovim/nvim-lspconfig",
+			"SmiteshP/nvim-navic",
+			"MunifTanjim/nui.nvim",
+			"numToStr/Comment.nvim", -- Optional
+			"nvim-telescope/telescope.nvim", -- Optional
+		},
+	})
 	if packer_bootstrap then
 		require("packer").sync()
 	end

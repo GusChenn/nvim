@@ -1,11 +1,13 @@
 local helpers = require("user.helpers")
 local ts_tools = helpers.SafeRequire("typescript-tools")
 local api = helpers.SafeRequire("typescript-tools.api")
+local navbuddy = helpers.SafeRequire("nvim-navbuddy")
 
-if ts_tools and api then
+if ts_tools and api and navbuddy then
 	ts_tools.setup({
-		on_attach = function(client)
+		on_attach = function(client, bufnr)
 			client.resolved_capabilities.document_formatting = false
+			navbuddy.attach(client, bufnr)
 		end,
 		-- handlers = { ... },
 		settings = {
