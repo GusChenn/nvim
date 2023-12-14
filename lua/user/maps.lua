@@ -35,7 +35,6 @@ vim_keymap("n", "ff", ":lua require('user.telescope-pickers').prettyFilesPicker(
 vim_keymap("n", "fg", ":lua require('user.telescope-pickers').prettyGrepPicker({ picker = 'live_grep' })<cr>", opts)
 vim_keymap("n", "fh", ":lua require('user.telescope-pickers').prettyFilesPicker({ picker = 'oldfiles' })<cr>", opts)
 vim_keymap("n", "fb", ":Telescope buffers<cr>", opts)
-lua_keymap("n", "<leader>pp", helpers.SafeRequire("harpoon.mark").add_file)
 vim_keymap("n", "<leader>?", ":lua require'telescope.builtin'.keymaps{}<cr>", opts)
 
 -- Telescope
@@ -118,12 +117,6 @@ vim_keymap("n", "<leader>z", "<cmd>:ZenMode<cr>", opts)
 
 -- Vim fugitite
 lua_keymap("n", "gs", vim.cmd.Git)
-
--- Harpoon
-lua_keymap("n", "<leader>pp", helpers.SafeRequire("harpoon.mark").add_file)
-lua_keymap("n", "<leader>p", helpers.SafeRequire("harpoon.ui").toggle_quick_menu)
-lua_keymap("n", "<leader>l", helpers.SafeRequire("harpoon.ui").nav_next)
-lua_keymap("n", "<leader>h", helpers.SafeRequire("harpoon.ui").nav_prev)
 
 -- Trouble
 lua_keymap("n", "<leader>dd", helpers.SafeRequire("trouble").toggle)
