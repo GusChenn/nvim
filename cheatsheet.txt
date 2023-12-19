@@ -1,1 +1,6 @@
-1. Olhar sentry
+# Planning task integrar mutation de deletar missoes
+
+- [ ] Criar arquivo da mutation
+- [ ] invocar mutation no hook de handlers
+- [ ] adicionar logica no hook de handlers
+- [ ] corrigir dependencia dessa mutation? Aquele lugar que da refetch depois das mutation
