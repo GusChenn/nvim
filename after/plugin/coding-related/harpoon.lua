@@ -7,7 +7,7 @@ end
 
 local format_list_item = function(list_item)
 	-- return only the part after the last / character on the path
-	return list_item.value:match("^.+/(.+)$")
+	return " " .. list_item.value:match("^.+/(.+)$")
 end
 
 harpoon:setup({

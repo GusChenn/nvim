@@ -43,7 +43,6 @@ local packer_bootstrap = ensure_packer()
 
 return packer.startup(function(use)
 	use("wbthomason/packer.nvim")
-	-- use("Mofiqul/dracula.nvim")
 	use({ "catppuccin/nvim", as = "catppuccin" })
 	use("tpope/vim-commentary")
 	use("norcalli/nvim-colorizer.lua")
@@ -51,16 +50,13 @@ return packer.startup(function(use)
 	use("nvim-tree/nvim-web-devicons")
 	use("windwp/nvim-ts-autotag")
 	use("onsails/lspkind.nvim")
-	-- use("mg979/vim-visual-multi")
 	use("dimfred/resize-mode.nvim")
 	use("folke/zen-mode.nvim")
 	use("folke/twilight.nvim")
-	-- use("skywind3000/asyncrun.vim")
 	use({ "ThePrimeagen/harpoon", branch = "harpoon2", requires = { "nvim-lua/plenary.nvim" } })
 	use("NvChad/nvterm")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("easymotion/vim-easymotion")
-	use("karb94/neoscroll.nvim")
 	use("rmagatti/auto-session")
 	use("tpope/vim-surround")
 
@@ -149,28 +145,9 @@ return packer.startup(function(use)
 		dependencies = { "rafamadriz/friendly-snippets" },
 		run = "make install_jsregexp",
 	})
-	-- use({
-	-- 	"akinsho/bufferline.nvim",
-	-- 	tag = "*",
-	-- 	requires = "nvim-tree/nvim-web-devicons",
-	-- })
 	use({
 		"nvimdev/lspsaga.nvim",
 		after = "nvim-lspconfig",
-	})
-	-- use({
-	-- 	"barrett-ruth/live-server.nvim",
-	-- 	run = "npm i -g live-server",
-	-- })
-	use({
-		"SmiteshP/nvim-navbuddy",
-		requires = {
-			"neovim/nvim-lspconfig",
-			"SmiteshP/nvim-navic",
-			"MunifTanjim/nui.nvim",
-			"numToStr/Comment.nvim", -- Optional
-			"nvim-telescope/telescope.nvim", -- Optional
-		},
 	})
 	if packer_bootstrap then
 		require("packer").sync()

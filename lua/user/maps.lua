@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- lua_keymap('n', '<space>D', vim.lsp.buf.type_definition, opts)
 		-- lua_keymap('n', 'gr', vim.lsp.buf.references, opts)
 		lua_keymap("n", "K", vim.lsp.buf.hover, lsp_opts)
-		lua_keymap("n", "<C-k>", vim.lsp.buf.signature_help, lsp_opts)
+		-- lua_keymap("n", "<C-k>", vim.lsp.buf.signature_help, lsp_opts)
 		-- lua_keymap("n", "<space>wa", vim.lsp.buf.add_workspace_folder, lsp_opts)
 		-- lua_keymap("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, lsp_opts)
 		-- lua_keymap("n", "<space>rn", vim.lsp.buf.rename, lsp_opts)
@@ -127,7 +127,8 @@ vim_keymap("n", "gb", "<cmd>:GitBlameToggle<cr>", opts)
 -- NvTerm
 -- lua_keymap("n", "tt", helpers.SafeRequire("nvterm.terminal").toggle("vertical"), opts)
 vim_keymap("n", "tt", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
-vim_keymap("n", "nttt", "<cmd>:lua require('nvterm.terminal').new('horizontal')<cr>", opts)
+-- vim_keymap("n", "tth", "<cmd>:lua require('nvterm.terminal').new('horizontal')<cr>", opts)
+vim_keymap("n", "tth", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>", opts)
 vim_keymap("t", "<Esc>", "<C-\\><C-n>", opts)
 
 -- Custom command mappings

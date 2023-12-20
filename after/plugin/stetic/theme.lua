@@ -4,6 +4,7 @@ local alacritty_color_matcher = require("user.alacritty-color-matcher")
 
 local hour_of_the_day = tonumber(os.date("%H"))
 
+-- unused for now, but is nice
 local function define_theme()
 	if hour_of_the_day < 17 and hour_of_the_day > 8 then
 		return "latte"
@@ -13,7 +14,7 @@ local function define_theme()
 end
 
 require("catppuccin").setup({
-	flavour = define_theme(), -- latte, frappe, macchiato, mocha
+	flavour = "macchiato", -- latte, frappe, macchiato, mocha
 	background = { -- :h background
 		light = "latte",
 		dark = "mocha",
@@ -68,24 +69,24 @@ require("catppuccin").setup({
 -- setup must be called before loading
 vim.cmd.colorscheme("catppuccin")
 
-if not alacritty_color_matcher then
-	return
-end
+-- if not alacritty_color_matcher then
+-- 	return
+-- end
 
--- Add autocmd to invoke add_alacritty_bg_lines on startup
-local base_path = "~/.config/alacritty/"
-local alacritty_theme_path = string.format("catppuccin/catppuccin-%s.yml", define_theme())
-local full_path = base_path .. alacritty_theme_path
+-- -- Add autocmd to invoke add_alacritty_bg_lines on startup
+-- local base_path = "~/.config/alacritty/"
+-- local alacritty_theme_path = string.format("catppuccin/catppuccin-%s.yml", define_theme())
+-- local full_path = base_path .. alacritty_theme_path
 
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
-	callback = function()
-		alacritty_color_matcher.add_alacritty_theme_lines(full_path)
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, {
+-- 	callback = function()
+-- 		alacritty_color_matcher.add_alacritty_theme_lines(full_path)
+-- 	end,
+-- })
 
--- Add autocmd to invoke remove_alacritty_bg_lines on exit
-vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
-	callback = function()
-		alacritty_color_matcher.remove_alacritty_lines(2)
-	end,
-})
+-- -- Add autocmd to invoke remove_alacritty_bg_lines on exit
+-- vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
+-- 	callback = function()
+-- 		alacritty_color_matcher.remove_alacritty_lines(2)
+-- 	end,
+-- })
