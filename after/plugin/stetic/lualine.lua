@@ -1,6 +1,12 @@
 local status, lualine = pcall(require, "lualine")
-if not status then
+local lspsaga_winbar = require("lspsaga.symbol.winbar")
+
+if not status and lspsaga_winbar then
 	return
+end
+
+local function get_bar_text()
+	return lspsaga_winbar.get_bar()
 end
 
 lualine.setup({
@@ -25,7 +31,7 @@ lualine.setup({
 	sections = {
 		lualine_a = { "mode" },
 		lualine_b = { "branch", "diff", "diagnostics" },
-		lualine_c = { "filename" },
+		lualine_c = { get_bar_text },
 		lualine_x = { "fileformat", "filetype" },
 		lualine_y = { "progress" },
 		lualine_z = { "location" },
@@ -42,5 +48,4 @@ lualine.setup({
 	winbar = {},
 	inactive_winbar = {},
 	extensions = {},
-	__FILE__,
 })

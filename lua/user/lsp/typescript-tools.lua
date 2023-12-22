@@ -45,7 +45,7 @@ if ts_tools and api then
 			handlers = {
 				["textDocument/publishDiagnostics"] = api.filter_diagnostics(
 					-- Ignore 'This may be converted to an async function' diagnostics.
-					{ 80006 }
+					{ 80006, 80002 }
 				),
 			},
 		},

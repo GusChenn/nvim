@@ -1,6 +1,8 @@
-# Planning task integrar mutation de deletar missoes
+#planning task de colocar a tag de learning nos tópicos com learning
 
-- [ ] Criar arquivo da mutation
-- [ ] invocar mutation no hook de handlers
-- [ ] adicionar logica no hook de handlers
-- [ ] corrigir dependencia dessa mutation? Aquele lugar que da refetch depois das mutation
+1. Encontrar o lugar que puxa as infos dos topicos da survey no front
+2. Alterar end point pra retornar a quantidade de learning items no tópico
+3. Adicionar a tag condicionalmente no front
+
+# Implementação:
+1. endpoint: /pt/companies/1/surveys/678

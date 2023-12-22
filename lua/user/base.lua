@@ -72,3 +72,16 @@ vim.api.nvim_create_user_command("Path", function()
 end, {})
 
 vim.api.nvim_create_user_command("CleanBuffers", ":%bd|e#", {})
+
+-- Config neovide
+if vim.g.neovide then
+	vim.o.guifont = "JetBrainsMono Nerd Font Mono:h13"
+	-- vim.opt.linespace = 0
+	vim.g.neovide_padding_top = 12
+	vim.g.neovide_padding_bottom = 6
+	vim.g.neovide_padding_right = 6
+	vim.g.neovide_padding_left = 6
+	vim.g.neovide_cursor_animate_in_insert_mode = true
+	-- to disable smooth scrolling:
+	-- vim.g.neovide_scroll_animation_length = 0
+end

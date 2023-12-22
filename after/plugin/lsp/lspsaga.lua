@@ -13,6 +13,10 @@ lspsaga.setup({
 			quit = { "q", "<ESC>" },
 		},
 	},
+	symbol_in_winbar = {
+		enable = false,
+		color_mode = true,
+	},
 	ui = {
 		kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
 	},
