@@ -9,10 +9,29 @@ local function get_bar_text()
 	return lspsaga_winbar.get_bar()
 end
 
+-- Return the theme name if current theme is allowed
+local function check_theme_name()
+	local theme = vim.g.colors_name
+
+	local lualine_supported_themes = {
+		"catppuccino",
+		"melange",
+	}
+
+	for _, supported_theme in ipairs(lualine_supported_themes) do
+		if theme == supported_theme then
+			return theme
+		end
+	end
+
+	return nil
+end
+
+---@diagnostic disable-next-line: undefined-field
 lualine.setup({
 	options = {
 		icons_enabled = true,
-		theme = "catppuccin",
+		theme = check_theme_name(),
 		component_separators = { left = " ", right = " " },
 		section_separators = { left = "", right = "" },
 		disabled_filetypes = {
@@ -31,7 +50,9 @@ lualine.setup({
 	sections = {
 		lualine_a = { "mode" },
 		lualine_b = { "branch", "diff", "diagnostics" },
-		lualine_c = { get_bar_text },
+		lualine_c = {
+			get_bar_text,
+		},
 		lualine_x = { "fileformat", "filetype" },
 		lualine_y = { "progress" },
 		lualine_z = { "location" },

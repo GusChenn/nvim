@@ -21,8 +21,8 @@ vim_keymap("n", "<leader>sr", "*:noh<cr>:%s//", opts)
 -- Yanking mappings
 vim_keymap("v", "Y", '"+y', opts)
 
--- Nvim tree
-vim_keymap("n", "<leader>e", ":Neotree toggle<cr>", opts)
+-- Neo tree
+vim_keymap("n", "<leader>e", ":Neotree reveal toggle<cr>", opts)
 
 -- Navigation
 vim_keymap("n", "<A-k>", ":wincmd k<cr>", opts)

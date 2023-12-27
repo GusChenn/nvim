@@ -3,6 +3,8 @@
 1. Encontrar o lugar que puxa as infos dos topicos da survey no front
 2. Alterar end point pra retornar a quantidade de learning items no tópico
 3. Adicionar a tag condicionalmente no front
+  . Criar tag react? - nao, ja existe => LearningTag
+  . Renderizar learningTag ao lado do title se tiver learning itesm
 
 # Implementação:
 1. endpoint: /pt/companies/1/surveys/678

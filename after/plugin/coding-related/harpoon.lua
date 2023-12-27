@@ -10,7 +10,7 @@ local format_list_item = function(list_item)
 	if not list_item.value:match("^.+/(.+)$") then
 		return "-- delete me or else i will explode --"
 	else
-		return " " .. list_item.value:match("^.+/(.+)$")
+		return "➜ " .. list_item.value:match("^.+/(.+)$")
 	end
 end
 
