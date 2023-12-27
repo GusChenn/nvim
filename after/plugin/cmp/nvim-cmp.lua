@@ -97,14 +97,14 @@ cmp.setup({
 	},
 	window = {
 		completion = {
-			winhighlight = "Normal:StatusLine,FloatBorder:CmpWindowBg,Search:None",
+			-- winhighlight = "Normal:CmpWindowBg,FloatBorder:CmpWindowBg,Search:None,NormalFloat:None",
 			col_offset = -3,
 			side_padding = 0,
 			scrollbar = false,
 			max_height = 25,
 		},
 		documentation = {
-			winhighlight = "Normal:StatusLine,FloatBorder:CmpWindowBg,Search:None",
+			-- winhighlight = "Normal:StatusLine,FloatBorder:CmpWindowBg,Search:None",
 			col_offset = 0,
 			side_padding = 0,
 		},

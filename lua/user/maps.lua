@@ -125,11 +125,14 @@ lua_keymap("n", "<leader>dd", helpers.SafeRequire("trouble").toggle)
 vim_keymap("n", "gb", "<cmd>:GitBlameToggle<cr>", opts)
 
 -- NvTerm
--- lua_keymap("n", "tt", helpers.SafeRequire("nvterm.terminal").toggle("vertical"), opts)
-vim_keymap("n", "tt", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
--- vim_keymap("n", "tth", "<cmd>:lua require('nvterm.terminal').new('horizontal')<cr>", opts)
-vim_keymap("n", "tth", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>", opts)
-vim_keymap("t", "<Esc>", "<C-\\><C-n>", opts)
+-- vim_keymap("n", "tt", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
+-- vim_keymap("n", "tth", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>", opts)
+-- vim_keymap("t", "<Esc>", "<C-\\><C-n>", opts)
+
+vim_keymap("t", "<A-t>", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
+vim_keymap("t", "<A-t><A-h>", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>", opts)
+vim_keymap("n", "<A-t>", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>", opts)
+vim_keymap("n", "<A-t><A-h>", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>", opts)
 
 -- Custom command mappings
 vim_keymap("n", "<leader>rs", ":RunScript<cr>", opts)
