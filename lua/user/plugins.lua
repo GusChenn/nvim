@@ -61,12 +61,6 @@ return packer.startup(function(use)
 	use("tpope/vim-surround")
 	use("savq/melange-nvim")
 
-	-- For Noice
-	use({ "MunifTanjim/nui.nvim", requires = {
-		"rcarriga/nvim-notify",
-		"folke/noice.nvim",
-	} })
-
 	-- For cmp stuff
 	use("hrsh7th/cmp-nvim-lsp")
 	use("hrsh7th/cmp-buffer")
@@ -100,7 +94,7 @@ return packer.startup(function(use)
 	-----------------
 
 	-- Linting and formatting
-	use("jose-elias-alvarez/null-ls.nvim")
+	use("nvimtools/none-ls.nvim")
 	-- use("MunifTanjim/prettier.nvim")
 	--
 

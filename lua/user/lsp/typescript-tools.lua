@@ -4,7 +4,7 @@ local api = helpers.SafeRequire("typescript-tools.api")
 
 if ts_tools and api then
 	ts_tools.setup({
-		on_attach = function(client, bufnr)
+		on_attach = function(client, _)
 			client.resolved_capabilities.document_formatting = false
 		end,
 		-- handlers = { ... },
