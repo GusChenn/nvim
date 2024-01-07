@@ -5,13 +5,13 @@ vim.g.mapleader = " " -- the leader key is the spacebar
 local M = {}
 
 -- Savind and closing buffers
-map("n", "<C-w>", ":noautocmd w<cr>", opts)
-map("n", "<C-s>", ":w<cr>", opts)
-map("n", "<leader>q", ":bd!<cr>", opts)
-map("n", "<leader>Q", ":qa!<cr>", opts)
+map("n", "<C-w>", ":noautocmd w<cr>")
+map("n", "<C-s>", ":w<cr>")
+map("n", "<leader>q", ":bd!<cr>")
+map("n", "<leader>Q", ":qa!<cr>")
 
 -- Search and replace on file
-map("n", "<leader>sr", "*<CMD>noh<CR>:%s//", opts)
+map("n", "<leader>sr", "*<CMD>noh<CR>:%s//")
 
 -- Image Pasting
 map("n", "<leader>p", "<CMD>PasteImage<CR>", { desc = "Paste clipboard image" })
@@ -33,30 +33,30 @@ map("n", "m", "<CMD>noh<CR>")
 map("i", "<C-d>", "<left><c-o>/[\"';)>}\\]]<cr><c-o><CMD>noh<cr><right>")
 map("i", "<C-b>", "<C-o>0")
 map("i", "<C-a>", "<C-o>A")
-map("", "<A-k>", ":wincmd k<cr>", opts)
-map("", "<A-h>", ":wincmd h<cr>", opts)
-map("", "<A-j>", ":wincmd j<cr>", opts)
-map("", "<A-l>", ":wincmd l<cr>", opts)
-map("t", "<A-k>", "<cmd>wincmd k<cr>", opts)
-map("t", "<A-h>", "<cmd>wincmd h<cr>", opts)
-map("t", "<A-j>", "<cmd>wincmd j<cr>", opts)
-map("t", "<A-l>", "<cmd>wincmd l<cr>", opts)
-map("n", "t", "%", opts)
-map("n", "<leader>s", "*", opts)
+map("", "<A-k>", ":wincmd k<cr>")
+map("", "<A-h>", ":wincmd h<cr>")
+map("", "<A-j>", ":wincmd j<cr>")
+map("", "<A-l>", ":wincmd l<cr>")
+map("t", "<A-k>", "<cmd>wincmd k<cr>")
+map("t", "<A-h>", "<cmd>wincmd h<cr>")
+map("t", "<A-j>", "<cmd>wincmd j<cr>")
+map("t", "<A-l>", "<cmd>wincmd l<cr>")
+map("n", "t", "%")
+map("n", "<leader>s", "*")
 
 -- Splits
-map("n", "<leader>wv", ":vsplit<cr>", opts)
-map("n", "<leader>wh", ":split<cr>", opts)
+map("n", "<leader>wv", ":vsplit<cr>")
+map("n", "<leader>wh", ":split<cr>")
 
 -- Command mode
 map("c", "<A-p>", "<Up>")
 map("c", "<A-n>", "<Down>")
 
 -- Telescope
-map("n", "ff", "<CMD>Telescope find_files<CR>", { desc = "Telescope Find Files" })
-map("n", "fg", "<CMD>Telescope live_grep<CR>")
+map("n", "ff", "<CMD>lua require('user.utils.telescope-pickers').prettyFilesPicker({ picker = 'find_files' })<CR>")
+map("n", "fg", "<CMD>lua require('user.utils.telescope-pickers').prettyGrepPicker({ picker = 'live_grep' })<cr>")
+map("n", "fh", "<CMD>lua require('user.utils.telescope-pickers').prettyFilesPicker({ picker = 'oldfiles' })<cr>")
 map("n", "<leader>fb", "<CMD>Telescope buffers<CR>")
-map("n", "<leader>fh", "<CMD>Telescope help_tags<CR>")
 
 -- Move lines and blocks
 map("x", "<A-j>", ":m '>+1<CR>gv=gv")

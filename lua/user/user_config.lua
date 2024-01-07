@@ -3,8 +3,8 @@ local M = {}
 -- add any null-ls sources you want here
 M.setup_sources = function(b)
 	return {
-		b.formatting.autopep8,
 		b.code_actions.gitsigns,
+		b.formatting.stylua,
 	}
 end
 
@@ -12,12 +12,8 @@ end
 M.ensure_installed = {
 	null_ls = {
 		"stylua",
-		"jq",
 	},
-	dap = {
-		"python",
-		"delve",
-	},
+	dap = {},
   mason = {
     "tsserver",
     "lua_ls",
