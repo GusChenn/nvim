@@ -22,6 +22,20 @@ M.ensure_installed = {
     "tsserver",
     "lua_ls",
     "solargraph",
+  },
+  treesitter = {
+    "lua",
+    "vim",
+    "vimdoc",
+    "json",
+    "python",
+    "toml",
+    "javascript",
+    "angular",
+    "bash",
+    "css",
+    "dockerfile",
+    "html",
   }
 }
 
