@@ -103,8 +103,37 @@ map("n", "<leader>bt", "<CMD>lua term.bashtop_toggle()<CR>", { desc = "open bash
 -- Hop
 map("n", "<leader>j", "<CMD>HopWord<CR>")
 
--- Gitsigns
+-- GitBlame
+map("n", "<leader>gb", "<CMD>GitBlameToggle<CR>", { desc = "toggle git blame" })
 
+-- Harpoon
+map("n", "<leader>pp", function()
+	---@diagnostic disable-next-line: different-requires
+	require("harpoon"):list():append()
+end)
+
+-- to open quick menu
+map("n", "<leader>p", function()
+	---@diagnostic disable-next-line: different-requires
+	require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+end)
+
+map("n", "<leader>l", function()
+	---@diagnostic disable-next-line: different-requires
+	require("harpoon"):list():next()
+end)
+
+map("n", "<leader>h", function()
+	---@diagnostic disable-next-line: different-requires
+	require("harpoon"):list():prev()
+end)
+
+-- Diffview
+map("n", "<leader>do", "<cmd>:DiffviewOpen<cr>")
+map("n", "<leader>dc", "<cmd>:DiffviewClose<cr>")
+map("n", "<leader>dr", "<cmd>:DiffviewRefresh<cr>")
+
+-- Gitsigns
 -- making this a function here because all it does is create keybinds for gitsigns but
 -- it needs to be attached to an on_attach function.
 M.gitsigns = function()

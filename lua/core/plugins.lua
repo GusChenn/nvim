@@ -229,6 +229,20 @@ require("lazy").setup({
 			require("gitblame").setup({ enabled = false })
 		end,
 	},
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("plugin-configs.harpoon")
+		end,
+	},
+	{
+		"sindrets/diffview.nvim",
+		config = function()
+			require("plugin-configs.diffview")
+		end,
+	},
 }, {
 	performance = {
 		rtp = {
