@@ -8,11 +8,14 @@ local sources = exist
 require("nvim-treesitter.configs").setup({
 	ensure_installed = sources,
 	highlight = {
-		disable = { "html" },
+		enable = true,
+		disable = { "html", "org" },
 	},
 	incremental_selection = { enable = true },
 	autotag = { enable = true },
 	rainbow = { enable = true, disable = { "html" }, extended_mode = false },
+	additional_vim_regex_highlighting = { "org" }, -- Required since TS highlighter doesn't support all syntax features (conceal)
+	endwise = { enable = true },
 })
 
 require("ts_context_commentstring").setup({

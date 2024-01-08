@@ -84,21 +84,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
--- ToggleTerm
-local git_root = "cd $(git rev-parse --show-toplevel 2>/dev/null) && clear"
--- opens terminal as a new tab at the git root
-map("n", "<C-\\>t", "<CMD>ToggleTerm direction=tab<CR>", { desc = "new tabbed terminal" })
--- as a regular window
-map("n", "<C-\\>", "<CMD>TermExec go_back=0 cmd='" .. git_root .. "'<CR>", { desc = "new terminal" })
-map(
-	"n",
-	"<leader>tk",
-	"<CMD>TermExec go_back=0 direction=float cmd='" .. git_root .. "&& tokei'<CR>",
-	{ desc = "tokei" }
-)
-map("n", "<leader>gg", "<CMD>lua term.lazygit_toggle()<CR>", { desc = "open lazygit" })
-map("n", "<leader>gd", "<CMD>lua term.gdu_toggle()<CR>", { desc = "open gdu" })
-map("n", "<leader>bt", "<CMD>lua term.bashtop_toggle()<CR>", { desc = "open bashtop" })
+-- NvTerm
+map("t", "<A-t>", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>")
+map("t", "<A-t><A-h>", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>")
+map("n", "<A-t>", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>")
+map("n", "<A-t><A-h>", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>")
 
 -- Hop
 map("n", "<leader>j", "<CMD>HopWord<CR>")
@@ -132,6 +122,12 @@ end)
 map("n", "<leader>do", "<cmd>:DiffviewOpen<cr>")
 map("n", "<leader>dc", "<cmd>:DiffviewClose<cr>")
 map("n", "<leader>dr", "<cmd>:DiffviewRefresh<cr>")
+
+-- Trouble
+map("n", "<leader>dd", require("trouble").toggle)
+
+-- Resize mode
+map("n", "<leader>r", require("resize-mode").start)
 
 -- Gitsigns
 -- making this a function here because all it does is create keybinds for gitsigns but
@@ -183,4 +179,10 @@ end
 -- ["<C-c>"] = cmp.mapping.abort(),
 -- ["<C-f>"] = cmp_action.luasnip_jump_forward(),
 -- ["<C-b>"] = cmp_action.luasnip_jump_backward(),
+
+-- Custom command mappings
+map("n", "<leader>rs", ":RunScript<cr>")
+map("n", "cpp", ":Cppath<cr>")
+map("n", "spp", ":Path<cr>")
+
 return M

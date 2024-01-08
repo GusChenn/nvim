@@ -14,25 +14,26 @@ M.ensure_installed = {
 		"stylua",
 	},
 	dap = {},
-  mason = {
-    "tsserver",
-    "lua_ls",
-    "solargraph",
-  },
-  treesitter = {
-    "lua",
-    "vim",
-    "vimdoc",
-    "json",
-    "python",
-    "toml",
-    "javascript",
-    "angular",
-    "bash",
-    "css",
-    "dockerfile",
-    "html",
-  }
+	mason = {
+		"tsserver",
+		"lua_ls",
+		"solargraph",
+	},
+	treesitter = {
+		"lua",
+		"vim",
+		"vimdoc",
+		"json",
+		"python",
+		"toml",
+		"javascript",
+		"angular",
+		"bash",
+		"css",
+		"dockerfile",
+		"html",
+		"org",
+	},
 }
 
 -- add servers to be used for auto formatting here

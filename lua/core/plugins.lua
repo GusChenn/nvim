@@ -243,6 +243,31 @@ require("lazy").setup({
 			require("plugin-configs.diffview")
 		end,
 	},
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+	{
+		"nvim-orgmode/orgmode",
+		config = function()
+			require("plugin-configs.orgmode")
+		end,
+	},
+	{
+		"dimfred/resize-mode.nvim",
+		config = function()
+			require("plugin-configs.resize-mode")
+		end,
+	},
+	{
+		"NvChad/nvterm",
+		config = function()
+			require("plugin-configs.nvterm")
+		end,
+	},
+	{
+		"RRethy/nvim-treesitter-endwise",
+	},
 }, {
 	performance = {
 		rtp = {
