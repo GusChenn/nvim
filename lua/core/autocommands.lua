@@ -1,5 +1,6 @@
 local augroup = vim.api.nvim_create_augroup
 local cmd = vim.api.nvim_create_autocmd
+local ucmd = vim.api.nvim_create_user_command
 
 -- enables suport for inlay hints with virtual text
 cmd("LspAttach", {
@@ -105,3 +106,17 @@ cmd({ "BufWritePre" }, {
 		require("session_manager").save_current_session()
 	end,
 })
+
+-- User defined commands
+ucmd("Cppath", function()
+	local path = vim.fn.expand("%:.")
+	vim.fn.setreg("+", path)
+	vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
+
+ucmd("Path", function()
+	local path = vim.fn.expand("%:.")
+	vim.notify('Path: "' .. path)
+end, {})
+
+ucmd("CleanBuffers", ":%bd|e#", {})

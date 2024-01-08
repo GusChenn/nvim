@@ -280,6 +280,7 @@ require("lazy").setup({
 			require("plugin-configs.session-manager")
 		end,
 	},
+	{ "savq/melange-nvim" },
 }, {
 	performance = {
 		rtp = {

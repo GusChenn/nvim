@@ -4,7 +4,15 @@ local M = {}
 M.setup_sources = function(b)
 	return {
 		b.code_actions.gitsigns,
+		-- js
+		b.formatting.prettierd,
+		b.diagnostics.eslint_d,
+		b.code_actions.eslint_d,
+		-- ruby
+		-- b.diagnostics.rubocop,
+		-- lua
 		b.formatting.stylua,
+		b.diagnostics.selene,
 	}
 end
 
