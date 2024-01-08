@@ -268,6 +268,18 @@ require("lazy").setup({
 	{
 		"RRethy/nvim-treesitter-endwise",
 	},
+	{
+		"tpope/vim-surround",
+	},
+	{
+		"tpope/vim-fugitive",
+	},
+	{
+		"Shatur/neovim-session-manager",
+		config = function()
+			require("plugin-configs.session-manager")
+		end,
+	},
 }, {
 	performance = {
 		rtp = {

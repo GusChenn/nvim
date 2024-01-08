@@ -129,6 +129,9 @@ map("n", "<leader>dd", require("trouble").toggle)
 -- Resize mode
 map("n", "<leader>r", require("resize-mode").start)
 
+-- Vim fugitive
+map("n", "gs", vim.cmd.Git)
+
 -- Gitsigns
 -- making this a function here because all it does is create keybinds for gitsigns but
 -- it needs to be attached to an on_attach function.
