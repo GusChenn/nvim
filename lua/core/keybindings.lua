@@ -21,6 +21,9 @@ map("n", "<leader>tr", "<CMD>TroubleToggle lsp_references<CR>")
 map("n", "<leader>td", "<CMD>TroubleToggle lsp_definitions<CR>")
 map("n", "<leader>cd", "<CMD>TroubleToggle<CR>")
 
+-- Yanking mappings
+map("v", "Y", '"+y')
+
 -- NeoTree
 map("n", "<leader>e", "<CMD>Neotree reveal toggle<CR>")
 
