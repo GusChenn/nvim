@@ -59,9 +59,6 @@ require("lazy").setup({
 			{ "neovim/nvim-lspconfig" },
 			{
 				"williamboman/mason.nvim",
-				config = function()
-					require("plugin-configs.mason")
-				end,
 			},
 			{ "williamboman/mason-lspconfig.nvim" },
 		},

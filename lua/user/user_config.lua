@@ -41,6 +41,7 @@ M.ensure_installed = {
 		"dockerfile",
 		"html",
 		"org",
+		"ruby",
 	},
 }
 
