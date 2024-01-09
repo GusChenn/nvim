@@ -8,8 +8,6 @@ M.setup_sources = function(b)
 		b.formatting.prettierd,
 		b.diagnostics.eslint_d,
 		b.code_actions.eslint_d,
-		-- ruby
-		-- b.diagnostics.rubocop,
 		-- lua
 		b.formatting.stylua,
 		b.diagnostics.selene,

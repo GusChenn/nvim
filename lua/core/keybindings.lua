@@ -4,6 +4,10 @@ vim.g.mapleader = " " -- the leader key is the spacebar
 
 local M = {}
 
+-- Void
+map("n", "Q", "<nop>")
+map("n", "s", "<nop>")
+
 -- Savind and closing buffers
 map("n", "<C-w>", ":noautocmd w<cr>")
 map("n", "<C-s>", ":w<cr>")
@@ -46,6 +50,13 @@ map("t", "<A-j>", "<cmd>wincmd j<cr>")
 map("t", "<A-l>", "<cmd>wincmd l<cr>")
 map("n", "t", "%")
 map("n", "<leader>s", "*")
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+map("x", "p", '"_dP')
 
 -- Splits
 map("n", "<leader>wv", ":vsplit<cr>")
@@ -75,7 +86,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		local opts = { buffer = ev.buf }
 
-		map("n", "rg", ":%s/<C-r><C-w>//g<Left><Left>", { desc = "global substitution" })
+		map("n", "<leader>rg", ":%s/<C-r><C-w>//g<Left><Left>", { desc = "global substitution" })
 		map("n", "gD", "<CMD>lua buf.declaration()<CR>", opts)
 		map("n", "gd", "<CMD>Telescope lsp_definitions<CR>", opts)
 		map("n", "K", "<CMD>lua buf.hover()<CR>", opts)
