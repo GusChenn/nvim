@@ -278,6 +278,12 @@ require("lazy").setup({
 		end,
 	},
 	{ "savq/melange-nvim" },
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
+	},
 }, {
 	performance = {
 		rtp = {

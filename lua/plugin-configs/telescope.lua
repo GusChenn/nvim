@@ -20,12 +20,13 @@ telescope.setup({
 		--     Cheatsheet plugin cant handle flex yet
 		layout_strategy = "horizontal",
 		borderchars = {
-			{ "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-			prompt = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-			result = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-			preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+			{ " ", " ", " ", " ", " ", " ", " ", " " },
+			prompt = { " ", " ", " ", " ", " ", " ", " ", " " },
+			result = { " ", " ", " ", " ", " ", " ", " ", " " },
+			preview = { " ", " ", " ", " ", " ", " ", " ", " " },
 		},
 		prompt_prefix = "   ",
+		entry_prefix = " 󰇊  ",
 	},
 
 	extensions = {

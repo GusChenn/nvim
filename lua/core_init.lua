@@ -30,4 +30,5 @@ vim.api.nvim_create_user_command("CyberUpdate", function()
 	require("core.utils.utils").updateAll()
 end, { desc = "Updates plugins, mason packages, treesitter parsers" })
 
-vim.cmd("colorscheme melange")
+vim.cmd("colorscheme tokyonight")
+require("user.utils.telescope-custom-highlights")
