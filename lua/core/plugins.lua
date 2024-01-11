@@ -296,6 +296,16 @@ require("lazy").setup({
 			require("plugin-configs.fidget")
 		end,
 	},
+	{
+		"nvimdev/lspsaga.nvim",
+		config = function()
+			require("plugin-configs.lspsaga")
+		end,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
 }, {
 	performance = {
 		rtp = {

@@ -35,7 +35,7 @@ vim_opts({
 		-- clipboard = "unnamedplus",
 		-- scrolloff = 5,
 		-- autowrite = true,
-		confirm = true,
+		-- confirm = true,
 		-- autochdir = true,
 		termguicolors = true,
 		undofile = true,

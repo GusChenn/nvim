@@ -42,6 +42,8 @@ M.ensure_installed = {
 		"html",
 		"org",
 		"ruby",
+		"markdown_inline",
+		"markdown",
 	},
 }
 

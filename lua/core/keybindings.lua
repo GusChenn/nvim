@@ -31,9 +31,7 @@ map("n", "<leader>sr", "*<CMD>noh<CR>:%s//")
 map("n", "<leader>p", "<CMD>PasteImage<CR>", { desc = "Paste clipboard image" })
 
 -- Trouble
-map("n", "<leader>tr", "<CMD>TroubleToggle lsp_references<CR>")
-map("n", "<leader>td", "<CMD>TroubleToggle lsp_definitions<CR>")
-map("n", "<leader>cd", "<CMD>TroubleToggle<CR>")
+map("n", "<leader>dd", require("trouble").toggle)
 
 -- Yanking mappings
 map("v", "Y", '"+y')
@@ -89,22 +87,26 @@ map("x", "<A-j>", ":m '>+1<CR>gv=gv")
 map("x", "<A-k>", ":m '<-2<CR>gv=gv")
 
 -- More LSP stuff
-_G.buf = vim.lsp.buf
 -- lsp agnostic global rename
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(ev)
 		local opts = { buffer = ev.buf }
+		local buf = vim.lsp.buf
 
 		map("n", "<leader>rg", ":%s/<C-r><C-w>//g<Left><Left>", { desc = "global substitution" })
-		map("n", "gD", "<CMD>lua buf.declaration()<CR>", opts)
+		map("n", "gD", buf.declaration, opts)
 		map("n", "gd", "<CMD>Telescope lsp_definitions<CR>", opts)
-		map("n", "K", "<CMD>lua buf.hover()<CR>", opts)
-		map("n", "gi", "<CMD>lua buf.implementation()<CR>", opts)
+		map("n", "gt", "<CMD>Lspsaga peek_type_definition<CR>", opts)
+		map("n", "K", buf.hover, opts)
+		map("n", "gi", buf.implementation, opts)
 		map("n", "gr", "<CMD>Telescope lsp_references<CR>", opts)
-		map("n", "sh", "<CMD>lua buf.signature_help()<CR>", opts)
-		map("n", "<leader>rn", "<CMD>lua buf.rename()<CR>", opts)
-		map("n", "gl", "<CMD>lua buf.code_action()<CR>", opts)
+		map("n", "sh", buf.signature_help, opts)
+		map("n", "<leader>rn", buf.rename, opts)
+		map("n", "ca", "<CMD>Lspsaga code_action<CR>", opts)
+		map("n", "gl", function()
+			vim.diagnostic.open_float(nil, { focus = false })
+		end, opts)
 	end,
 })
 
@@ -119,7 +121,7 @@ map("t", "<ESC>", "<C-\\><C-n>")
 map("n", "<leader>j", "<CMD>HopWord<CR>")
 
 -- GitBlame
-map("n", "<leader>gb", "<CMD>GitBlameToggle<CR>", { desc = "toggle git blame" })
+map("n", "gbb", "<CMD>GitBlameToggle<CR>", { desc = "toggle git blame" })
 
 -- Harpoon
 map("n", "<leader>pp", function()
@@ -147,9 +149,6 @@ end)
 map("n", "<leader>do", "<cmd>:DiffviewOpen<cr>")
 map("n", "<leader>dc", "<cmd>:DiffviewClose<cr>")
 map("n", "<leader>dr", "<cmd>:DiffviewRefresh<cr>")
-
--- Trouble
-map("n", "<leader>dd", require("trouble").toggle)
 
 -- Resize mode
 map("n", "<leader>r", require("resize-mode").start)
@@ -193,9 +192,9 @@ M.gitsigns = function()
 	end, { desc = "complete blame line history" })
 	map("n", "<leader>lb", gs.toggle_current_line_blame, { desc = "toggle blame line" })
 	-- diff at current working directory
-	map("n", "<leader>hd", gs.diffthis, { desc = "diff at cwd" })
+	map("n", "gdd", gs.diffthis, { desc = "diff at cwd" })
 	-- diff at root of git repository
-	map("n", "<leader>hD", function()
+	map("n", "gdD", function()
 		gs.diffthis("~")
 	end, { desc = "diff at root of git repo" })
 	map("n", "<leader>td", gs.toggle_deleted, { desc = "toggle deleted line" })
