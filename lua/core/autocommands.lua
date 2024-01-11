@@ -120,3 +120,31 @@ ucmd("Path", function()
 end, {})
 
 ucmd("CleanBuffers", ":%bd|e#", {})
+
+-- vim.g.last_pos = 0
+--
+-- cmd({ "CursorMoved", "CursorMovedI" }, {
+-- 	pattern = { "*" },
+-- 	callback = function()
+-- 		local cur_pos = vim.fn.winline()
+--
+-- 		-- Check if this is the first call (initial cursor position)
+-- 		if vim.g.last_pos == 0 then
+-- 			vim.cmd("set cul")
+-- 			vim.g.last_pos = cur_pos
+-- 			return
+-- 		end
+--
+-- 		local diff = vim.g.last_pos - cur_pos
+--
+-- 		-- Check if the cursor has moved significantly
+-- 		if diff > 1 or diff < -1 then
+-- 			vim.cmd("set cul")
+-- 		else
+-- 			vim.cmd("set nocul")
+-- 		end
+--
+-- 		-- Update last_pos for the next comparison
+-- 		vim.g.last_pos = cur_pos
+-- 	end,
+-- })

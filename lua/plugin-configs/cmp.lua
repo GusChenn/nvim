@@ -6,14 +6,14 @@ local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
-local has_words_before = require("core.utils.utils").has_words_before
-
 cmp.setup({
 	enabled = function()
 		-- disables in comments
 		local context = require("cmp.config.context")
 		if vim.api.nvim_get_mode().mode == "c" then
 			return true
+		elseif vim.bo.buftype == "prompt" then
+			return false
 		else
 			return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
 		end
@@ -43,26 +43,6 @@ cmp.setup({
 	},
 	mapping = {
 		["<CR>"] = cmp.mapping.confirm({ select = false }),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			elseif has_words_before() then
-				cmp.complete()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-c>"] = cmp.mapping.abort(),
@@ -71,11 +51,12 @@ cmp.setup({
 		["<C-k>"] = cmp.mapping.select_prev_item(),
 	},
 	sources = {
-		{ name = "copilot" },
+		-- { name = "copilot" },
 		{ name = "nvim_lsp" },
-		{ name = "nvim_lua" },
+		-- { name = "nvim_lua" },
+		{ name = "buffer" },
 		{ name = "luasnip" },
-		{ name = "path", option = { trailing_slash = true } },
+		-- { name = "path", option = { trailing_slash = true } },
 		{ name = "orgmode" },
 	},
 })

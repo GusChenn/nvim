@@ -284,6 +284,18 @@ require("lazy").setup({
 		priority = 1000,
 		opts = {},
 	},
+	{
+		"kwkarlwang/bufresize.nvim",
+		config = function()
+			require("bufresize").setup()
+		end,
+	},
+	{
+		"j-hui/fidget.nvim",
+		config = function()
+			require("plugin-configs.fidget")
+		end,
+	},
 }, {
 	performance = {
 		rtp = {

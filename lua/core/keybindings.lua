@@ -8,6 +8,16 @@ local M = {}
 map("n", "Q", "<nop>")
 map("n", "s", "<nop>")
 
+-- Line number
+map("n", "<leader>nn", function()
+	local is_relative = vim.o.relativenumber
+	if is_relative then
+		vim.opt.relativenumber = false
+	else
+		vim.opt.relativenumber = true
+	end
+end)
+
 -- Savind and closing buffers
 map("n", "<C-w>", ":noautocmd w<cr>")
 map("n", "<C-s>", ":w<cr>")
@@ -103,6 +113,7 @@ map("t", "<A-t>", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>")
 map("t", "<A-t><A-h>", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>")
 map("n", "<A-t>", "<cmd>:lua require('nvterm.terminal').toggle('vertical')<cr>")
 map("n", "<A-t><A-h>", "<cmd>:lua require('nvterm.terminal').toggle('horizontal')<cr>")
+map("t", "<ESC>", "<C-\\><C-n>")
 
 -- Hop
 map("n", "<leader>j", "<CMD>HopWord<CR>")
