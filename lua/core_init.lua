@@ -1,5 +1,9 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
+if vim.g.neovide then
+	require("core.neovide-options")
+end
+
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
