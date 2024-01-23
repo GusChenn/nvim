@@ -1,3 +1,4 @@
+---@diagnostic disable: mixed_table
 local enabled = require("core.utils.utils").enabled
 
 require("lazy").setup({
@@ -278,11 +279,22 @@ require("lazy").setup({
 		end,
 	},
 	{ "savq/melange-nvim" },
+	-- {
+	-- 	"folke/tokyonight.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		vim.cmd("colorscheme tokyonight-night")
+	-- 	end,
+	-- 	opts = {},
+	-- },
 	{
-		"folke/tokyonight.nvim",
+		"rebelot/kanagawa.nvim",
 		lazy = false,
 		priority = 1000,
-		opts = {},
+		config = function()
+			require("kanagawa").load("wave")
+		end,
 	},
 	{
 		"kwkarlwang/bufresize.nvim",
