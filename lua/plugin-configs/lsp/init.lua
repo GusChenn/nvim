@@ -7,6 +7,7 @@ lsp_zero.on_attach(function(_, bufnr)
 end)
 
 local exist, user_config = pcall(require, "user.user_config")
+
 local sources = exist
 		and type(user_config) == "table"
 		and user_config.ensure_installed
@@ -18,6 +19,9 @@ require("mason-lspconfig").setup({
 	ensure_installed = sources,
 	handlers = {
 		lsp_zero.default_setup,
+		tsserver = function()
+			require("typescript-tools").setup({})
+		end,
 	},
 })
 

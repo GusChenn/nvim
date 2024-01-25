@@ -178,6 +178,13 @@ require("lazy").setup({
 			{ "JoosepAlviste/nvim-ts-context-commentstring" },
 		},
 	},
+
+	{
+		"windwp/nvim-ts-autotag",
+		config = function()
+			require("nvim-ts-autotag").setup()
+		end,
+	},
 	{
 		"navarasu/onedark.nvim",
 	},
@@ -279,23 +286,30 @@ require("lazy").setup({
 		end,
 	},
 	{ "savq/melange-nvim" },
+	{
+		"folke/tokyonight.nvim",
+		-- lazy = false,
+		-- priority = 1000,
+		-- config = function()
+		-- 	vim.cmd("colorscheme tokyonight-night")
+		-- end,
+	},
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		config = function()
+			vim.cmd("colorscheme catppuccin-mocha")
+		end,
+	},
 	-- {
-	-- 	"folke/tokyonight.nvim",
+	-- 	"rebelot/kanagawa.nvim",
 	-- 	lazy = false,
 	-- 	priority = 1000,
 	-- 	config = function()
-	-- 		vim.cmd("colorscheme tokyonight-night")
+	-- 		require("kanagawa").load("wave")
 	-- 	end,
-	-- 	opts = {},
 	-- },
-	{
-		"rebelot/kanagawa.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("kanagawa").load("wave")
-		end,
-	},
 	{
 		"kwkarlwang/bufresize.nvim",
 		config = function()
@@ -317,6 +331,28 @@ require("lazy").setup({
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-tree/nvim-web-devicons",
 		},
+	},
+	{
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("plugin-configs.project")
+		end,
+	},
+	{
+		"christoomey/vim-tmux-navigator",
+		lazy = false,
+	},
+	{
+		"otavioschwanck/tmux-awesome-manager.nvim",
+		config = function()
+			require("plugin-configs.tmux")
+		end,
+	},
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		event = "VeryLazy",
+		opts = {},
 	},
 }, {
 	performance = {

@@ -36,7 +36,7 @@ vim_opts({
 		-- autowrite = true,
 		-- confirm = true,
 		-- autochdir = true,
-		termguicolors = true,
+		-- termguicolors = true,
 		undofile = true,
 		-- sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions",
 		-- hidden = true,
@@ -46,3 +46,6 @@ vim_opts({
 		inccommand = "split",
 	},
 })
+
+-- Tmux gloab declaration
+vim.g.tmux_navigator_no_mappings = 1
