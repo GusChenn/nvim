@@ -20,7 +20,7 @@ require("mason-lspconfig").setup({
 	handlers = {
 		lsp_zero.default_setup,
 		tsserver = function()
-			require("typescript-tools").setup({})
+			require("plugin-configs.lsp.typescript-tools")
 		end,
 	},
 })
