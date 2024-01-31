@@ -85,9 +85,7 @@ map("n", "fh", "<CMD>lua require('user.utils.telescope-pickers').prettyFilesPick
 map("v", "fg", "y<ESC>:Telescope live_grep default_text=<C-r>0<CR>")
 map("v", "ff", "y<ESC>:Telescope find_files default_text=<C-r>0<CR>")
 map("n", "<leader>fb", "<CMD>Telescope buffers<CR>")
-map("n", "fp", function()
-	require("telescope").extensions.projects.projects({})
-end)
+map("n", "fp", "<CMD>CdProject<CR>")
 
 -- Move lines and blocks
 map("x", "<A-j>", ":m '>+1<CR>gv=gv")

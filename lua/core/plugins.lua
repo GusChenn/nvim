@@ -333,7 +333,7 @@ require("lazy").setup({
 		},
 	},
 	{
-		"ahmedkhalf/project.nvim",
+		"LintaoAmons/cd-project.nvim",
 		config = function()
 			require("plugin-configs.project")
 		end,

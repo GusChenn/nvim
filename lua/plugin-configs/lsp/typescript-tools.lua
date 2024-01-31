@@ -3,7 +3,7 @@ local api = require("typescript-tools.api")
 require("typescript-tools").setup({
 	settings = {
 		-- spawn additional tsserver instance to calculate diagnostics on it
-		separate_diagnostic_server = true,
+		separate_diagnostic_server = false,
 		-- "change"|"insert_leave" determine when the client asks the server about diagnostic
 		publish_diagnostic_on = "insert_leave",
 		-- array of strings("fix_all"|"add_missing_imports"|"remove_unused"|
@@ -21,7 +21,7 @@ require("typescript-tools").setup({
 		},
 		-- this value is passed to: https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes
 		-- memory limit in megabytes or "auto"(basically no limit)
-		tsserver_max_memory = "auto",
+		tsserver_max_memory = "3000",
 		-- described below
 		tsserver_format_options = {},
 		tsserver_file_preferences = {},
@@ -30,7 +30,7 @@ require("typescript-tools").setup({
 		tsserver_locale = "en",
 		-- mirror of VSCode's `typescript.suggest.completeFunctionCalls`
 		complete_function_calls = false,
-		include_completions_with_insert_text = true,
+		include_completions_with_insert_text = false,
 		-- CodeLens
 		-- WARNING: Experimental feature also in VSCode, because it might hit performance of server.
 		-- possible values: ("off"|"all"|"implementations_only"|"references_only")
