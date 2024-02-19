@@ -80,4 +80,7 @@ M.user_conf = function()
 	-- vim.cmd("colorscheme elflord")
 end
 
+-- add vim tip
+print(vim.cmd("curl -s -m 3 https://www.vimiscool.tech/neotip?all"))
+
 return M

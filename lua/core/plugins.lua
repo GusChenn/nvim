@@ -354,6 +354,45 @@ require("lazy").setup({
 		event = "VeryLazy",
 		opts = {},
 	},
+	{
+		"s1n7ax/nvim-window-picker",
+		name = "window-picker",
+		event = "VeryLazy",
+		version = "2.*",
+		config = function()
+			require("window-picker").setup()
+		end,
+	},
+  {
+    "otavioschwanck/tmux-awesome-manager.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("plugin-configs.tmux-awesome-manager")
+    end,
+  },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",  -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    event = {
+      -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+      -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+      "BufReadPre home/gchen/Repos/studies/second-brain/**.md",
+      "BufNewFile home/gchen/Repos/studies/second-brain/**.md",
+    },
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvim-telescope/telescope.nvim",
+      -- see below for full list of optional dependencies 👇
+    },
+    config = function()
+      require("plugin-configs.obsidian")
+    end
+  }
 }, {
 	performance = {
 		rtp = {

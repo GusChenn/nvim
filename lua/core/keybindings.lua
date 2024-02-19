@@ -217,4 +217,11 @@ map("n", "<leader>rs", ":RunScript<cr>")
 map("n", "cpp", ":Cppath<cr>")
 map("n", "spp", ":Path<cr>")
 
+-- Obsidian
+-- map("n", "of", "<CMD>ObsidianQuickSwitch<CR>")
+-- map("n", "ot", "<CMD>ObsidianTemplate<CR>")
+-- map("n", "on", "<CMD>ObsidianNew<CR>")
+-- map("n", "obl", "<CMD>ObsidianBacklinks<CR>")
+-- map("n", "ofl", "<CMD>ObsidianFollowLink<CR>")
+
 return M

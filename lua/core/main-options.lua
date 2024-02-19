@@ -44,6 +44,7 @@ vim_opts({
 		timeoutlen = 200,
 		cursorlineopt = "number",
 		inccommand = "split",
+    conceallevel = 2,
 	},
 })
 
