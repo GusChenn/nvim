@@ -14,6 +14,7 @@ map("n", "<leader>sr", "*<CMD>noh<CR>:%s//")
 
 -- Yanking mappings
 map("v", "Y", '"+y')
+map("n", "t", "%")
 
 -- Closing editors
 vscode_map("n", "<leader>q", "workbench.action.closeActiveEditor")
@@ -27,8 +28,8 @@ vscode_map("", "<A-h>", "workbench.action.navigateLeft")
 vscode_map("", "<A-j>", "workbench.action.navigateDown")
 vscode_map("", "<A-k>", "workbench.action.navigateUp")
 vscode_map("", "<A-l>", "workbench.action.navigateRight")
-map("n", "q", "<ESC>")
 map("n", "t", "%")
+map("v", "t", "%")
 map("n", "<leader>s", "*")
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
@@ -54,7 +55,8 @@ vscode_map("n", "cm", "workbench.action.showCommands")
 vscode_map("v", "fg", "workbench.action.findInFiles", "{ args = { query = vim.fn.expand('<cword>') } }")
 vscode_map("n", "fg", "workbench.action.findInFiles")
 vscode_map("n", "ff", "workbench.action.quickOpen")
-vscode_sequencial_map("n", "cs", {"search.action.clearSearchResults", "workbench.action.closeSidebar", "workbench.action.closeActiveEditor"})
+vscode_sequencial_map("n", "cs",
+  { "search.action.clearSearchResults", "workbench.action.closeSidebar", "workbench.action.closeActiveEditor" })
 
 -- Quick fix (code actions)
 vscode_map("n", "ca", "editor.action.quickFix")
@@ -66,3 +68,10 @@ vscode_map("n", "<A-t>", "workbench.action.focusActiveEditorGroup")
 -- Source control (git)
 vscode_map("n", "gs", "workbench.scm.focus")
 vscode_map("n", "gb", "gitlens.toggleLineBlame")
+
+-- Project management
+vscode_map("n", "gp", "projectManager.listProjects")
+
+-- Cmds
+map("n", "cpp", ":Cppath<cr>")
+map("n", "spp", ":Path<cr>")
