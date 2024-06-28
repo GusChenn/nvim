@@ -1,5 +1,3 @@
-print("hahhaah")
-
 local loaders = require("utils.loaders")
 
 -- Bootstrap lazy.nvim

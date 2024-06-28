@@ -1,399 +1,586 @@
 return {
-	{
-		"nvim-tree/nvim-tree.lua",
-		opts = {
-			view = {
-				width = 60,
-				side = "right",
-			},
-			filters = {
-				enable = false,
-			},
-			on_attach = function(bufnr)
-				local api = require("nvim-tree.api")
-				local opts = require("utils.plugin-helpers").opts
-				local map = vim.keymap.set
+  {
+    "folke/which-key.nvim",
+    keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
+    cmd = "WhichKey",
+    config = true,
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    opts = {
+      view = {
+        width = 60,
+        side = "right",
+      },
+      filters = {
+        enable = false,
+      },
+      on_attach = function(bufnr)
+        local api = require "nvim-tree.api"
+        local opts = require("utils.plugin-helpers").opts
+        local map = vim.keymap.set
 
-				-- Load default mappings
-				api.config.mappings.default_on_attach(bufnr)
+        -- Load default mappings
+        -- api.config.mappings.default_on_attach(bufnr)
+        map("n", "h", api.node.navigate.parent_close, opts "Up")
+        map("n", "l", api.node.open.edit, opts "Up")
+      end,
+    },
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
 
-				-- Load custom mappings
-				map("n", "h", api.node.navigate.parent_close, opts("Up"))
-				map("n", "l", api.node.open.edit, opts("Up"))
-			end,
-		},
-	},
-	{
-		"nvim-treesitter/nvim-treesitter",
-		event = "VeryLazy",
-		opts = {
-			endwise = {
-				enable = true,
-			},
-			matchup = {
-				enable = true,
-				disable_virtual_text = true,
-			},
-			ensure_installed = {
-				require("config.relevant").treesitter.ensure_installed,
-			},
-		},
-	},
-	{
-		"brenoprata10/nvim-highlight-colors",
-		event = "VeryLazy",
-		opts = {
-			---@usage 'background'|'foreground'|'virtual'
-			render = "virtual",
-			virtual_symbol = "◉",
+      require("which-key").register({
+        e = { cmd "NvimTreeToggle", "Toggle explorer" },
+      }, { prefix = "<leader>" })
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
+    opts = {
+      endwise = {
+        enable = true,
+      },
+      matchup = {
+        enable = true,
+        disable_virtual_text = true,
+      },
+      ensure_installed = {
+        require("config.relevant").treesitter.ensure_installed,
+      },
+    },
+  },
+  {
+    "brenoprata10/nvim-highlight-colors",
+    event = "VeryLazy",
+    opts = {
+      ---@usage 'background'|'foreground'|'virtual'
+      render = "virtual",
+      virtual_symbol = "◉",
 
-			enable_named_colors = true,
-			enable_tailwind = true,
-		},
-	},
-	{
-		"folke/zen-mode.nvim",
-	},
-	{
-		"shellRaining/hlchunk.nvim",
-		event = { "UIEnter" },
-		opts = {
-			chunk = {
-				enable = true,
-				use_treesitter = true,
-				chars = {
-					horizontal_line = "─",
-					left_top = "┌",
-					vertical_line = "│",
-					left_bottom = "└",
-					right_arrow = "─",
-				},
-				style = {
-					{
-						-- TODO: Get color from theme
-						fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("MatchParen")), "bg", "gui"),
-					},
-				},
-				max_file_size = 80 * 1024,
-			},
-			indent = {
-				enable = false,
-			},
-			line_num = {
-				enable = false,
-			},
-			blank = {
-				enable = false,
-			},
-		},
-	},
-	{
-		"RRethy/vim-illuminate",
-		event = { "UIEnter" },
-		config = function()
-			require("illuminate").configure({
+      enable_named_colors = true,
+      enable_tailwind = true,
+    },
+  },
+  {
+    "folke/zen-mode.nvim",
+  },
+  {
+    "shellRaining/hlchunk.nvim",
+    event = { "UIEnter" },
+    opts = {
+      chunk = {
+        enable = true,
+        use_treesitter = true,
+        chars = {
+          horizontal_line = "─",
+          left_top = "┌",
+          vertical_line = "│",
+          left_bottom = "└",
+          right_arrow = "─",
+        },
+        style = {
+          {
+            -- TODO: Get color from theme
+            fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID "MatchParen"), "bg", "gui"),
+          },
+        },
+        max_file_size = 80 * 1024,
+      },
+      indent = {
+        enable = false,
+      },
+      line_num = {
+        enable = false,
+      },
+      blank = {
+        enable = false,
+      },
+    },
+  },
+  {
+    "RRethy/vim-illuminate",
+    event = { "UIEnter" },
+    config = function()
+      require("illuminate").configure {
 
-				modes_denylist = {
-					"i",
-					"ic",
-					"ix",
-				},
-				filetypes_denylist = {
-					"dirbuf",
-					"dirvish",
-					"fugitive",
-					"copilot-chat",
-					"NvimTree",
-				},
-				providers = {
-					"regex",
-					"treesitter",
-					"lsp",
-				},
-				min_count_to_highlight = 2,
-			})
-		end,
-	},
-	-- {
-	-- 	"kevinhwang91/nvim-bqf",
-	-- 	ft = "qf",
-	-- 	opts = {
-	-- 		preview = {
-	-- 			border = "single",
-	-- 			show_scroll_bar = false,
-	-- 			winblend = 0,
-	-- 			wrap = true,
-	-- 		},
-	-- 	},
-	-- },
-	{
-		"kevinhwang91/nvim-ufo",
-		event = "UIEnter",
-		dependencies = {
-			"kevinhwang91/promise-async",
-		},
-		opts = {
-			fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
-				local newVirtText = {}
-				local suffix = (" 󰁂 %d "):format(endLnum - lnum)
-				local sufWidth = vim.fn.strdisplaywidth(suffix)
-				local targetWidth = width - sufWidth
-				local curWidth = 0
-				for _, chunk in ipairs(virtText) do
-					local chunkText = chunk[1]
-					local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-					if targetWidth > curWidth + chunkWidth then
-						table.insert(newVirtText, chunk)
-					else
-						chunkText = truncate(chunkText, targetWidth - curWidth)
-						local hlGroup = chunk[2]
-						table.insert(newVirtText, { chunkText, hlGroup })
-						chunkWidth = vim.fn.strdisplaywidth(chunkText)
-						-- str width returned from truncate() may less than 2nd argument, need padding
-						if curWidth + chunkWidth < targetWidth then
-							suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-						end
-						break
-					end
-					curWidth = curWidth + chunkWidth
-				end
-				table.insert(newVirtText, { suffix, "MoreMsg" })
-				return newVirtText
-			end,
-		},
-	},
+        modes_denylist = {
+          "i",
+          "ic",
+          "ix",
+        },
+        filetypes_denylist = {
+          "dirbuf",
+          "dirvish",
+          "fugitive",
+          "copilot-chat",
+          "NvimTree",
+        },
+        providers = {
+          "regex",
+          "treesitter",
+          "lsp",
+        },
+        min_count_to_highlight = 2,
+      }
+    end,
+  },
+  {
+    "kevinhwang91/nvim-ufo",
+    event = "UIEnter",
+    dependencies = {
+      "kevinhwang91/promise-async",
+    },
+    opts = {
+      fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
+        local newVirtText = {}
+        local suffix = (" 󰁂 %d "):format(endLnum - lnum)
+        local sufWidth = vim.fn.strdisplaywidth(suffix)
+        local targetWidth = width - sufWidth
+        local curWidth = 0
+        for _, chunk in ipairs(virtText) do
+          local chunkText = chunk[1]
+          local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+          if targetWidth > curWidth + chunkWidth then
+            table.insert(newVirtText, chunk)
+          else
+            chunkText = truncate(chunkText, targetWidth - curWidth)
+            local hlGroup = chunk[2]
+            table.insert(newVirtText, { chunkText, hlGroup })
+            chunkWidth = vim.fn.strdisplaywidth(chunkText)
+            -- str width returned from truncate() may less than 2nd argument, need padding
+            if curWidth + chunkWidth < targetWidth then
+              suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+            end
+            break
+          end
+          curWidth = curWidth + chunkWidth
+        end
+        table.insert(newVirtText, { suffix, "MoreMsg" })
+        return newVirtText
+      end,
+    },
+    init = function()
+      require("which-key").register({
+        p = { "za", "Toggle fold (za)" },
+      }, { prefix = "f" })
+    end,
+  },
+  {
+    "cbochs/grapple.nvim",
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons", lazy = true },
+    },
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = "Grapple",
+    opts = {
+      scope = "git_branch",
+      style = "basename",
+      win_opts = {
+        border = "solid",
+      },
+    },
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
 
-	{
-		"cbochs/grapple.nvim",
-		dependencies = {
-			{ "nvim-tree/nvim-web-devicons", lazy = true },
-		},
-		event = { "BufReadPost", "BufNewFile" },
-		cmd = "Grapple",
-		opts = {
-			scope = "git_branch",
-			style = "basename",
-			win_opts = {
-				border = "solid",
-			},
-		},
-	},
-	-- {
-	-- 	"nvim-telescope/telescope.nvim",
-	-- 	cmd = { "Telescope" },
-	-- 	-- event = "VeryLazy",
-	-- 	opts = {
-	-- 		pickers = {
-	-- 			find_files = {
-	-- 				theme = "ivy",
-	-- 			},
-	-- 			live_grep = {
-	-- 				theme = "ivy",
-	-- 			},
-	-- 		},
-	-- 		extensions = {
-	-- 			fzf = {
-	-- 				fuzzy = true, -- false will only do exact matching
-	-- 				override_generic_sorter = true, -- override the generic sorter
-	-- 				override_file_sorter = true, -- override the file sorter
-	-- 				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-	-- 			},
-	-- 			undo = {
-	-- 				use_delta = true,
-	-- 				use_custom_command = nil,
-	-- 				side_by_side = true,
-	-- 				diff_context_lines = 10,
-	-- 				entry_format = "N∘ $ID, $STAT, $TIME",
-	-- 				time_format = "",
-	-- 				saved_only = false,
-	-- 				mappings = {
-	-- 					i = {
-	-- 						["<cr>"] = require("telescope-undo.actions").yank_additions,
-	-- 						["<C-y>"] = require("telescope-undo.actions").yank_deletions,
-	-- 						["<C-r>"] = require("telescope-undo.actions").restore,
-	-- 					},
-	-- 					n = {
-	-- 						["y"] = require("telescope-undo.actions").yank_additions,
-	-- 						["Y"] = require("telescope-undo.actions").yank_deletions,
-	-- 						["u"] = require("telescope-undo.actions").restore,
-	-- 					},
-	-- 				},
-	-- 			},
-	-- 		},
-	-- 	},
-	-- 	init = function()
-	-- 		local telescope = require("telescope")
-	-- 		telescope.load_extension("fzf")
-	-- 		telescope.load_extension("undo")
-	-- 	end,
-	-- 	dependencies = {
-	-- 		{
-	-- 			"nvim-telescope/telescope-fzf-native.nvim",
-	-- 			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-	-- 		},
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"debugloop/telescope-undo.nvim",
-	-- 	},
-	-- 	{
-	-- 		"RRethy/nvim-treesitter-endwise",
-	-- 		event = "BufEnter",
-	-- 		dependencies = {
-	-- 			"nvim-treesitter",
-	-- 		},
-	-- 	},
-	-- },
-	-- TODO: setup Obsidian/ Neorg
-	-- {
-	-- 	"tpope/vim-surround",
-	-- 	event = "VeryLazy",
-	-- },
-	{
-		"github/copilot.vim",
-		event = "VeryLazy",
-	},
-	{
-		"CopilotC-Nvim/CopilotChat.nvim",
-		cmd = {
-			"CopilotChatOpen",
-			"CopilotChatToggle",
-			"CopilotChatExplain",
-			"CopilotChatTest",
-			"CopilotChatCommitStaged",
-			"CopilotChatLoad",
-		},
-		branch = "canary",
-		dependencies = {
-			{ "github/copilot.vim" },
-			{ "nvim-lua/plenary.nvim" },
-		},
-		opts = {
-			context = "buffers",
+      require("which-key").register({
+        p = {
+          cmd "Grapple toggle_tags",
+          "Toggle grapple window",
+          p = {
+            cmd "Grapple tag",
+            "Tag current window",
+          },
+        },
+        l = {
+          cmd "Grapple cycle_tags next",
+          "Grapple cycle to next tag",
+        },
+        h = {
+          cmd "Grapple cycle_tags prev",
+          "Grapple cycle to previous tag",
+        },
+      }, { prefix = "<leader>" })
+    end,
+  },
+  -- {
+  -- 	"nvim-telescope/telescope.nvim",
+  -- 	cmd = { "Telescope" },
+  -- 	-- event = "VeryLazy",
+  -- 	opts = {
+  -- 		pickers = {
+  -- 			find_files = {
+  -- 				theme = "ivy",
+  -- 			},
+  -- 			live_grep = {
+  -- 				theme = "ivy",
+  -- 			},
+  -- 		},
+  -- 		extensions = {
+  -- 			fzf = {
+  -- 				fuzzy = true, -- false will only do exact matching
+  -- 				override_generic_sorter = true, -- override the generic sorter
+  -- 				override_file_sorter = true, -- override the file sorter
+  -- 				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+  -- 			},
+  -- 			undo = {
+  -- 				use_delta = true,
+  -- 				use_custom_command = nil,
+  -- 				side_by_side = true,
+  -- 				diff_context_lines = 10,
+  -- 				entry_format = "N∘ $ID, $STAT, $TIME",
+  -- 				time_format = "",
+  -- 				saved_only = false,
+  -- 				mappings = {
+  -- 					i = {
+  -- 						["<cr>"] = require("telescope-undo.actions").yank_additions,
+  -- 						["<C-y>"] = require("telescope-undo.actions").yank_deletions,
+  -- 						["<C-r>"] = require("telescope-undo.actions").restore,
+  -- 					},
+  -- 					n = {
+  -- 						["y"] = require("telescope-undo.actions").yank_additions,
+  -- 						["Y"] = require("telescope-undo.actions").yank_deletions,
+  -- 						["u"] = require("telescope-undo.actions").restore,
+  -- 					},
+  -- 				},
+  -- 			},
+  -- 		},
+  -- 	},
+  -- 	init = function()
+  -- 		local telescope = require("telescope")
+  -- 		telescope.load_extension("fzf")
+  -- 		telescope.load_extension("undo")
+  -- 	end,
+  -- 	dependencies = {
+  -- 		{
+  -- 			"nvim-telescope/telescope-fzf-native.nvim",
+  -- 			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+  -- 		},
+  -- 		"nvim-lua/plenary.nvim",
+  -- 		"debugloop/telescope-undo.nvim",
+  -- 	},
+  -- 	{
+  -- 		"RRethy/nvim-treesitter-endwise",
+  -- 		event = "BufEnter",
+  -- 		dependencies = {
+  -- 			"nvim-treesitter",
+  -- 		},
+  -- 	},
+  -- },
+  -- TODO: setup Obsidian/ Neorg
+  {
+    "github/copilot.vim",
+    event = "VeryLazy",
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
 
-			question_header = "󰙊 ", -- Header to use for user questions
-			answer_header = " ", -- Header to use for AI answers
-			error_header = " ", -- Header to use for errors
-			separator = " ", -- Separator to use in chat
+      require("which-key").register({
+        c = {
+          d = {
+            cmd "Copilot disable",
+            "Disable copilot virtual text",
+          },
+          e = {
+            cmd "Copilot enable",
+            "Enable copilot virtual text",
+          },
+        },
+      }, { prefix = "<leader>" })
+    end,
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    cmd = {
+      "CopilotChatOpen",
+      "CopilotChatToggle",
+      "CopilotChatExplain",
+      "CopilotChatTest",
+      "CopilotChatCommitStaged",
+      "CopilotChatLoad",
+      "CopilotChatFixDiagnostic",
+    },
+    branch = "canary",
+    dependencies = {
+      { "github/copilot.vim" },
+      { "nvim-lua/plenary.nvim" },
+    },
+    opts = {
+      context = "buffers",
 
-			show_help = false,
-			show_folds = false,
-			auto_follow_cursor = false,
+      question_header = "󰙊 ",
+      answer_header = " ",
+      error_header = " ",
+      separator = " ",
 
-			callback = function()
-				-- Calls the CopilotChatSave <name> command passing <name> as the root directory name
-				vim.cmd("CopilotChatSave " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"))
-			end,
+      show_help = false,
+      show_folds = false,
+      auto_follow_cursor = false,
 
-			mappings = {
-				reset = {
-					normal = "<leader><C-l>",
-				},
-				complete = {
-					detail = "Use @<Tab> or /<Tab> for options.",
-					insert = "<S-Tab>",
-				},
-			},
-		},
-	},
-	{
-		"windwp/nvim-ts-autotag",
-		ft = { "typescriptreact", "tsx", "html" },
-		config = true,
-	},
-	-- {
-	-- 	"nvim-neotest/neotest",
-	-- 	event = "VeryLazy",
-	-- 	dependencies = {
-	-- 		"nvim-neotest/nvim-nio",
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"antoinemadec/FixCursorHold.nvim",
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 		"olimorris/neotest-rspec",
-	-- 	},
-	-- 	opts = {
-	-- 		adapters = {
-	-- 			require("neotest-rspec"),
-	-- 		},
-	-- 	},
-	-- },
-	{
-		"andymass/vim-matchup",
-		event = "UIEnter",
-	},
-	{
-		"folke/ts-comments.nvim",
-		event = "VeryLazy",
-		config = true,
-	},
-	-- {
-	-- 	"dmmulroy/ts-error-translator.nvim",
-	-- 	event = { "BufEnter *.ts", "BufEnter *.tsx", "BufEnter *.js", "BufEnter *.jsx" },
-	-- 	config = true,
-	-- },
-	{
-		"farmergreg/vim-lastplace",
-		event = "UIEnter",
-	},
-	{
-		"rmagatti/auto-session",
-		lazy = false,
-		opts = {
-			log_level = "error",
-			-- auto_session_enable_last_session = true,
-			-- auto_restore_enabled = true,
-			auto_session_use_git_branch = true,
+      callback = function()
+        vim.cmd("CopilotChatSave " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"))
+      end,
 
-			pre_save_cmds = {
-				"silent! NvimTreeClose",
-				"silent! CopilotChatClose",
-			},
-		},
-	},
-	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		opts = {
-			modes = {
-				search = {
-					enabled = true,
-					label = {
-						style = "overlay",
-					},
-				},
-				char = {
-					enabled = false,
-				},
-			},
-		},
-	},
-	{
-		"echasnovski/mini.nvim",
-		version = "*",
-		event = "VeryLazy",
-		config = function()
-			local loaders = require("utils.loaders")
+      mappings = {
+        reset = {
+          normal = "<leader><C-l>",
+        },
+      },
+    },
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
 
-			local module_configs = {
-				{ module = "ai" },
-				{ module = "bufremove" },
-				{ module = "pairs" },
-				{ module = "splitjoin" },
-				{ module = "surround" },
-				{
-					module = "pick",
-					config = {
-						window = {
-							config = {
-								border = "solid",
-							},
-							prompt_cursor = " ",
-							prompt_prefix = "  ",
-						},
-					},
-				},
-				{ module = "extra" },
-			}
+      require("which-key").register({
+        c = {
+          m = {
+            require("utils.ai.ai-helpers").commit_with_ai,
+            "Generate commit message with ai",
+          },
+          t = {
+            mode = "v",
+            cmd "CopilotChatTest",
+            "Generate test with ai",
+          },
+        },
+      }, { prefix = "<leader>" })
 
-			loaders.load_mini_modules(module_configs)
-		end,
-	},
+      require("which-key").register {
+        ["<A-T>"] = {
+          mode = { "n", "v" },
+          require("utils.ai.ai-helpers").toggle_copilot_chat,
+          "Toggle copilot chat",
+        },
+        ["<A-E>"] = {
+          mode = "v",
+          cmd "CopilotChatExplain",
+          "Explain selection with ai",
+        },
+      }
+    end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = { "typescriptreact", "tsx", "html" },
+    config = true,
+  },
+  {
+    "nvim-neotest/neotest",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "olimorris/neotest-rspec",
+    },
+    opts = {
+      adapters = {
+        require "neotest-rspec",
+      },
+      diagnostic = {
+        enabled = false,
+      },
+      log_level = vim.log.levels.TRACE,
+      icons = {
+        expanded = "",
+        child_prefix = "",
+        child_indent = "",
+        final_child_prefix = "",
+        non_collapsible = "",
+        collapsed = "",
+
+        passed = "",
+        running = "",
+        failed = "",
+        unknown = "",
+        skipped = "",
+      },
+      floating = {
+        border = "single",
+        max_height = 0.8,
+        max_width = 0.9,
+      },
+      summary = {
+        mappings = {
+          attach = "a",
+          expand = { "<CR>", "<2-LeftMouse>" },
+          expand_all = "e",
+          jumpto = "i",
+          output = "o",
+          run = "r",
+          short = "O",
+          stop = "u",
+        },
+      },
+    },
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").register({
+        n = {
+          l = {
+            require("neotest").run.run(),
+            "Run closest test",
+          },
+          f = {
+            require("neotest").run.run(vim.fn.expand "%"),
+            "Run all tests in file",
+          },
+          p = {
+            cmd "Neotest output-panel",
+            "Toggle output panel",
+          },
+          s = {
+            cmd "Neotest summary",
+            "Toggle summary panel",
+          },
+        },
+        t = {
+          function()
+            if vim.bo.filetype ~= "ruby" then
+              print "Not a ruby file"
+              return
+            end
+
+            local current_file_path = vim.fn.expand "%:p:~:."
+            local is_spec = string.match(current_file_path, "_spec")
+
+            if is_spec then
+              local app_file_path = current_file_path:gsub("([^/]+)", "app", 1):gsub("_spec%.", ".")
+
+              vim.cmd("e " .. app_file_path)
+            else
+              local spec_file_path = current_file_path:gsub("([^/]+)", "spec", 1):gsub("%.", "_spec.")
+
+              vim.cmd("e " .. spec_file_path)
+            end
+          end,
+        },
+      }, { prefix = "<leader>" })
+    end,
+  },
+  {
+    "andymass/vim-matchup",
+    event = "UIEnter",
+  },
+  {
+    "folke/ts-comments.nvim",
+    event = "VeryLazy",
+    config = true,
+  },
+  {
+    "farmergreg/vim-lastplace",
+    event = "UIEnter",
+  },
+  {
+    "rmagatti/auto-session",
+    lazy = false,
+    opts = {
+      log_level = "error",
+      -- auto_session_enable_last_session = true,
+      -- auto_restore_enabled = true,
+      auto_session_use_git_branch = true,
+
+      pre_save_cmds = {
+        "silent! NvimTreeClose",
+        "silent! CopilotChatClose",
+      },
+    },
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").register({
+        s = {
+          s = {
+            cmd "Autosession save",
+            "Save session",
+          },
+          l = {
+            cmd "Telescope session-lens",
+            "Load session",
+          },
+        },
+      }, { prefix = "<leader>" })
+    end,
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {
+      modes = {
+        search = {
+          enabled = true,
+          label = {
+            style = "overlay",
+          },
+        },
+        char = {
+          enabled = false,
+        },
+      },
+    },
+  },
+  {
+    "echasnovski/mini.nvim",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      local loaders = require "utils.loaders"
+
+      local module_configs = {
+        { module = "ai" },
+        { module = "bufremove" },
+        { module = "pairs" },
+        { module = "splitjoin" },
+        { module = "surround" },
+        {
+          module = "pick",
+          config = {
+            window = {
+              config = {
+                border = "solid",
+              },
+              prompt_cursor = " ",
+              prompt_prefix = "  ",
+            },
+          },
+        },
+        { module = "extra" },
+      }
+
+      loaders.load_mini_modules(module_configs)
+    end,
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+      local wk = require "which-key"
+
+      wk.register({
+        f = {
+          cmd "Pick files",
+          "Pick files",
+        },
+        g = {
+          cmd "Pick grep_live",
+          "Pick live grep",
+        },
+        h = {
+          cmd "Pick oldfiles",
+          "Pick oldfiles",
+        },
+      }, { prefix = "f" })
+
+      wk.register({
+        f = {
+          mode = "v",
+          'y<ESC> <CMD> Pick files <CR> <C-r>"',
+          "Search for selected text in files",
+        },
+        g = {
+          mode = "v",
+          'y<ESC> <CMD> Pick grep_live <CR> <C-r>"',
+          "Search for selected text in live grep",
+        },
+      }, { prefix = "f" })
+    end,
+  },
 }
