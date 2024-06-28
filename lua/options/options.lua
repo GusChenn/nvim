@@ -11,6 +11,9 @@ g.mapleader = " "
 g.maplocalleader = "\\"
 
 g.tmux_navigator_no_mappings = 1
+g.matchup_matchparen_offscreen = {}
+g.lastplace_ignore = "gitcommit,gitrebase,hgcommit,svn,xxd"
+g.lastplace_ignore_buftype = "help,nofile,quickfix"
 
 -- Re-enable python provier (disabled by nvchad)
 g.loaded_python3_provider = 1

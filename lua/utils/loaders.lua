@@ -1,7 +1,7 @@
 local loaders = {}
 
 loaders.load_options = function()
-	require("config.options")
+	require("options")
 end
 
 loaders.bootstrap_lazy_nvim = function()
@@ -27,6 +27,33 @@ loaders.load_lazy = function()
 		-- automatically check for plugin updates
 		checker = { enabled = true },
 	})
+end
+
+loaders.load_custom_highlights = function()
+	local highlights = require("options.custom-highlights").highlights
+	local set_hl = vim.api.nvim_set_hl
+
+	for group, opts in ipairs(highlights) do
+		set_hl(0, group, opts)
+	end
+end
+
+loaders.load_mini_modules = function(module_configs)
+	local concat_plugin_root_name = function(module)
+		return "mini." .. module
+	end
+
+	for _, module_config in ipairs(module_configs) do
+		local full_module_name = concat_plugin_root_name(module_config.module)
+
+		local ok, module = pcall(require, full_module_name)
+
+		if ok and module then
+			module.setup(module_config.config or {})
+		else
+			print("CUSTOM ERROR: Mini module " .. module_config.module .. " did not load properly")
+		end
+	end
 end
 
 return loaders
