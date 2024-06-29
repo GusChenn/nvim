@@ -1,4 +1,4 @@
-local loaders = require("utils.loaders")
+local loaders = require "utils.loaders"
 
 -- Bootstrap lazy.nvim
 loaders.bootstrap_lazy_nvim()
@@ -6,8 +6,14 @@ loaders.bootstrap_lazy_nvim()
 -- Setup options
 loaders.load_options()
 
--- Setup lazy.nvim
+-- Setup lazy.nvim alongside plugins
 loaders.load_lazy()
+
+-- Setup mappings
+loaders.load_mappings()
+
+-- Setup colorscheme
+vim.cmd.colorscheme "catppuccin-latte"
 
 -- Setup custom highlights
 loaders.load_custom_highlights()

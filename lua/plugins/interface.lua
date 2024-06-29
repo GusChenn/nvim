@@ -6,27 +6,14 @@ return {
     config = true,
   },
   {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    opts = {
-      view = {
-        width = 60,
-        side = "right",
-      },
-      filters = {
-        enable = false,
-      },
-      on_attach = function(bufnr)
-        local api = require "nvim-tree.api"
-        local opts = require("utils.plugin-helpers").opts
-        local map = vim.keymap.set
-
-        -- Load default mappings
-        -- api.config.mappings.default_on_attach(bufnr)
-        map("n", "h", api.node.navigate.parent_close, opts "Up")
-        map("n", "l", api.node.open.edit, opts "Up")
-      end,
-    },
+    opts = require "config.long-configs.nvim-tree",
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
@@ -47,7 +34,7 @@ return {
         disable_virtual_text = true,
       },
       ensure_installed = {
-        require("config.relevant").treesitter.ensure_installed,
+        require("general-opts").treesitter.ensure_installed,
       },
     },
   },
@@ -69,42 +56,13 @@ return {
   {
     "shellRaining/hlchunk.nvim",
     event = { "UIEnter" },
-    opts = {
-      chunk = {
-        enable = true,
-        use_treesitter = true,
-        chars = {
-          horizontal_line = "─",
-          left_top = "┌",
-          vertical_line = "│",
-          left_bottom = "└",
-          right_arrow = "─",
-        },
-        style = {
-          {
-            -- TODO: Get color from theme
-            fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID "MatchParen"), "bg", "gui"),
-          },
-        },
-        max_file_size = 80 * 1024,
-      },
-      indent = {
-        enable = false,
-      },
-      line_num = {
-        enable = false,
-      },
-      blank = {
-        enable = false,
-      },
-    },
+    opts = require "config.long-configs.hlchunk",
   },
   {
     "RRethy/vim-illuminate",
     event = { "UIEnter" },
     config = function()
       require("illuminate").configure {
-
         modes_denylist = {
           "i",
           "ic",
@@ -132,35 +90,7 @@ return {
     dependencies = {
       "kevinhwang91/promise-async",
     },
-    opts = {
-      fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
-        local newVirtText = {}
-        local suffix = (" 󰁂 %d "):format(endLnum - lnum)
-        local sufWidth = vim.fn.strdisplaywidth(suffix)
-        local targetWidth = width - sufWidth
-        local curWidth = 0
-        for _, chunk in ipairs(virtText) do
-          local chunkText = chunk[1]
-          local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-          if targetWidth > curWidth + chunkWidth then
-            table.insert(newVirtText, chunk)
-          else
-            chunkText = truncate(chunkText, targetWidth - curWidth)
-            local hlGroup = chunk[2]
-            table.insert(newVirtText, { chunkText, hlGroup })
-            chunkWidth = vim.fn.strdisplaywidth(chunkText)
-            -- str width returned from truncate() may less than 2nd argument, need padding
-            if curWidth + chunkWidth < targetWidth then
-              suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-            end
-            break
-          end
-          curWidth = curWidth + chunkWidth
-        end
-        table.insert(newVirtText, { suffix, "MoreMsg" })
-        return newVirtText
-      end,
-    },
+    opts = require "config.long-configs.nvim-ufo",
     init = function()
       require("which-key").register({
         p = { "za", "Toggle fold (za)" },
@@ -205,68 +135,31 @@ return {
     end,
   },
   -- {
-  -- 	"nvim-telescope/telescope.nvim",
-  -- 	cmd = { "Telescope" },
-  -- 	-- event = "VeryLazy",
-  -- 	opts = {
-  -- 		pickers = {
-  -- 			find_files = {
-  -- 				theme = "ivy",
-  -- 			},
-  -- 			live_grep = {
-  -- 				theme = "ivy",
-  -- 			},
-  -- 		},
-  -- 		extensions = {
-  -- 			fzf = {
-  -- 				fuzzy = true, -- false will only do exact matching
-  -- 				override_generic_sorter = true, -- override the generic sorter
-  -- 				override_file_sorter = true, -- override the file sorter
-  -- 				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-  -- 			},
-  -- 			undo = {
-  -- 				use_delta = true,
-  -- 				use_custom_command = nil,
-  -- 				side_by_side = true,
-  -- 				diff_context_lines = 10,
-  -- 				entry_format = "N∘ $ID, $STAT, $TIME",
-  -- 				time_format = "",
-  -- 				saved_only = false,
-  -- 				mappings = {
-  -- 					i = {
-  -- 						["<cr>"] = require("telescope-undo.actions").yank_additions,
-  -- 						["<C-y>"] = require("telescope-undo.actions").yank_deletions,
-  -- 						["<C-r>"] = require("telescope-undo.actions").restore,
-  -- 					},
-  -- 					n = {
-  -- 						["y"] = require("telescope-undo.actions").yank_additions,
-  -- 						["Y"] = require("telescope-undo.actions").yank_deletions,
-  -- 						["u"] = require("telescope-undo.actions").restore,
-  -- 					},
-  -- 				},
-  -- 			},
-  -- 		},
-  -- 	},
-  -- 	init = function()
-  -- 		local telescope = require("telescope")
-  -- 		telescope.load_extension("fzf")
-  -- 		telescope.load_extension("undo")
-  -- 	end,
-  -- 	dependencies = {
-  -- 		{
-  -- 			"nvim-telescope/telescope-fzf-native.nvim",
-  -- 			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-  -- 		},
-  -- 		"nvim-lua/plenary.nvim",
-  -- 		"debugloop/telescope-undo.nvim",
-  -- 	},
-  -- 	{
-  -- 		"RRethy/nvim-treesitter-endwise",
-  -- 		event = "BufEnter",
-  -- 		dependencies = {
-  -- 			"nvim-treesitter",
-  -- 		},
-  -- 	},
+  --   "nvim-telescope/telescope.nvim",
+  --   cmd = { "Telescope" },
+  --   -- event = "VeryLazy",
+  --   opts = require "config.long-configs.telescope",
+  --   init = function()
+  --     local telescope = require "telescope"
+  --
+  --     telescope.load_extension "fzf"
+  --     telescope.load_extension "undo"
+  --   end,
+  --   dependencies = {
+  --     {
+  --       "nvim-telescope/telescope-fzf-native.nvim",
+  --       build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+  --     },
+  --     "nvim-lua/plenary.nvim",
+  --     "debugloop/telescope-undo.nvim",
+  --   },
+  --   {
+  --     "RRethy/nvim-treesitter-endwise",
+  --     event = "BufEnter",
+  --     dependencies = {
+  --       "nvim-treesitter",
+  --     },
+  --   },
   -- },
   -- TODO: setup Obsidian/ Neorg
   {
@@ -363,102 +256,67 @@ return {
     ft = { "typescriptreact", "tsx", "html" },
     config = true,
   },
-  {
-    "nvim-neotest/neotest",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-neotest/nvim-nio",
-      "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "olimorris/neotest-rspec",
-    },
-    opts = {
-      adapters = {
-        require "neotest-rspec",
-      },
-      diagnostic = {
-        enabled = false,
-      },
-      log_level = vim.log.levels.TRACE,
-      icons = {
-        expanded = "",
-        child_prefix = "",
-        child_indent = "",
-        final_child_prefix = "",
-        non_collapsible = "",
-        collapsed = "",
-
-        passed = "",
-        running = "",
-        failed = "",
-        unknown = "",
-        skipped = "",
-      },
-      floating = {
-        border = "single",
-        max_height = 0.8,
-        max_width = 0.9,
-      },
-      summary = {
-        mappings = {
-          attach = "a",
-          expand = { "<CR>", "<2-LeftMouse>" },
-          expand_all = "e",
-          jumpto = "i",
-          output = "o",
-          run = "r",
-          short = "O",
-          stop = "u",
-        },
-      },
-    },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").register({
-        n = {
-          l = {
-            require("neotest").run.run(),
-            "Run closest test",
-          },
-          f = {
-            require("neotest").run.run(vim.fn.expand "%"),
-            "Run all tests in file",
-          },
-          p = {
-            cmd "Neotest output-panel",
-            "Toggle output panel",
-          },
-          s = {
-            cmd "Neotest summary",
-            "Toggle summary panel",
-          },
-        },
-        t = {
-          function()
-            if vim.bo.filetype ~= "ruby" then
-              print "Not a ruby file"
-              return
-            end
-
-            local current_file_path = vim.fn.expand "%:p:~:."
-            local is_spec = string.match(current_file_path, "_spec")
-
-            if is_spec then
-              local app_file_path = current_file_path:gsub("([^/]+)", "app", 1):gsub("_spec%.", ".")
-
-              vim.cmd("e " .. app_file_path)
-            else
-              local spec_file_path = current_file_path:gsub("([^/]+)", "spec", 1):gsub("%.", "_spec.")
-
-              vim.cmd("e " .. spec_file_path)
-            end
-          end,
-        },
-      }, { prefix = "<leader>" })
-    end,
-  },
+  -- {
+  --   "nvim-neotest/neotest",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "nvim-neotest/nvim-nio",
+  --     "nvim-lua/plenary.nvim",
+  --     "antoinemadec/FixCursorHold.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "olimorris/neotest-rspec",
+  --   },
+  --   config = function()
+  --     local opts = require "config.long-configs.neotest"
+  --     require("neotest").setup(opts)
+  --   end,
+  --   init = function()
+  --     local cmd = require("utils.plugin-helpers").cmd
+  --     local neotest = require "neotest"
+  --
+  --     require("which-key").register({
+  --       n = {
+  --         l = {
+  --           neotest.run.run(),
+  --           "Run closest test",
+  --         },
+  --         f = {
+  --           neotest.run.run(vim.fn.expand "%"),
+  --           "Run all tests in file",
+  --         },
+  --         p = {
+  --           cmd "Neotest output-panel",
+  --           "Toggle output panel",
+  --         },
+  --         s = {
+  --           cmd "Neotest summary",
+  --           "Toggle summary panel",
+  --         },
+  --       },
+  --       t = {
+  --         function()
+  --           if vim.bo.filetype ~= "ruby" then
+  --             print "Not a ruby file"
+  --             return
+  --           end
+  --
+  --           local current_file_path = vim.fn.expand "%:p:~:."
+  --           local is_spec = string.match(current_file_path, "_spec")
+  --
+  --           if is_spec then
+  --             local app_file_path = current_file_path:gsub("([^/]+)", "app", 1):gsub("_spec%.", ".")
+  --
+  --             vim.cmd("e " .. app_file_path)
+  --           else
+  --             local spec_file_path = current_file_path:gsub("([^/]+)", "spec", 1):gsub("%.", "_spec.")
+  --
+  --             vim.cmd("e " .. spec_file_path)
+  --           end
+  --         end,
+  --       },
+  --     }, { prefix = "<leader>" })
+  --   end,
+  -- },
   {
     "andymass/vim-matchup",
     event = "UIEnter",
