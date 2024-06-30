@@ -9,11 +9,20 @@ return {
   on_attach = function(bufnr)
     local api = require "nvim-tree.api"
     local opts = require("utils.plugin-helpers").opts
-    local map = vim.keymap.set
+    local map = vim.api.nvim_buf_set_keymap
 
     -- Load default mappings
-    -- api.config.mappings.default_on_attach(bufnr)
-    map("n", "h", api.node.navigate.parent_close, opts "Up")
-    map("n", "l", api.node.open.edit, opts "Up")
+    api.config.mappings.default_on_attach(bufnr)
+    require("which-key").register {
+      n = {
+        buffer = bufnr,
+        api.node.navigate.parent_close "Close",
+      },
+      l = {
+        buffer = bufnr,
+        api.node.open.edit,
+        "Close",
+      },
+    }
   end,
 }

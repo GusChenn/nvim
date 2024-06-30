@@ -123,44 +123,40 @@ return {
             "Tag current window",
           },
         },
-        l = {
-          cmd "Grapple cycle_tags next",
-          "Grapple cycle to next tag",
-        },
-        h = {
-          cmd "Grapple cycle_tags prev",
-          "Grapple cycle to previous tag",
-        },
+        l = { cmd "Grapple cycle_tags next", "Grapple cycle to next tag" },
+        h = { cmd "Grapple cycle_tags prev", "Grapple cycle to previous tag" },
       }, { prefix = "<leader>" })
     end,
   },
-  -- {
-  --   "nvim-telescope/telescope.nvim",
-  --   cmd = { "Telescope" },
-  --   -- event = "VeryLazy",
-  --   opts = require "config.long-configs.telescope",
-  --   init = function()
-  --     local telescope = require "telescope"
-  --
-  --     telescope.load_extension "fzf"
-  --     telescope.load_extension "undo"
-  --   end,
-  --   dependencies = {
-  --     {
-  --       "nvim-telescope/telescope-fzf-native.nvim",
-  --       build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-  --     },
-  --     "nvim-lua/plenary.nvim",
-  --     "debugloop/telescope-undo.nvim",
-  --   },
-  --   {
-  --     "RRethy/nvim-treesitter-endwise",
-  --     event = "BufEnter",
-  --     dependencies = {
-  --       "nvim-treesitter",
-  --     },
-  --   },
-  -- },
+  {
+    "nvim-telescope/telescope.nvim",
+    cmd = { "Telescope" },
+    event = "VeryLazy",
+    config = function()
+      require("telescope").setup(require "config.long-configs.telescope")
+    end,
+    init = function()
+      local telescope = require "telescope"
+
+      telescope.load_extension "fzf"
+      telescope.load_extension "undo"
+    end,
+    dependencies = {
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+      },
+      "nvim-lua/plenary.nvim",
+      "debugloop/telescope-undo.nvim",
+    },
+    {
+      "RRethy/nvim-treesitter-endwise",
+      event = "BufEnter",
+      dependencies = {
+        "nvim-treesitter",
+      },
+    },
+  },
   -- TODO: setup Obsidian/ Neorg
   {
     "github/copilot.vim",

@@ -13,7 +13,7 @@ loaders.load_lazy()
 loaders.load_mappings()
 
 -- Setup colorscheme
-vim.cmd.colorscheme "catppuccin-latte"
+loaders.load_colorscheme()
 
 -- Setup custom highlights
 loaders.load_custom_highlights()
