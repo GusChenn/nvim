@@ -30,10 +30,38 @@ o.foldlevelstart = 99
 o.foldenable = true
 o.foldcolumn = "0"
 o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+o.cursorline = true
 o.cursorlineopt = "both" -- to enable cursorline!
 
 -- hide fold column
 o.showtabline = 0 -- to hide tabline
+
+o.laststatus = 3
+o.showmode = false
+
+-- Indenting
+o.expandtab = true
+o.shiftwidth = 2
+o.smartindent = true
+o.tabstop = 2
+o.softtabstop = 2
+
+o.ignorecase = true
+o.smartcase = true
+o.mouse = "a"
+
+-- Numbers
+o.number = true
+o.numberwidth = 2
+o.ruler = false
+
+-- disable nvim intro
+opt.shortmess:append "sI"
+
+o.signcolumn = "yes"
+o.splitbelow = true
+o.splitright = true
+o.undofile = true
 
 opt.linebreak = true
 opt.showbreak = ">>"
@@ -51,3 +79,9 @@ wo.number = false
 
 -- Set shell
 vim.api.nvim_set_option("shell", "/usr/bin/zsh")
+
+-- add binaries installed by mason.nvim to path
+local is_windows = vim.fn.has "win32" ~= 0
+local sep = is_windows and "\\" or "/"
+local delim = is_windows and ";" or ":"
+vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH

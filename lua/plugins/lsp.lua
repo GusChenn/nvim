@@ -5,110 +5,28 @@ return {
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
       "williamboman/mason.nvim",
+      "hrsh7th/nvim-cmp",
+      {
+        "stevearc/conform.nvim",
+        opts = {
+          formatters_by_ft = {
+            lua = { "stylua" },
+            python = { "isort", "black" },
+            javascript = { { "prettierd", "prettier" } },
+          },
+          format_on_save = {
+            timeout_ms = 500,
+            lsp_format = "fallback",
+          },
+        },
+      },
     },
     config = function()
       local mason_lspconfig = require "mason-lspconfig"
+      local lsp = require "utils.lsp"
 
       require("mason").setup()
       require("mason-lspconfig").setup()
-
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-      capabilities.textDocument.completion.completionItem = {
-        documentationFormat = { "markdown", "plaintext" },
-        snippetSupport = true,
-        preselectSupport = true,
-        insertReplaceSupport = true,
-        labelDetailsSupport = true,
-        deprecatedSupport = true,
-        commitCharactersSupport = true,
-        tagSupport = { valueSet = { 1 } },
-        resolveSupport = {
-          properties = {
-            "documentation",
-            "detail",
-            "additionalTextEdits",
-          },
-        },
-      }
-
-      local on_init = function(client, _)
-        if client.supports_method "textDocument/semanticTokens" then
-          client.server_capabilities.semanticTokensProvider = nil
-        end
-      end
-
-      local on_attach = function(_, bufnr)
-        local wc = require "which-key"
-
-        wc.register {
-          g = {
-            name = "Go to",
-            D = {
-              buffer = bufnr,
-              vim.lsp.buf.declaration,
-              "Go to declaration",
-            },
-            d = {
-              buffer = bufnr,
-              vim.lsp.buf.definition,
-              "Go to definition",
-            },
-            i = {
-              buffer = bufnr,
-              vim.lsp.buf.implementation,
-              "Go to implementation",
-            },
-          },
-          ["<leader>"] = {
-            sh = {
-              buffer = bufnr,
-              vim.lsp.buf.signature_help,
-              "Show signature help",
-            },
-            wa = {
-              buffer = bufnr,
-              vim.lsp.buf.add_workspace_folder,
-              "Add workspace folder",
-            },
-            wr = {
-              buffer = bufnr,
-              vim.lsp.buf.remove_workspace_folder,
-              "Remove workspace folder",
-            },
-            wl = {
-              buffer = bufnr,
-              function()
-                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-              end,
-              "List workspace folders",
-            },
-            D = {
-              buffer = bufnr,
-              vim.lsp.buf.type_definition,
-              "Go to type definition",
-            },
-            ra = {
-              buffer = bufnr,
-              function()
-                print "TODO: Add lsp renaming function"
-              end,
-              "Rename files",
-            },
-          },
-          ca = {
-            buffer = bufnr,
-            mode = { "n", "v" },
-            vim.lsp.buf.code_action,
-            "Code action",
-          },
-          gr = {
-            buffer = bufnr,
-            vim.lsp.buf.references,
-            "Show references",
-          },
-        }
-      end
 
       mason_lspconfig.setup {
         ensure_installed = require("general-opts").lsp.ensure_installed,
@@ -117,9 +35,9 @@ return {
 
       local with_base_capabilities = function(extra_opts)
         local base_capabilities = {
-          on_attach = on_attach,
-          capabilities = capabilities,
-          on_init = on_init,
+          on_attach = lsp.on_attach,
+          capabilities = lsp.capabilities(),
+          on_init = lsp.on_init,
         }
 
         return vim.tbl_deep_extend("force", base_capabilities, extra_opts or {})
@@ -141,7 +59,7 @@ return {
               packageManager = "yarn",
             },
             on_attach = function()
-              on_attach(client, bufnr)
+              lsp.on_attach(client, bufnr)
               vim.api.nvim_create_autocmd("BufWritePre", {
                 buffer = bufnr,
                 command = "EslintFixAll",
@@ -154,20 +72,132 @@ return {
       -- Customize diagnostics looks
       vim.diagnostic.config {
         virtual_text = false,
-        signs = true,
         underline = true,
         update_in_insert = false,
         severity_sort = true,
+        float = {
+          header = "  ᵈⁱᵃᵍⁿᵒˢᵗⁱᶜˢ",
+          source = false,
+          prefix = " ",
+          border = "solid",
+          suffix = "",
+          format = function(diagnostic)
+            return string.sub(diagnostic.message, 1, -2)
+          end,
+        },
       }
     end,
   },
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   event = "InsertEnter",
-  --   opts = function()
-  --     return require "configs.cmp"
-  --   end,
-  -- },
+  {
+    -- TODO: Remove unecessary dependencies
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lua",
+      -- "zbirenbaum/copilot-cmp",
+      "onsails/lspkind.nvim",
+      -- Snippet engine
+      {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*",
+        build = "make install_jsregexp",
+        config = function()
+          -- lua format
+          require("luasnip.loaders.from_lua").load()
+          require("luasnip.loaders.from_lua").lazy_load { paths = vim.g.lua_snippets_path or "" }
+          vim.api.nvim_create_autocmd("InsertLeave", {
+            callback = function()
+              if
+                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+                and not require("luasnip").session.jump_active
+              then
+                require("luasnip").unlink_current()
+              end
+            end,
+          })
+
+          require("luasnip").config.set_config {
+            history = true,
+            updateevents = "TextChanged,TextChangedI",
+          }
+        end,
+      },
+    },
+    config = function()
+      local cmp = require "cmp"
+
+      cmp.setup {
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        sources = cmp.config.sources {
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "buffer" },
+          { name = "nvim_lua" },
+          { name = "path" },
+          { name = "nvim_lsp_signature_help" },
+        },
+        window = {
+          completion = {
+            side_padding = 1,
+            winhighlight = "Normal:MiniPickNormal,CursorLine:PmenuSel,Search:None",
+            scrollbar = false,
+            border = "solid",
+          },
+          documentation = {
+            winhighlight = "Normal:MiniPickNormal",
+            border = "solid",
+          },
+        },
+        formatting = {
+          format = require("lspkind").cmp_format {
+            maxwidth = 50,
+            ellipsis_char = "",
+          },
+        },
+        mapping = {
+          ["<C-p>"] = cmp.mapping.select_prev_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item(),
+          ["<C-f>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-b>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-c>"] = cmp.mapping.close(),
+
+          ["<CR>"] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = true,
+          },
+        },
+      }
+
+      cmp.setup.cmdline({ "/", "?" }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = "buffer" },
+        },
+      })
+
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, {
+          { name = "cmdline" },
+        }),
+        matching = { disallow_symbol_nonprefix_matching = false },
+      })
+    end,
+  },
   -- {
   --   "nvimtools/none-ls.nvim",
   --   event = "VeryLazy",

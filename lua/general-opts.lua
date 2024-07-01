@@ -35,4 +35,11 @@ M.lsp = {
   },
 }
 
+M.conform = {
+  blacklist = {
+    "**/node_modules/**",
+    "**/plugins/**",
+  },
+}
+
 return M

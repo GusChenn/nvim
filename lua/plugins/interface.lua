@@ -315,7 +315,14 @@ return {
   -- },
   {
     "andymass/vim-matchup",
-    event = "UIEnter",
+    event = "VeryLazy",
+    config = function()
+      vim.g.matchup_matchparen_nomode = "i"
+      vim.g.matchup_matchparen_offscreen = {}
+
+      vim.api.nvim_set_hl(0, "MatchParen", { link = "Underlined" })
+      vim.api.nvim_set_hl(0, "MatchWord", { link = "Underlined" })
+    end,
   },
   {
     "folke/ts-comments.nvim",
