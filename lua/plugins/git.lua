@@ -155,33 +155,39 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = "VeryLazy",
-    opts = {
-      signs = {
-        add = { text = "│" },
-        change = { text = "│" },
-        delete = { text = "│" },
-        topdelete = { text = "┆" },
-        changedelete = { text = "┆" },
-        untracked = { text = "┆" },
-      },
-    },
-    init = function()
+    config = function()
       local gs = require "gitsigns"
+      local wc = require "which-key"
+      local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register({
-        rh = {
-          gs.reset_hunk,
-          "Reset hunk",
+      gs.setup {
+        signs = {
+          add = { text = "│" },
+          change = { text = "│" },
+          delete = { text = "│" },
+          topdelete = { text = "┆" },
+          changedelete = { text = "┆" },
+          untracked = { text = "┆" },
         },
-        ph = {
-          gs.preview_hunk,
-          "Preview hunk",
-        },
-        gd = {
-          gs.diffthis,
-          "Diff",
-        },
-      }, { prefix = "<leader>" })
+        on_attach = function(bufnr)
+          wc.register {
+            ["<leader>"] = {
+              rh = {
+                gs.reset_hunk,
+                "Reset hunk",
+              },
+              ph = {
+                gs.preview_hunk,
+                "Preview hunk",
+              },
+              gd = {
+                gs.diffthis,
+                "Diff",
+              },
+            },
+          }
+        end,
+      }
     end,
   },
 }

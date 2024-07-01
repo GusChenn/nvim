@@ -3,7 +3,7 @@ local M = {}
 M.treesitter = {
   ensure_installed = {
     "vim",
-    "vimdocs",
+    "vimdoc",
     "lua",
     "html",
     "css",

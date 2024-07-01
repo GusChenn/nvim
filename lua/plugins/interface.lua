@@ -25,18 +25,20 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     event = "VeryLazy",
-    opts = {
-      endwise = {
-        enable = true,
-      },
-      matchup = {
-        enable = true,
-        disable_virtual_text = true,
-      },
-      ensure_installed = {
-        require("general-opts").treesitter.ensure_installed,
-      },
-    },
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        endwise = {
+          enable = true,
+        },
+        matchup = {
+          enable = true,
+          disable_virtual_text = true,
+        },
+        ensure_installed = {
+          require("general-opts").treesitter.ensure_installed,
+        },
+      }
+    end,
   },
   {
     "brenoprata10/nvim-highlight-colors",
@@ -85,50 +87,6 @@ return {
     end,
   },
   {
-    "kevinhwang91/nvim-ufo",
-    event = "UIEnter",
-    dependencies = {
-      "kevinhwang91/promise-async",
-    },
-    opts = require "config.long-configs.nvim-ufo",
-    init = function()
-      require("which-key").register({
-        p = { "za", "Toggle fold (za)" },
-      }, { prefix = "f" })
-    end,
-  },
-  {
-    "cbochs/grapple.nvim",
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons", lazy = true },
-    },
-    event = { "BufReadPost", "BufNewFile" },
-    cmd = "Grapple",
-    opts = {
-      scope = "git_branch",
-      style = "basename",
-      win_opts = {
-        border = "solid",
-      },
-    },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").register({
-        p = {
-          cmd "Grapple toggle_tags",
-          "Toggle grapple window",
-          p = {
-            cmd "Grapple tag",
-            "Tag current window",
-          },
-        },
-        l = { cmd "Grapple cycle_tags next", "Grapple cycle to next tag" },
-        h = { cmd "Grapple cycle_tags prev", "Grapple cycle to previous tag" },
-      }, { prefix = "<leader>" })
-    end,
-  },
-  {
     "nvim-telescope/telescope.nvim",
     cmd = { "Telescope" },
     event = "VeryLazy",
@@ -151,13 +109,30 @@ return {
     },
     {
       "RRethy/nvim-treesitter-endwise",
-      event = "BufEnter",
+      lazy = false,
       dependencies = {
         "nvim-treesitter",
       },
     },
   },
-  -- TODO: setup Obsidian/ Neorg
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    event = {
+      "BufReadPre " .. vim.fn.expand "~/" .. "Repos/studies/second-brain/Software Engineer Studies/**/**.md",
+      "BufNewFile " .. vim.fn.expand "~/" .. "Repos/studies/second-brain/Software Engineer Studies/**/**.md",
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter",
+      "epwalsh/pomo.nvim",
+    },
+    config = function()
+      require "config.long-configs.obsidian"
+    end,
+  },
   {
     "github/copilot.vim",
     event = "VeryLazy",
@@ -214,6 +189,10 @@ return {
         reset = {
           normal = "<leader><C-l>",
         },
+        complete = {
+          detail = "Use @<Tab> or /<Tab> for options.",
+          insert = "<S-Tab>",
+        },
       },
     },
     init = function()
@@ -252,67 +231,70 @@ return {
     ft = { "typescriptreact", "tsx", "html" },
     config = true,
   },
-  -- {
-  --   "nvim-neotest/neotest",
-  --   event = "VeryLazy",
-  --   dependencies = {
-  --     "nvim-neotest/nvim-nio",
-  --     "nvim-lua/plenary.nvim",
-  --     "antoinemadec/FixCursorHold.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "olimorris/neotest-rspec",
-  --   },
-  --   config = function()
-  --     local opts = require "config.long-configs.neotest"
-  --     require("neotest").setup(opts)
-  --   end,
-  --   init = function()
-  --     local cmd = require("utils.plugin-helpers").cmd
-  --     local neotest = require "neotest"
-  --
-  --     require("which-key").register({
-  --       n = {
-  --         l = {
-  --           neotest.run.run(),
-  --           "Run closest test",
-  --         },
-  --         f = {
-  --           neotest.run.run(vim.fn.expand "%"),
-  --           "Run all tests in file",
-  --         },
-  --         p = {
-  --           cmd "Neotest output-panel",
-  --           "Toggle output panel",
-  --         },
-  --         s = {
-  --           cmd "Neotest summary",
-  --           "Toggle summary panel",
-  --         },
-  --       },
-  --       t = {
-  --         function()
-  --           if vim.bo.filetype ~= "ruby" then
-  --             print "Not a ruby file"
-  --             return
-  --           end
-  --
-  --           local current_file_path = vim.fn.expand "%:p:~:."
-  --           local is_spec = string.match(current_file_path, "_spec")
-  --
-  --           if is_spec then
-  --             local app_file_path = current_file_path:gsub("([^/]+)", "app", 1):gsub("_spec%.", ".")
-  --
-  --             vim.cmd("e " .. app_file_path)
-  --           else
-  --             local spec_file_path = current_file_path:gsub("([^/]+)", "spec", 1):gsub("%.", "_spec.")
-  --
-  --             vim.cmd("e " .. spec_file_path)
-  --           end
-  --         end,
-  --       },
-  --     }, { prefix = "<leader>" })
-  --   end,
-  -- },
+  {
+    "nvim-neotest/neotest",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "olimorris/neotest-rspec",
+    },
+    config = function()
+      local opts = require "config.long-configs.neotest"
+      require("neotest").setup(opts)
+    end,
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+      local neotest = require "neotest"
+
+      require("which-key").register({
+        n = {
+          l = {
+            neotest.run.run,
+            "Run closest test",
+          },
+          f = {
+            function()
+              neotest.run.run(vim.fn.expand "%")
+            end,
+            "Run all tests in file",
+          },
+          p = {
+            cmd "Neotest output-panel",
+            "Toggle output panel",
+          },
+          s = {
+            cmd "Neotest summary",
+            "Toggle summary panel",
+          },
+        },
+        t = {
+          function()
+            if vim.bo.filetype ~= "ruby" then
+              print "Not a ruby file"
+              return
+            end
+
+            local current_file_path = vim.fn.expand "%:p:~:."
+            local is_spec = string.match(current_file_path, "_spec")
+
+            if is_spec then
+              local app_file_path = current_file_path:gsub("([^/]+)", "app", 1):gsub("_spec%.", ".")
+
+              vim.cmd("e " .. app_file_path)
+            else
+              local spec_file_path = current_file_path:gsub("([^/]+)", "spec", 1):gsub("%.", "_spec.")
+
+              vim.cmd("e " .. spec_file_path)
+            end
+          end,
+          "Toggle test file",
+        },
+      }, { prefix = "<leader>" })
+    end,
+  },
   {
     "andymass/vim-matchup",
     event = "VeryLazy",
@@ -335,6 +317,7 @@ return {
   },
   {
     "rmagatti/auto-session",
+    enabled = false,
     lazy = false,
     opts = {
       log_level = "error",
@@ -407,6 +390,23 @@ return {
           },
         },
         { module = "extra" },
+        {
+          module = "sessions",
+          config = {
+            autoread = true,
+          },
+        },
+        {
+          module = "statusline",
+          config = {
+            content = {
+              active = function()
+                return " %t"
+              end,
+            },
+            set_vim_settings = false,
+          },
+        },
       }
 
       loaders.load_mini_modules(module_configs)
