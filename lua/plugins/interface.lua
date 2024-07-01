@@ -26,6 +26,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     event = "VeryLazy",
     config = function()
+      ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup {
         endwise = {
           enable = true,
@@ -34,8 +35,10 @@ return {
           enable = true,
           disable_virtual_text = true,
         },
-        ensure_installed = {
-          require("general-opts").treesitter.ensure_installed,
+        ensure_installed = require("general-opts").treesitter.ensure_installed,
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = true,
         },
       }
     end,
@@ -399,12 +402,12 @@ return {
         {
           module = "statusline",
           config = {
-            content = {
-              active = function()
-                return " %t"
-              end,
-            },
-            set_vim_settings = false,
+            -- content = {
+            --   active = function()
+            --     return " %t"
+            --   end,
+            -- },
+            -- set_vim_settings = false,
           },
         },
       }

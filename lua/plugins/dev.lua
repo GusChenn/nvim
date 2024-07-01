@@ -243,11 +243,31 @@ return {
     ft = "lua",
     opts = {
       library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
         { path = "luvit-meta/library", words = { "vim%.uv" } },
       },
     },
+    dependencies = {
+      { "Bilal2453/luvit-meta", lazy = true },
+    },
   },
-  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+  {
+    "nvim-pack/nvim-spectre",
+    event = "VeryLazy",
+    cmd = "Spectre",
+    config = true,
+  },
+  {
+    "kawre/leetcode.nvim",
+    build = ":TSUpdate html",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+
+      -- optional
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = true,
+  },
 }

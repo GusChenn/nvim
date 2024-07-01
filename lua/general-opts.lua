@@ -26,11 +26,7 @@ M.lsp = {
   ensure_installed = {
     "cssls",
     "lua_ls",
-    "html",
-    "clangd",
     "solargraph",
-    "marksman",
-    "astro",
     "pylyzer",
   },
 }

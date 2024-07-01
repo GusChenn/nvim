@@ -59,4 +59,18 @@ wc.register {
   ["<A-j>"] = { cmd "TmuxNavigateDown", "Focus pane down" },
   ["<A-h>"] = { cmd "TmuxNavigateLeft", "Focus pane left" },
   ["<A-l>"] = { cmd "TmuxNavigateRight", "Focus pane right" },
+  cpp = {
+    function()
+      local path = vim.fn.expand "%:."
+      vim.fn.setreg("+", path)
+    end,
+    "Copies the current file path to the clipboard",
+  },
+  spp = {
+    function()
+      local path = vim.fn.expand "%:."
+      vim.notify('Path: "' .. path)
+    end,
+    "Shows the current file path",
+  },
 }

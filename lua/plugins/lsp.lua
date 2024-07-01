@@ -8,17 +8,43 @@ return {
       "hrsh7th/nvim-cmp",
       {
         "stevearc/conform.nvim",
+        event = "BufReadPre",
         opts = {
           formatters_by_ft = {
             lua = { "stylua" },
-            python = { "isort", "black" },
-            javascript = { { "prettierd", "prettier" } },
+            -- python = { "isort", "black" },
+            javascript = { "prettier_d", "eslint_d" },
+            typescript = { "prettier_d", "eslint_d" },
+            javascriptreact = { "prettier_d", "eslint_d" },
+            typescriptreact = { "prettier_d", "eslint_d" },
           },
           format_on_save = {
             timeout_ms = 500,
             lsp_format = "fallback",
           },
         },
+      },
+      {
+        "mfussenegger/nvim-lint",
+        event = "BufReadPre",
+        config = function()
+          local lint = require "lint"
+
+          lint.linters_by_ft = {
+            typescriptreact = { "eslint_d" },
+            typescript = { "eslint_d" },
+            javascriptreact = { "eslint_d" },
+            javascript = { "eslint_d" },
+          }
+        end,
+
+        init = function()
+          vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+            callback = function()
+              require("lint").try_lint()
+            end,
+          })
+        end,
       },
     },
     config = function()
@@ -53,20 +79,6 @@ return {
             single_file_support = false,
           })
         end,
-        ["eslint"] = function(client, bufnr)
-          require("lspconfig").tsserver.setup(with_base_capabilities {
-            settings = {
-              packageManager = "yarn",
-            },
-            on_attach = function()
-              lsp.on_attach(client, bufnr)
-              vim.api.nvim_create_autocmd("BufWritePre", {
-                buffer = bufnr,
-                command = "EslintFixAll",
-              })
-            end,
-          })
-        end,
       }
 
       -- Customize diagnostics looks
@@ -77,7 +89,7 @@ return {
         severity_sort = true,
         float = {
           header = "  ᵈⁱᵃᵍⁿᵒˢᵗⁱᶜˢ",
-          source = false,
+          source = true,
           prefix = " ",
           border = "solid",
           suffix = "",
@@ -218,11 +230,5 @@ return {
       retries = 3,
       timeout = 1000,
     },
-  },
-  {
-    "nvim-pack/nvim-spectre",
-    event = "VeryLazy",
-    cmd = "Spectre",
-    config = true,
   },
 }

@@ -1,18 +1,39 @@
 return {
+  -- Too new for now
+  -- {
+  --   "OXY2DEV/markview.nvim",
+  --   ft = "markdown",
+  --   dependencies = {
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  --   name = "markview",
+  --   -- config = true,
+  --   opts = {
+  --     header = {
+  --       {
+  --         -- sign = " ",
+  --         -- icon = "",
+  --       },
+  --     },
+  --   },
+  -- },
   {
-    "OXY2DEV/markview.nvim",
-    ft = "markdown",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
+    "lukas-reineke/headlines.nvim",
+    ft = { "markdown" },
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = {
+      markdown = {
+        bullets = { "󰬺", "󰬻", "󰬼", "󰬽" },
+        fat_headlines = true,
+      },
     },
-    config = true,
   },
   {
     "epwalsh/obsidian.nvim",
     version = "*",
     event = {
-      "BufReadPre " .. vim.fn.expand "~/" .. "Repos/studies/second-brain/Software Engineer Studies/**/**.md",
-      "BufNewFile " .. vim.fn.expand "~/" .. "Repos/studies/second-brain/Software Engineer Studies/**/**.md",
+      "BufReadPre " .. vim.fn.expand "~/" .. "Repos/studies/**/**.md",
+      "BufNewFile " .. vim.fn.expand "~/" .. "Repos/studies/**/**.md",
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
