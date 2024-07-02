@@ -436,12 +436,12 @@ return {
       wk.register({
         f = {
           mode = "v",
-          'y<ESC> <CMD> Pick files <CR> <C-r>"',
+          'y<ESC> <CMD> Pick files<CR><C-r>"',
           "Search for selected text in files",
         },
         g = {
           mode = "v",
-          'y<ESC> <CMD> Pick grep_live <CR> <C-r>"',
+          'y<ESC> <CMD> Pick grep_live<CR><C-r>"',
           "Search for selected text in live grep",
         },
       }, { prefix = "f" })
