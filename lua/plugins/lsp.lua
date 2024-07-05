@@ -12,11 +12,11 @@ return {
         opts = {
           formatters_by_ft = {
             lua = { "stylua" },
-            -- python = { "isort", "black" },
-            javascript = { "prettier_d", "eslint_d" },
-            typescript = { "prettier_d", "eslint_d" },
-            javascriptreact = { "prettier_d", "eslint_d" },
-            typescriptreact = { "prettier_d", "eslint_d" },
+            javascript = { "prettier_d" },
+            typescript = { "prettier_d" },
+            javascriptreact = { "prettier_d" },
+            typescriptreact = { "prettier_d" },
+            ruby = { "trim_whitespace" },
           },
           format_on_save = {
             timeout_ms = 500,
@@ -27,19 +27,20 @@ return {
       {
         "mfussenegger/nvim-lint",
         event = "BufReadPre",
+        -- ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
         config = function()
           local lint = require "lint"
 
           lint.linters_by_ft = {
-            typescriptreact = { "eslint_d" },
-            typescript = { "eslint_d" },
-            javascriptreact = { "eslint_d" },
-            javascript = { "eslint_d" },
+            typescriptreact = { "eslint" },
+            typescript = { "eslint" },
+            javascriptreact = { "eslint" },
+            javascript = { "eslint" },
           }
         end,
 
         init = function()
-          vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+          vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
             callback = function()
               require("lint").try_lint()
             end,
@@ -77,6 +78,21 @@ return {
           require("lspconfig").tsserver.setup(with_base_capabilities {
             root_dir = require("lspconfig.util").find_git_ancestor,
             single_file_support = false,
+          })
+        end,
+        ["eslint"] = function()
+          require("lspconfig").eslint.setup(with_base_capabilities {
+            on_attach = function(client, bufnr)
+              lsp.on_attach(client, bufnr)
+
+              vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                command = "EslintFixAll",
+              })
+            end,
+            settings = {
+              packageManager = "yarn",
+            },
           })
         end,
       }
@@ -230,5 +246,20 @@ return {
       retries = 3,
       timeout = 1000,
     },
+    on_init = function()
+      require("which-key").register({
+        g = {
+          name = "Garbage Day",
+          d = {
+            require("garbage-day.utils").stop_lsp,
+            "Stop LSP servers",
+          },
+          e = {
+            require("garbage-day.utils").start_lsp,
+            "Start LSP servers",
+          },
+        },
+      }, { prefix = "<leader>" })
+    end,
   },
 }

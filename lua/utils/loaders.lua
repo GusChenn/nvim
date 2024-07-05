@@ -138,6 +138,7 @@ loaders.load_colorscheme = function()
       mason = true,
       markdown = true,
       neogit = true,
+      neotest = true,
       nvimtree = true,
       ufo = true,
       telescope = { enabled = true, style = "nvchad" },

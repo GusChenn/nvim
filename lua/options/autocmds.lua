@@ -36,7 +36,7 @@ autocmd({ "FileType" }, {
 autocmd({ "FileType" }, {
   desc = "Close quick fix list with q",
   pattern = "qf",
-  command = [[nnoremap <buffer> q <CR>:cclose<CR>]],
+  command = [[nnoremap <buffer> q <CMD>:cclose<CR>]],
 })
 
 autocmd({ "BufRead" }, {

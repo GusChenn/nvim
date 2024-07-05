@@ -49,7 +49,7 @@ return {
     opts = {
       ---@usage 'background'|'foreground'|'virtual'
       render = "virtual",
-      virtual_symbol = "◉",
+      virtual_symbol = "⬤ ",
 
       enable_named_colors = true,
       enable_tailwind = true,
@@ -79,6 +79,7 @@ return {
           "fugitive",
           "copilot-chat",
           "NvimTree",
+          "[Quickfix List]",
         },
         providers = {
           "regex",
@@ -244,9 +245,47 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "olimorris/neotest-rspec",
     },
-    config = function()
-      local opts = require "config.long-configs.neotest"
-      require("neotest").setup(opts)
+    opts = function()
+      return {
+        adapters = {
+          require "neotest-rspec",
+        },
+        diagnostic = {
+          enabled = false,
+        },
+        log_level = vim.log.levels.TRACE,
+        icons = {
+          expanded = "",
+          child_prefix = "",
+          child_indent = "",
+          final_child_prefix = "",
+          non_collapsible = "",
+          collapsed = "",
+
+          passed = "",
+          running = "",
+          failed = "",
+          unknown = "",
+          skipped = "",
+        },
+        floating = {
+          border = "single",
+          max_height = 0.8,
+          max_width = 0.9,
+        },
+        summary = {
+          mappings = {
+            attach = "a",
+            expand = { "<CR>", "<2-LeftMouse>" },
+            expand_all = "e",
+            jumpto = "i",
+            output = "o",
+            run = "r",
+            short = "O",
+            stop = "u",
+          },
+        },
+      }
     end,
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
@@ -446,5 +485,20 @@ return {
         },
       }, { prefix = "f" })
     end,
+  },
+  {
+    "yorickpeterse/nvim-pqf",
+    event = "VeryLazy",
+    name = "pqf",
+    opts = {
+      signs = {
+        error = { text = " ", hl = "DiagnosticSignError" },
+        warning = { text = " ", hl = "DiagnosticSignWarn" },
+        info = { text = " ", hl = "DiagnosticSignInfo" },
+        hint = { text = " ", hl = "DiagnosticSignHint" },
+      },
+      max_filename_length = 45,
+      filename_truncate_prefix = "...",
+    },
   },
 }
