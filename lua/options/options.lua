@@ -25,7 +25,7 @@ g.VtrClearBeforeSend = 0
 
 -- nvim ufo default settings
 o.foldcolumn = "1" -- '0' is not bad
-o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99
 o.foldenable = true
 o.foldcolumn = "0"
@@ -70,15 +70,15 @@ opt.timeoutlen = 200
 opt.scrolloff = 999
 opt.clipboard = ""
 opt.fillchars = {
-	vert = " ",
-	eob = " ",
+  vert = " ",
+  eob = " ",
 }
 opt.conceallevel = 2
 
 wo.number = false
 
 -- Set shell
-vim.api.nvim_set_option("shell", "/usr/bin/zsh")
+-- vim.api.nvim_set_option("shell", "/usr/bin/zsh")
 
 -- add binaries installed by mason.nvim to path
 local is_windows = vim.fn.has "win32" ~= 0

@@ -17,9 +17,9 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register({
-        e = { cmd "NvimTreeToggle", "Toggle explorer" },
-      }, { prefix = "<leader>" })
+      require("which-key").add({
+        "<leader>e", cmd "NvimTreeToggle", desc = "Toggle explorer"
+      })
     end,
   },
   {
@@ -106,7 +106,8 @@ return {
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+        build =
+        "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
       },
       "nvim-lua/plenary.nvim",
       "debugloop/telescope-undo.nvim",
@@ -135,99 +136,6 @@ return {
     },
     config = function()
       require "config.long-configs.obsidian"
-    end,
-  },
-  {
-    "github/copilot.vim",
-    event = "VeryLazy",
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").register({
-        c = {
-          d = {
-            cmd "Copilot disable",
-            "Disable copilot virtual text",
-          },
-          e = {
-            cmd "Copilot enable",
-            "Enable copilot virtual text",
-          },
-        },
-      }, { prefix = "<leader>" })
-    end,
-  },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    cmd = {
-      "CopilotChatOpen",
-      "CopilotChatToggle",
-      "CopilotChatExplain",
-      "CopilotChatTest",
-      "CopilotChatCommitStaged",
-      "CopilotChatLoad",
-      "CopilotChatFixDiagnostic",
-    },
-    branch = "canary",
-    dependencies = {
-      { "github/copilot.vim" },
-      { "nvim-lua/plenary.nvim" },
-    },
-    opts = {
-      context = "buffers",
-
-      question_header = "󰙊 ",
-      answer_header = " ",
-      error_header = " ",
-      separator = " ",
-
-      show_help = false,
-      show_folds = false,
-      auto_follow_cursor = false,
-
-      callback = function()
-        vim.cmd("CopilotChatSave " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"))
-      end,
-
-      mappings = {
-        reset = {
-          normal = "<leader><C-l>",
-        },
-        complete = {
-          detail = "Use @<Tab> or /<Tab> for options.",
-          insert = "<S-Tab>",
-        },
-      },
-    },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").register({
-        c = {
-          m = {
-            require("utils.ai.ai-helpers").commit_with_ai,
-            "Generate commit message with ai",
-          },
-          t = {
-            mode = "v",
-            cmd "CopilotChatTest",
-            "Generate test with ai",
-          },
-        },
-      }, { prefix = "<leader>" })
-
-      require("which-key").register {
-        ["<A-T>"] = {
-          mode = { "n", "v" },
-          require("utils.ai.ai-helpers").toggle_copilot_chat,
-          "Toggle copilot chat",
-        },
-        ["<A-E>"] = {
-          mode = "v",
-          cmd "CopilotChatExplain",
-          "Explain selection with ai",
-        },
-      }
     end,
   },
   {
@@ -291,28 +199,13 @@ return {
       local cmd = require("utils.plugin-helpers").cmd
       local neotest = require "neotest"
 
-      require("which-key").register({
-        n = {
-          l = {
-            neotest.run.run,
-            "Run closest test",
-          },
-          f = {
-            function()
-              neotest.run.run(vim.fn.expand "%")
-            end,
-            "Run all tests in file",
-          },
-          p = {
-            cmd "Neotest output-panel",
-            "Toggle output panel",
-          },
-          s = {
-            cmd "Neotest summary",
-            "Toggle summary panel",
-          },
-        },
-        t = {
+      require("which-key").add({
+        { "<leader>nl", neotest.run.run,                                   desc = "Run closest test" },
+        { "<leader>nf", function() neotest.run.run(vim.fn.expand "%") end, desc = "Run all tests in file", },
+        { "<leader>np", cmd "Neotest output-panel",                        desc = "Toggle output panel", },
+        { "<leader>ns", cmd "Neotest summary",                             desc = "Toggle summary panel", },
+        {
+          "<leader>t",
           function()
             if vim.bo.filetype ~= "ruby" then
               print "Not a ruby file"
@@ -332,9 +225,9 @@ return {
               vim.cmd("e " .. spec_file_path)
             end
           end,
-          "Toggle test file",
+          desc = "Toggle test file",
         },
-      }, { prefix = "<leader>" })
+      })
     end,
   },
   {
@@ -375,18 +268,10 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register({
-        s = {
-          s = {
-            cmd "Autosession save",
-            "Save session",
-          },
-          l = {
-            cmd "Telescope session-lens",
-            "Load session",
-          },
-        },
-      }, { prefix = "<leader>" })
+      require("which-key").add({
+        { "<leader>ss", cmd "Autosession save",       desc = "Save session", },
+        { "<leader>sl", cmd "Telescope session-lens", desc = "Load session", },
+      })
     end,
   },
   {
@@ -457,33 +342,16 @@ return {
       local cmd = require("utils.plugin-helpers").cmd
       local wk = require "which-key"
 
-      wk.register({
-        f = {
-          cmd "Pick files",
-          "Pick files",
-        },
-        g = {
-          cmd "Pick grep_live",
-          "Pick live grep",
-        },
-        h = {
-          cmd "Pick oldfiles",
-          "Pick oldfiles",
-        },
-      }, { prefix = "f" })
+      wk.add({
+        { "ff", cmd "Pick files",     desc = "Pick files", },
+        { "fg", cmd "Pick grep_live", desc = "Pick live grep", },
+        { "fh", cmd "Pick oldfiles",  desc = "Pick oldfiles", },
+      })
 
-      wk.register({
-        f = {
-          mode = "v",
-          'y<ESC> <CMD> Pick files<CR><C-r>"',
-          "Search for selected text in files",
-        },
-        g = {
-          mode = "v",
-          'y<ESC> <CMD> Pick grep_live<CR><C-r>"',
-          "Search for selected text in live grep",
-        },
-      }, { prefix = "f" })
+      wk.add({
+        { "ff", 'y<ESC> <CMD> Pick files<CR><C-r>"',     mode = "v", desc = "Search for selected text in files", },
+        { "fg", 'y<ESC> <CMD> Pick grep_live<CR><C-r>"', mode = "v", desc = "Search for selected text in live grep", },
+      })
     end,
   },
   {

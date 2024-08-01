@@ -72,17 +72,9 @@ return {
 
     -- Load default mappings
     api.config.mappings.default_on_attach(bufnr)
-    require("which-key").register {
-      h = {
-        buffer = bufnr,
-        api.node.navigate.parent_close,
-        "Close",
-      },
-      l = {
-        buffer = bufnr,
-        api.node.open.edit,
-        "Open",
-      },
+    require("which-key").add {
+      { "h", api.node.navigate.parent_close, buffer = bufnr, desc = "Close", },
+      { "l", api.node.open.edit,             buffer = bufnr, desc = "Open", },
     }
   end,
 }

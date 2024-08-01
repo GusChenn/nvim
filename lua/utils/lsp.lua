@@ -33,79 +33,19 @@ end
 M.on_attach = function(_, bufnr)
   local wc = require "which-key"
 
-  wc.register {
-    g = {
-      name = "Go to",
-      D = {
-        buffer = bufnr,
-        vim.lsp.buf.declaration,
-        "Go to declaration",
-      },
-      d = {
-        buffer = bufnr,
-        vim.lsp.buf.definition,
-        "Go to definition",
-      },
-      i = {
-        buffer = bufnr,
-        vim.lsp.buf.implementation,
-        "Go to implementation",
-      },
-      l = {
-        buffer = bufnr,
-        function()
-          vim.diagnostic.open_float { focus = false }
-        end,
-        "Get line diagnostic",
-      },
-    },
-    ["<leader>"] = {
-      sh = {
-        buffer = bufnr,
-        vim.lsp.buf.signature_help,
-        "Show signature help",
-      },
-      wa = {
-        buffer = bufnr,
-        vim.lsp.buf.add_workspace_folder,
-        "Add workspace folder",
-      },
-      wr = {
-        buffer = bufnr,
-        vim.lsp.buf.remove_workspace_folder,
-        "Remove workspace folder",
-      },
-      wl = {
-        buffer = bufnr,
-        function()
-          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end,
-        "List workspace folders",
-      },
-      D = {
-        buffer = bufnr,
-        vim.lsp.buf.type_definition,
-        "Go to type definition",
-      },
-      ra = {
-        buffer = bufnr,
-        function()
-          print "TODO: Add lsp renaming function"
-        end,
-        "Rename files",
-      },
-    },
-    ca = {
-      buffer = bufnr,
-      mode = { "n", "v" },
-      vim.lsp.buf.code_action,
-      "Code action",
-    },
-    gr = {
-      buffer = bufnr,
-      vim.lsp.buf.references,
-      "Show references",
-    },
+  wc.add {
+    { "gD",         buffer = bufnr, vim.lsp.buf.declaration,                                                 desc = "Go to declaration", },
+    { "d",          buffer = bufnr, vim.lsp.buf.definition,                                                  desc = "Go to definition", },
+    { "i",          buffer = bufnr, vim.lsp.buf.implementation,                                              desc = "Go to implementation", },
+    { "l",          buffer = bufnr, function() vim.diagnostic.open_float { focus = false } end,              desc = "Get line diagnostic", },
+    { "<leader>sh", buffer = bufnr, vim.lsp.buf.signature_help,                                              desc = "Show signature help", },
+    { "<leader>wa", buffer = bufnr, vim.lsp.buf.add_workspace_folder,                                        desc = "Add workspace folder", },
+    { "<leader>wr", buffer = bufnr, vim.lsp.buf.remove_workspace_folder,                                     desc = "Remove workspace folder", },
+    { "<leader>wl", buffer = bufnr, function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, desc = "List workspace folders", },
+    { "<leader>D",  buffer = bufnr, vim.lsp.buf.type_definition,                                             desc = "Go to type definition", },
+    { "<leader>ra", buffer = bufnr, function() print "TODO: Add lsp renaming function" end,                  desc = "Rename files", },
+    { "ca",         buffer = bufnr, vim.lsp.buf.code_action,                                                 desc = "Code action",             mode = { "n", "v" }, },
+    { "gr",         buffer = bufnr, vim.lsp.buf.references,                                                  desc = "Show references", },
   }
 end
 

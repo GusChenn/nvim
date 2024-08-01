@@ -6,9 +6,9 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register({
-        e = { cmd "NvimTreeToggle", "Toggle explorer" },
-      }, { prefix = "<leader>" })
+      require("which-key").add({
+        { "<leader>e", cmd "NvimTreeToggle", desc = "Toggle explorer" },
+      })
     end,
   },
   {
@@ -45,9 +45,9 @@ return {
     },
     opts = require "config.long-configs.nvim-ufo",
     init = function()
-      require("which-key").register({
-        p = { "za", "Toggle fold (za)" },
-      }, { prefix = "f" })
+      require("which-key").add({
+        { "fp", "za", desc = "Toggle fold (za)" },
+      })
     end,
   },
   {
@@ -67,18 +67,12 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register({
-        p = {
-          cmd "Grapple toggle_tags",
-          "Toggle grapple window",
-          p = {
-            cmd "Grapple tag",
-            "Tag current window",
-          },
-        },
-        l = { cmd "Grapple cycle_tags next", "Grapple cycle to next tag" },
-        h = { cmd "Grapple cycle_tags prev", "Grapple cycle to previous tag" },
-      }, { prefix = "<leader>" })
+      require("which-key").add({
+        { "<leader>p",  cmd "Grapple toggle_tags",     desc = "Toggle grapple window", },
+        { "<leader>pp", cmd "Grapple tag",             desc = "Tag current window", },
+        { "<leader>l",  cmd "Grapple cycle_tags next", desc = "Grapple cycle to next tag" },
+        { "<leader>h",  cmd "Grapple cycle_tags prev", desc = "Grapple cycle to previous tag" },
+      })
     end,
   },
   {
@@ -89,9 +83,9 @@ return {
     },
     opts = require "config.long-configs.nvim-ufo",
     init = function()
-      require("which-key").register({
-        p = { "za", "Toggle fold (za)" },
-      }, { prefix = "f" })
+      require("which-key").add({
+        { "fp", "za", desc = "Toggle fold (za)" },
+      })
     end,
   },
   {
@@ -110,7 +104,8 @@ return {
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+        build =
+        "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
       },
       "nvim-lua/plenary.nvim",
       "debugloop/telescope-undo.nvim",
@@ -129,18 +124,10 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register({
-        c = {
-          d = {
-            cmd "Copilot disable",
-            "Disable copilot virtual text",
-          },
-          e = {
-            cmd "Copilot enable",
-            "Enable copilot virtual text",
-          },
-        },
-      }, { prefix = "<leader>" })
+      require("which-key").add({
+        { "<leader>cd", cmd "Copilot disable", desc = "Disable copilot virtual text", },
+        { "<leader>ce", cmd "Copilot enable",  desc = "Enable copilot virtual text", },
+      })
     end,
   },
   {
@@ -188,31 +175,14 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register({
-        c = {
-          m = {
-            require("utils.ai.ai-helpers").commit_with_ai,
-            "Generate commit message with ai",
-          },
-          t = {
-            mode = "v",
-            cmd "CopilotChatTest",
-            "Generate test with ai",
-          },
-        },
-      }, { prefix = "<leader>" })
+      require("which-key").add({
+        { "<leader>cm", require("utils.ai.ai-helpers").commit_with_ai, desc = "Generate commit message with ai", },
+        { "<leader>ct", cmd "CopilotChatTest",                         mode = "v",                               desc = "Generate test with ai", },
+      })
 
-      require("which-key").register {
-        ["<A-T>"] = {
-          mode = { "n", "v" },
-          require("utils.ai.ai-helpers").toggle_copilot_chat,
-          "Toggle copilot chat",
-        },
-        ["<A-E>"] = {
-          mode = "v",
-          cmd "CopilotChatExplain",
-          "Explain selection with ai",
-        },
+      require("which-key").add {
+        { "<A-T>", require("utils.ai.ai-helpers").toggle_copilot_chat, mode = { "n", "v" }, desc = "Toggle copilot chat", },
+        { "<A-E>", cmd "CopilotChatExplain",                           mode = "v",          desc = "Explain selection with ai", },
       }
     end,
   },

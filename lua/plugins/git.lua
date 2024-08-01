@@ -5,11 +5,8 @@ return {
     config = true,
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
-      require("which-key").register {
-        ["<leader>dd"] = {
-          cmd "Trouble diagnostics toggle",
-          "Toggle diagnostics",
-        },
+      require("which-key").add {
+        { "<leader>dd", cmd "Trouble diagnostics toggle", desc = "Toggle diagnostics", },
       }
     end,
   },
@@ -23,11 +20,8 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register {
-        gbb = {
-          cmd "GitBlameToggle",
-          "Toggle git blame",
-        },
+      require("which-key").add {
+        { "gbb", cmd "GitBlameToggle", desc = "Toggle git blame", },
       }
     end,
   },
@@ -95,16 +89,10 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register({
-        ["do"] = {
-          cmd "DiffviewOpen",
-          "Open diffview",
-        },
-        dc = {
-          cmd "DiffviewClose",
-          "Close diffview",
-        },
-      }, { prefix = "<leader>" })
+      require("which-key").add({
+        { "<leader>do", cmd "DiffviewOpen",  desc = "Open diffview", },
+        { "<leader>dc", cmd "DiffviewClose", desc = "Close diffview", },
+      })
     end,
   },
   {
@@ -144,11 +132,8 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").register {
-        gs = {
-          cmd "Neogit",
-          "Open Neogit",
-        },
+      require("which-key").add {
+        { "gs", cmd "Neogit", desc = "Open Neogit", },
       }
     end,
   },
@@ -169,22 +154,11 @@ return {
           changedelete = { text = "┆" },
           untracked = { text = "┆" },
         },
-        on_attach = function(bufnr)
-          wc.register {
-            ["<leader>"] = {
-              rh = {
-                gs.reset_hunk,
-                "Reset hunk",
-              },
-              ph = {
-                gs.preview_hunk,
-                "Preview hunk",
-              },
-              gd = {
-                gs.diffthis,
-                "Diff",
-              },
-            },
+        on_attach = function()
+          wc.add {
+            { "<leader>rh", gs.reset_hunk,   desc = "Reset hunk" },
+            { "<leader>ph", gs.preview_hunk, desc = "Preview hunk" },
+            { "<leader>gd", gs.diffthis,     desc = "Diff" },
           }
         end,
       }
