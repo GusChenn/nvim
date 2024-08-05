@@ -35,9 +35,9 @@ M.on_attach = function(_, bufnr)
 
   wc.add {
     { "gD",         buffer = bufnr, vim.lsp.buf.declaration,                                                 desc = "Go to declaration", },
-    { "d",          buffer = bufnr, vim.lsp.buf.definition,                                                  desc = "Go to definition", },
-    { "i",          buffer = bufnr, vim.lsp.buf.implementation,                                              desc = "Go to implementation", },
-    { "l",          buffer = bufnr, function() vim.diagnostic.open_float { focus = false } end,              desc = "Get line diagnostic", },
+    { "gd",         buffer = bufnr, vim.lsp.buf.definition,                                                  desc = "Go to definition", },
+    { "gi",         buffer = bufnr, vim.lsp.buf.implementation,                                              desc = "Go to implementation", },
+    { "gl",         buffer = bufnr, function() vim.diagnostic.open_float { focus = false } end,              desc = "Get line diagnostic", },
     { "<leader>sh", buffer = bufnr, vim.lsp.buf.signature_help,                                              desc = "Show signature help", },
     { "<leader>wa", buffer = bufnr, vim.lsp.buf.add_workspace_folder,                                        desc = "Add workspace folder", },
     { "<leader>wr", buffer = bufnr, vim.lsp.buf.remove_workspace_folder,                                     desc = "Remove workspace folder", },

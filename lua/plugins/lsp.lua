@@ -16,10 +16,10 @@ return {
             typescript = { "prettier_d" },
             javascriptreact = { "prettier_d" },
             typescriptreact = { "prettier_d" },
-            ruby = { "trim_whitespace" },
+            ruby = { "rubocop" },
           },
           format_on_save = {
-            timeout_ms = 500,
+            timeout_ms = 2000,
             lsp_format = "fallback",
           },
         },

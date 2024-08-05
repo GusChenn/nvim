@@ -38,19 +38,6 @@ return {
     end,
   },
   {
-    "kevinhwang91/nvim-ufo",
-    event = "UIEnter",
-    dependencies = {
-      "kevinhwang91/promise-async",
-    },
-    opts = require "config.long-configs.nvim-ufo",
-    init = function()
-      require("which-key").add({
-        { "fp", "za", desc = "Toggle fold (za)" },
-      })
-    end,
-  },
-  {
     "cbochs/grapple.nvim",
     dependencies = {
       { "nvim-tree/nvim-web-devicons", lazy = true },
@@ -190,23 +177,6 @@ return {
     "windwp/nvim-ts-autotag",
     ft = { "typescriptreact", "tsx", "html" },
     config = true,
-  },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      modes = {
-        search = {
-          enabled = true,
-          label = {
-            style = "overlay",
-          },
-        },
-        char = {
-          enabled = false,
-        },
-      },
-    },
   },
   {
     "folke/lazydev.nvim",

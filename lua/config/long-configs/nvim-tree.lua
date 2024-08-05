@@ -73,8 +73,8 @@ return {
     -- Load default mappings
     api.config.mappings.default_on_attach(bufnr)
     require("which-key").add {
-      { "h", api.node.navigate.parent_close, buffer = bufnr, desc = "Close", },
-      { "l", api.node.open.edit,             buffer = bufnr, desc = "Open", },
+      { "h", api.node.navigate.parent_close, group = "NvimTree", buffer = bufnr, desc = "Close", },
+      { "l", api.node.open.edit,             group = "NvimTree", buffer = bufnr, desc = "Open", },
     }
   end,
 }

@@ -280,7 +280,6 @@ return {
     opts = {
       modes = {
         search = {
-          enabled = true,
           label = {
             style = "overlay",
           },
@@ -290,6 +289,11 @@ return {
         },
       },
     },
+    init = function()
+      require("which-key").add({
+        { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      })
+    end
   },
   {
     "echasnovski/mini.nvim",
