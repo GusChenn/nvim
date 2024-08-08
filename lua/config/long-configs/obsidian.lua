@@ -8,7 +8,7 @@ require("obsidian").setup {
   workspaces = {
     {
       name = "Personal",
-      path = "~/Repos/studies/second-brain/Software Engineer Studies",
+      path = "~/Repos/second-brain/obsidian-vault",
     },
   },
 
@@ -23,16 +23,16 @@ require("obsidian").setup {
   -- levels defined by "vim.log.levels.*".
   log_level = vim.log.levels.INFO,
 
-  -- daily_notes = {
-  -- 	-- Optional, if you keep daily notes in a separate directory.
-  -- 	folder = "notes/dailies",
-  -- 	-- Optional, if you want to change the date format for the ID of daily notes.
-  -- 	date_format = "%Y-%m-%d",
-  -- 	-- Optional, if you want to change the date format of the default alias of daily notes.
-  -- 	alias_format = "%B %-d, %Y",
-  -- 	-- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
-  -- 	template = nil,
-  -- },
+  daily_notes = {
+    -- Optional, if you keep daily notes in a separate directory.
+    folder = "obsidian-vault/Notes/dailies",
+    -- Optional, if you want to change the date format for the ID of daily notes.
+    date_format = "%Y-%m-%d",
+    -- Optional, if you want to change the date format of the default alias of daily notes.
+    alias_format = "%B %-d, %Y",
+    -- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
+    template = "daily.md",
+  },
 
   -- Optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
   completion = {
@@ -85,6 +85,12 @@ require("obsidian").setup {
     ["<leader>gf"] = {
       action = function()
         return require("obsidian").util.gf_passthrough()
+      end,
+      opts = { noremap = false, expr = true, buffer = true },
+    },
+    ["<leader>oT"] = {
+      action = function()
+        return "<CMD> ObsidianToday <CR>"
       end,
       opts = { noremap = false, expr = true, buffer = true },
     },
@@ -196,11 +202,15 @@ require("obsidian").setup {
 
   -- Optional, for templates (see below).
   templates = {
-    subdir = "Templates",
+    folder = "obsidian-vault/Templates",
     date_format = "%Y-%m-%d",
     time_format = "%H:%M",
     -- A map for custom variables, the key should be the variable and the value a function
-    substitutions = {},
+    substitutions = {
+      daily_note_title = function()
+        return os.date("Standup topics: %a, %B %d")
+      end
+    },
   },
 
   -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
@@ -221,15 +231,15 @@ require("obsidian").setup {
 
   picker = {
     -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
-    name = "telescope.nvim",
+    name = "mini.pick",
     -- Optional, configure key mappings for the picker. These are the defaults.
     -- Not all pickers support all mappings.
     mappings = {
-      -- Create a new note from your query.
       new = "<C-x>",
-      -- Insert a link to the selected note.
       insert_link = "<C-l>",
     },
+    note_mappings = {},
+    tag_mappings = {},
   },
 
   -- Optional, sort search results by "path", "modified", "accessed", or "created".
@@ -279,10 +289,10 @@ require("obsidian").setup {
     -- Define how various check-boxes are displayed
     checkboxes = {
       -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-      [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-      ["x"] = { char = "", hl_group = "ObsidianDone" },
-      [">"] = { char = "", hl_group = "ObsidianRightArrow" },
-      ["~"] = { char = "󰰱", hl_group = "ObsidianTilde" },
+      [" "] = { char = "󰄱 ", hl_group = "ObsidianTodo" },
+      ["x"] = { char = " ", hl_group = "ObsidianDone" },
+      [">"] = { char = " ", hl_group = "ObsidianRightArrow" },
+      ["~"] = { char = "󰰱 ", hl_group = "ObsidianTilde" },
       -- Replace the above with this if you don't have a patched font:
       -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
       -- ["x"] = { char = "✔", hl_group = "ObsidianDone" },
@@ -291,7 +301,7 @@ require("obsidian").setup {
     },
     -- Use bullet marks for non-checkbox lists.
     bullets = { char = "•", hl_group = "ObsidianBullet" },
-    external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
+    external_link_icon = { char = " ", hl_group = "ObsidianExtLinkIcon" },
     -- Replace the above with this if you don't have a patched font:
     -- external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
     reference_text = { hl_group = "ObsidianRefText" },

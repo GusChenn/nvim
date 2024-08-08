@@ -12,32 +12,6 @@ return {
     end,
   },
   {
-    "RRethy/vim-illuminate",
-    event = { "UIEnter" },
-    config = function()
-      require("illuminate").configure {
-        modes_denylist = {
-          "i",
-          "ic",
-          "ix",
-        },
-        filetypes_denylist = {
-          "dirbuf",
-          "dirvish",
-          "fugitive",
-          "copilot-chat",
-          "NvimTree",
-        },
-        providers = {
-          "regex",
-          "treesitter",
-          "lsp",
-        },
-        min_count_to_highlight = 2,
-      }
-    end,
-  },
-  {
     "cbochs/grapple.nvim",
     dependencies = {
       { "nvim-tree/nvim-web-devicons", lazy = true },
@@ -172,11 +146,6 @@ return {
         { "<A-E>", cmd "CopilotChatExplain",                           mode = "v",          desc = "Explain selection with ai", },
       }
     end,
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    ft = { "typescriptreact", "tsx", "html" },
-    config = true,
   },
   {
     "folke/lazydev.nvim",

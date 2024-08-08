@@ -16,10 +16,9 @@ return {
             typescript = { "prettier_d" },
             javascriptreact = { "prettier_d" },
             typescriptreact = { "prettier_d" },
-            ruby = { "rubocop" },
           },
           format_on_save = {
-            timeout_ms = 2000,
+            timeout_ms = 500,
             lsp_format = "fallback",
           },
         },
@@ -36,6 +35,7 @@ return {
             typescript = { "eslint" },
             javascriptreact = { "eslint" },
             javascript = { "eslint" },
+            ruby = { "rubocop" },
           }
         end,
 
@@ -227,13 +227,6 @@ return {
       })
     end,
   },
-  -- {
-  --   "nvimtools/none-ls.nvim",
-  --   event = "VeryLazy",
-  --   config = function()
-  --     require "configs.none_ls"
-  --   end,
-  -- },
   {
     "zeioth/garbage-day.nvim",
     event = "VeryLazy",
@@ -246,7 +239,7 @@ return {
       retries = 3,
       timeout = 1000,
     },
-    on_init = function()
+    init = function()
       require("which-key").add({
         { "<leader>gd", require("garbage-day.utils").stop_lsp,  desc = "Stop LSP servers", },
         { "<leader>ge", require("garbage-day.utils").start_lsp, desc = "Start LSP servers", },

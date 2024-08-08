@@ -42,6 +42,18 @@ return {
         },
       }
     end,
+    init = function()
+      local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+
+      parser_config.embedded_template = {
+        install_info = {
+          url                            = 'https://github.com/tree-sitter/tree-sitter-embedded-template',
+          files                          = { 'src/parser.c' },
+          requires_generate_from_grammar = true,
+        },
+        used_by = { 'erb' }
+      }
+    end
   },
   {
     "brenoprata10/nvim-highlight-colors",
@@ -54,9 +66,6 @@ return {
       enable_named_colors = true,
       enable_tailwind = true,
     },
-  },
-  {
-    "folke/zen-mode.nvim",
   },
   {
     "shellRaining/hlchunk.nvim",
@@ -140,7 +149,7 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    ft = { "typescriptreact", "tsx", "html" },
+    ft = { "typescriptreact", "tsx", "html", "eruby" },
     config = true,
   },
   {
@@ -251,28 +260,18 @@ return {
     event = "UIEnter",
   },
   {
-    "rmagatti/auto-session",
-    enabled = false,
-    lazy = false,
-    opts = {
-      log_level = "error",
-      -- auto_session_enable_last_session = true,
-      -- auto_restore_enabled = true,
-      auto_session_use_git_branch = true,
-
-      pre_save_cmds = {
-        "silent! NvimTreeClose",
-        "silent! CopilotChatClose",
-      },
+    "folke/persistence.nvim",
+    dependencies = {
+      "echasnovski/mini.nvim",  -- necessary so it doesnt try to load the session before mini modules are up
+      "zeioth/garbage-day.nvim" -- necessary so it can load LSPs,
     },
+    event = "BufReadPre",       -- this will only start session saving when an actual file was opened
+    config = true,
     init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
       require("which-key").add({
-        { "<leader>ss", cmd "Autosession save",       desc = "Save session", },
-        { "<leader>sl", cmd "Telescope session-lens", desc = "Load session", },
+        { "<leader>sl", function() require("persistence").load() end, desc = "Load last directory session" }
       })
-    end,
+    end
   },
   {
     "folke/flash.nvim",
@@ -359,18 +358,39 @@ return {
     end,
   },
   {
-    "yorickpeterse/nvim-pqf",
+    'stevearc/quicker.nvim',
     event = "VeryLazy",
-    name = "pqf",
+    ---@module "quicker"
+    ---@type quicker.SetupOptions
     opts = {
-      signs = {
-        error = { text = " ", hl = "DiagnosticSignError" },
-        warning = { text = " ", hl = "DiagnosticSignWarn" },
-        info = { text = " ", hl = "DiagnosticSignInfo" },
-        hint = { text = " ", hl = "DiagnosticSignHint" },
-      },
-      max_filename_length = 45,
-      filename_truncate_prefix = "...",
+      keys = {
+        {
+          "<Tab>",
+          function()
+            if vim.g.quickfix_context_expanded then
+              require("quicker").collapse()
+              vim.g.quickfix_context_expanded = false
+            else
+              require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+              vim.g.quickfix_context_expanded = true
+            end
+          end,
+          desc = "Toggle quickfix context",
+        },
+      }
     },
   },
+  {
+    'Bekaboo/dropbar.nvim',
+    event = "VeryLazy",
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim'
+    },
+    opts = {},
+  },
+  {
+    'declancm/maximize.nvim',
+    event = "VeryLazy",
+    config = true
+  }
 }

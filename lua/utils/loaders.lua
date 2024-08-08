@@ -96,7 +96,7 @@ end
 loaders.load_colorscheme = function()
   require("catppuccin").setup {
     -- transparent_background = vim
-    flavour = "mocha",
+    flavour = "latte",
     color_overrides = {
       latte = {
         rosewater = "#cc7983",

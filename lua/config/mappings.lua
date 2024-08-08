@@ -54,6 +54,7 @@ wc.add {
   { "<A-j>",      cmd "TmuxNavigateDown",  desc = "Focus pane down" },
   { "<A-h>",      cmd "TmuxNavigateLeft",  desc = "Focus pane left" },
   { "<A-l>",      cmd "TmuxNavigateRight", desc = "Focus pane right" },
+  { "<leader>f",  cmd "Maximize",          desc = "Full screen current window" },
   { "cpp",
     function()
       local path = vim.fn.expand "%:."

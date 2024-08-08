@@ -40,8 +40,8 @@ autocmd({ "FileType" }, {
 })
 
 autocmd({ "BufRead" }, {
-  desc = "Treat slim files as ruby files",
-  pattern = "*.slim",
+  desc = "Treat slim and erb files as ruby files",
+  pattern = { "*.slim" },
   command = [[setfiletype ruby]],
 })
 

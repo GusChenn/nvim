@@ -7,6 +7,11 @@ local g = vim.g
 local o = vim.o
 local wo = vim.wo
 
+-- Personal global vars
+g.quickfix_context_expanded = false
+
+-- General globals
+
 g.mapleader = " "
 g.maplocalleader = "\\"
 

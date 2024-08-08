@@ -19,6 +19,7 @@ M.treesitter = {
     "gitignore",
     "json",
     "python",
+    "scss",
   },
 }
 
