@@ -81,6 +81,7 @@ return {
   },
   {
     "github/copilot.vim",
+    enabled = false,
     event = "VeryLazy",
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
@@ -93,6 +94,7 @@ return {
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
+    enabled = false,
     cmd = {
       "CopilotChatOpen",
       "CopilotChatToggle",

@@ -329,13 +329,46 @@ return {
         {
           module = "statusline",
           config = {
-            -- content = {
-            --   active = function()
-            --     return " %t"
-            --   end,
-            -- },
-            -- set_vim_settings = false,
-          },
+            content = {
+              active = function()
+                local _, mode_hl = MiniStatusline.section_mode({ trunc_width = 75 })
+                local git_branch = MiniStatusline.section_git({ icon = " " })
+                local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75, icon = "" })
+                local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
+                local location = "󱨄 %P"
+                local search = MiniStatusline.section_searchcount({ trunc_width = 75 })
+
+                -- Format filename
+                local filename = vim.fn.expand('%:t')
+                local extension = filename:match("^.+%.(.+)$")
+                local filename_icon = require 'nvim-web-devicons'.get_icon(filename, extension, { default = true })
+                local formatted_filename = filename_icon .. " " .. filename
+
+                -- Format git branch name
+                local formatted_git = ""
+                if #git_branch <= 13 then
+                  formatted_git = git_branch
+                else
+                  formatted_git = string.sub(git_branch, 1, 13) .. " "
+                end
+
+                return MiniStatusline.combine_groups({
+                  { hl = "NormalNC", strings = { formatted_git, diagnostics } },
+                  "%=",
+                  { hl = "NormalNC", strings = { formatted_filename } },
+                  "%=",
+                  { hl = "NormalNC", strings = { lsp } },
+                  { hl = mode_hl,    strings = { search, location } },
+                })
+              end,
+            },
+            use_icons = true,
+
+            -- Whether to set Vim's settings for statusline (make it always shown with
+            -- 'laststatus' set to 2). To use global statusline in Neovim>=0.7.0, set
+            -- this to `false` and 'laststatus' to 3.
+            set_vim_settings = false,
+          }
         },
       }
 
@@ -380,14 +413,14 @@ return {
       }
     },
   },
-  {
-    'Bekaboo/dropbar.nvim',
-    event = "VeryLazy",
-    dependencies = {
-      'nvim-telescope/telescope-fzf-native.nvim'
-    },
-    opts = {},
-  },
+  -- {
+  --   'Bekaboo/dropbar.nvim',
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     'nvim-telescope/telescope-fzf-native.nvim'
+  --   },
+  --   opts = {},
+  -- },
   {
     'declancm/maximize.nvim',
     event = "VeryLazy",

@@ -14,3 +14,6 @@ loaders.load_mappings()
 
 -- Setup colorscheme
 loaders.load_colorscheme()
+
+-- Setup custom highlights
+loaders.load_custom_highlights()

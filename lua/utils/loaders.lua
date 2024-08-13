@@ -149,4 +149,12 @@ loaders.load_colorscheme = function()
   vim.cmd.colorscheme "catppuccin"
 end
 
+loaders.load_custom_highlights = function()
+  local custom_hls = require("options.custom-highlights").custom_highlights()
+
+  for group, opts in pairs(custom_hls) do
+    vim.api.nvim_set_hl(0, group, opts)
+  end
+end
+
 return loaders
