@@ -161,6 +161,7 @@ return {
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
       "olimorris/neotest-rspec",
+      "tpope/vim-rails",
     },
     opts = function()
       return {
@@ -213,29 +214,8 @@ return {
         { "<leader>nf", function() neotest.run.run(vim.fn.expand "%") end, desc = "Run all tests in file", },
         { "<leader>np", cmd "Neotest output-panel",                        desc = "Toggle output panel", },
         { "<leader>ns", cmd "Neotest summary",                             desc = "Toggle summary panel", },
-        {
-          "<leader>t",
-          function()
-            if vim.bo.filetype ~= "ruby" then
-              print "Not a ruby file"
-              return
-            end
-
-            local current_file_path = vim.fn.expand "%:p:~:."
-            local is_spec = string.match(current_file_path, "_spec")
-
-            if is_spec then
-              local app_file_path = current_file_path:gsub("([^/]+)", "app", 1):gsub("_spec%.", ".")
-
-              vim.cmd("e " .. app_file_path)
-            else
-              local spec_file_path = current_file_path:gsub("([^/]+)", "spec", 1):gsub("%.", "_spec.")
-
-              vim.cmd("e " .. spec_file_path)
-            end
-          end,
-          desc = "Toggle test file",
-        },
+        { "<leader>t",  cmd "A",                                           desc = "Toggle test file with vim rails", },
+        { "<leader>T",  cmd "R",                                           desc = "Toggle related file with vim rails", },
       })
     end,
   },
@@ -423,6 +403,18 @@ return {
   -- },
   {
     'declancm/maximize.nvim',
+    event = "VeryLazy",
+    config = true
+  },
+  {
+    "OXY2DEV/helpview.nvim",
+    lazy = false, -- Recommended
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter"
+    }
+  },
+  {
+    'r-cha/encourage.nvim',
     event = "VeryLazy",
     config = true
   }

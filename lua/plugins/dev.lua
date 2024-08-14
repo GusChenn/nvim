@@ -182,4 +182,8 @@ return {
     },
     config = true,
   },
+  {
+    "tpope/vim-rails",
+    ft = { "ruby", "eruby" }
+  }
 }

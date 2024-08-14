@@ -34,6 +34,16 @@ local toggle_line_numbers = function()
   end
 end
 
+local copy_path = function()
+  local path = vim.fn.expand "%:."
+  vim.fn.setreg("+", path)
+end
+
+local show_path = function()
+  local path = vim.fn.expand "%:."
+  vim.notify('Path: "' .. path)
+end
+
 wc.add {
   { "<leader>n",  toggle_line_numbers,     desc = "Toggle line numbers" },
   { "<leader>s",  "*",                     desc = "Highligh all instances of the word under the cursor" },
@@ -45,28 +55,16 @@ wc.add {
   { "K",          ":m '<-2<CR>gv=gv",      mode = "v",                                                  desc = "Move line up respecting indentation" },
   { "s",          "0",                     mode = "v",                                                  desc = "Move to the beginning of the line" },
   { "S",          "$",                     mode = "v",                                                  desc = "Move to the end of the line" },
-  { "<C-q>",      cmd "noautocmd w",       desc = "Save file without autocmds" },
+  { "<C-s>",      cmd "noautocmd w",       desc = "Save file without autocmds" },
+  { "<C-q>",      cmd "w",                 desc = "Save file with autocmds" },
   { "cb",         close_all_buffers,       desc = "Close all buffers except the current one" },
   { "<C-l>",      cmd "noh",               desc = "Clear highlights" },
   { "Y",          '"+y',                   mode = "v",                                                  desc = "Copy to system clipboard" },
-  { "<C-s>",      cmd "w",                 desc = "Save file with autocmds" },
   { "<A-k>",      cmd "TmuxNavigateUp",    desc = "Focus pane up" },
   { "<A-j>",      cmd "TmuxNavigateDown",  desc = "Focus pane down" },
   { "<A-h>",      cmd "TmuxNavigateLeft",  desc = "Focus pane left" },
   { "<A-l>",      cmd "TmuxNavigateRight", desc = "Focus pane right" },
   { "<leader>f",  cmd "Maximize",          desc = "Full screen current window" },
-  { "cpp",
-    function()
-      local path = vim.fn.expand "%:."
-      vim.fn.setreg("+", path)
-    end,
-    desc = "Copies the current file path to the clipboard",
-  },
-  { "spp",
-    function()
-      local path = vim.fn.expand "%:."
-      vim.notify('Path: "' .. path)
-    end,
-    desc = "Shows the current file path",
-  },
+  { "cpp",        copy_path,               desc = "Copies the current file path to the clipboard", },
+  { "spp",        show_path,               desc = "Shows the current file path", },
 }
