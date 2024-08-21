@@ -11,6 +11,13 @@ return {
     priority = 1000,
   },
   {
+    -- More high contrast
+    "scottmckendry/cyberdream.nvim",
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     opts = require "config.long-configs.nvim-tree",
@@ -171,20 +178,20 @@ return {
         diagnostic = {
           enabled = false,
         },
-        log_level = vim.log.levels.TRACE,
+        log_level = vim.log.levels.ERROR,
         icons = {
-          expanded = "",
+          expanded = " ",
           child_prefix = "",
           child_indent = "",
           final_child_prefix = "",
           non_collapsible = "",
           collapsed = "",
 
-          passed = "",
-          running = "",
-          failed = "",
-          unknown = "",
-          skipped = "",
+          passed = " ",
+          running = " ",
+          failed = " ",
+          unknown = " ",
+          skipped = " ",
         },
         floating = {
           border = "single",

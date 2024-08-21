@@ -101,6 +101,11 @@ require("obsidian").setup {
       end,
       opts = { buffer = true, expr = true },
     },
+    ["<leader>ft"] = {
+      action = function()
+        return require("utils.plugin-helpers").pick_folder_files("database/tasks")
+      end,
+    },
   },
 
   -- Where to put new notes. Valid options are
@@ -301,6 +306,8 @@ require("obsidian").setup {
     },
     -- Use bullet marks for non-checkbox lists.
     bullets = { char = "•", hl_group = "ObsidianBullet" },
+    -- Use this instead when markview is enabled
+    -- bullets = { char = "", hl_group = "ObsidianBullet" },
     external_link_icon = { char = " ", hl_group = "ObsidianExtLinkIcon" },
     -- Replace the above with this if you don't have a patched font:
     -- external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },

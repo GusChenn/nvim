@@ -1,5 +1,6 @@
 local wc = require "which-key"
 local cmd = require("utils.plugin-helpers").cmd
+local pick_folder_files = require("utils.plugin-helpers").pick_folder_files
 
 local safe_close = function()
   local is_buffer_in_multiple_splits = function()
@@ -44,6 +45,10 @@ local show_path = function()
   vim.notify('Path: "' .. path)
 end
 
+local pick_model = function()
+  pick_folder_files("app/models")
+end
+
 wc.add {
   { "<leader>n",  toggle_line_numbers,     desc = "Toggle line numbers" },
   { "<leader>s",  "*",                     desc = "Highligh all instances of the word under the cursor" },
@@ -55,8 +60,8 @@ wc.add {
   { "K",          ":m '<-2<CR>gv=gv",      mode = "v",                                                  desc = "Move line up respecting indentation" },
   { "s",          "0",                     mode = "v",                                                  desc = "Move to the beginning of the line" },
   { "S",          "$",                     mode = "v",                                                  desc = "Move to the end of the line" },
-  { "<C-s>",      cmd "noautocmd w",       desc = "Save file without autocmds" },
-  { "<C-q>",      cmd "w",                 desc = "Save file with autocmds" },
+  { "<C-q>",      cmd "noautocmd w",       desc = "Save file without autocmds" },
+  { "<C-s>",      cmd "w",                 desc = "Save file with autocmds" },
   { "cb",         close_all_buffers,       desc = "Close all buffers except the current one" },
   { "<C-l>",      cmd "noh",               desc = "Clear highlights" },
   { "Y",          '"+y',                   mode = "v",                                                  desc = "Copy to system clipboard" },
@@ -67,4 +72,5 @@ wc.add {
   { "<leader>f",  cmd "Maximize",          desc = "Full screen current window" },
   { "cpp",        copy_path,               desc = "Copies the current file path to the clipboard", },
   { "spp",        show_path,               desc = "Shows the current file path", },
+  { "<leader>fm", pick_model,              desc = "Pick model", },
 }
