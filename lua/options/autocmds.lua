@@ -9,9 +9,13 @@ autocmd({ "VimResized" }, {
 })
 
 autocmd({ "BufEnter" }, {
-  desc = "Auto resize panes when entering copilot-chat",
+  desc = "Change background color for copilot-chat buffers",
   pattern = "copilot-chat",
-  command = "tabdo wincmd =",
+  callback = function()
+    vim.api.nvim_set_hl(0, 'CopilotChatBg', { bg = '#f0f0f0' })
+    vim.wo.winhighlight = 'Normal:CopilotChatBg'
+  end,
+  group = augroup("copilot_chat_bg", { clear = true }),
 })
 
 autocmd({ "FileType" }, {

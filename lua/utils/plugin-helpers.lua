@@ -47,6 +47,8 @@ plugin_helpers.pick_folder_files = function(folder_partial_path)
 
   local picked_file = MiniPick.start({ source = { items = files } })
 
+  if picked_file == "" then return end
+
   local file_full_path = table.concat({ target_folder_relative_path, picked_file }, '/')
 
   vim.cmd.edit(file_full_path)

@@ -81,7 +81,6 @@ return {
   },
   {
     "github/copilot.vim",
-    enabled = false,
     event = "VeryLazy",
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
@@ -94,7 +93,6 @@ return {
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
-    enabled = false,
     cmd = {
       "CopilotChatOpen",
       "CopilotChatToggle",
@@ -110,6 +108,16 @@ return {
       { "nvim-lua/plenary.nvim" },
     },
     opts = {
+      window = {
+        layout = "float",
+        width = 0.33,
+        height = 1,
+        relative = "editor",
+        col = 9999,
+        title = "  Copilot Chat",
+        border = "solid",
+      },
+
       context = "buffers",
 
       question_header = "󰙊 ",
