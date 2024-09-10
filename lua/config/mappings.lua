@@ -58,8 +58,6 @@ wc.add {
   { "<leader>wv", cmd "vsplit",            desc = "Split window vertically" },
   { "J",          ":m '>+1<CR>gv=gv",      mode = "v",                                                  desc = "Move line down respecting indentation" },
   { "K",          ":m '<-2<CR>gv=gv",      mode = "v",                                                  desc = "Move line up respecting indentation" },
-  { "s",          "0",                     mode = "v",                                                  desc = "Move to the beginning of the line" },
-  { "S",          "$",                     mode = "v",                                                  desc = "Move to the end of the line" },
   { "<C-q>",      cmd "noautocmd w",       desc = "Save file without autocmds" },
   { "<C-s>",      cmd "w",                 desc = "Save file with autocmds" },
   { "cb",         close_all_buffers,       desc = "Close all buffers except the current one" },

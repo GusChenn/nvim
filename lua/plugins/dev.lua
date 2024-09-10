@@ -174,6 +174,11 @@ return {
     event = "VeryLazy",
     cmd = "Spectre",
     config = true,
+    init = function()
+      require("which-key").add({
+        { "<A-F>", require("spectre").toggle, desc = "Toggle Spectre", },
+      })
+    end
   },
   {
     "kawre/leetcode.nvim",
