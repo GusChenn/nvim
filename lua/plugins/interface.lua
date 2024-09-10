@@ -428,5 +428,21 @@ return {
   {
     "rest-nvim/rest.nvim",
     lazy = false,
+  },
+  {
+    "ptdewey/yankbank-nvim",
+    dependencies = "kkharji/sqlite.lua",
+    event = "VeryLazy",
+    opts = {
+      persist_type = "sqlite",
+      sep = ""
+    },
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").add({
+        { "<leader>yb", cmd "YankBank", desc = "Open yankbank" }
+      })
+    end
   }
 }
