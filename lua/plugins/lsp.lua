@@ -75,8 +75,8 @@ return {
         function(server_name)
           require("lspconfig")[server_name].setup(with_base_capabilities())
         end,
-        ["tsserver"] = function()
-          require("lspconfig").tsserver.setup(with_base_capabilities {
+        ["ts_ls"] = function()
+          require("lspconfig").ts_ls.setup(with_base_capabilities {
             root_dir = require("lspconfig.util").find_git_ancestor,
             single_file_support = false,
           })
