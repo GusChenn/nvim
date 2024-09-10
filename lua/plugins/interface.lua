@@ -424,5 +424,9 @@ return {
     'r-cha/encourage.nvim',
     event = "VeryLazy",
     config = true
+  },
+  {
+    "rest-nvim/rest.nvim",
+    lazy = false,
   }
 }

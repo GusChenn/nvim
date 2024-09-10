@@ -62,3 +62,11 @@ autocmd({ "BufEnter" }, {
     vim.keymap.set("n", "q", "<CMD> DiffviewClose <CR>", { buffer = true })
   end,
 })
+
+autocmd("FileType", {
+  desc = "Set formatprg to jq for json files",
+  pattern = { "json" },
+  callback = function()
+    vim.api.nvim_set_option_value("formatprg", "jq", { scope = 'local' })
+  end,
+})
