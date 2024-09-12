@@ -173,7 +173,18 @@ return {
     "nvim-pack/nvim-spectre",
     event = "VeryLazy",
     cmd = "Spectre",
-    config = true,
+    opts = {
+      replace_engine = {
+        ["sed"] = {
+          cmd = "sed",
+          args = {
+            "-i",
+            "",
+            "-E",
+          },
+        },
+      },
+    },
     init = function()
       require("which-key").add({
         { "<A-F>", require("spectre").toggle, desc = "Toggle Spectre", },
