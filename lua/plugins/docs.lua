@@ -24,7 +24,6 @@ return {
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = {
       markdown = {
-        bullets = { "󰬺", "󰬻", "󰬼", "󰬽" },
         fat_headlines = true,
       },
     },

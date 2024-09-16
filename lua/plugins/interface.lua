@@ -19,6 +19,7 @@ return {
   },
   {
     "nvim-tree/nvim-tree.lua",
+    enabled = false,
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     opts = require "config.long-configs.nvim-tree",
     init = function()
@@ -28,6 +29,41 @@ return {
         "<leader>e", cmd "NvimTreeToggle", desc = "Toggle explorer"
       })
     end,
+  },
+  {
+    'stevearc/oil.nvim',
+    event = "VeryLazy",
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {
+      keymaps = {
+        ["g?"] = "actions.show_help",
+        ["<CR>"] = "actions.select",
+        ["<C-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+        ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
+        ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
+        ["<C-p>"] = "actions.preview",
+        ["q"] = "actions.close",
+        ["<C-l>"] = "actions.refresh",
+        ["-"] = "actions.parent",
+        ["_"] = "actions.open_cwd",
+        ["`"] = "actions.cd",
+        ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
+        ["gs"] = "actions.change_sort",
+        ["gx"] = "actions.open_external",
+        ["g."] = "actions.toggle_hidden",
+        ["g\\"] = "actions.toggle_trash",
+      },
+    },
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").add({
+        { "<leader>e", cmd "Oil", desc = "Open Oil file explorer" }
+      })
+    end
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -361,11 +397,19 @@ return {
                   formatted_git = string.sub(git_branch, 1, 13) .. " "
                 end
 
+                -- Format tab numbers
+                local tab_indicator = function()
+                  local current_tab = vim.fn.tabpagenr()
+                  local total_tabs = vim.fn.tabpagenr('$')
+                  return string.format("  %d/%d", current_tab, total_tabs)
+                end
+
                 return MiniStatusline.combine_groups({
                   { hl = "NormalNC", strings = { formatted_git, diagnostics } },
                   "%=",
                   { hl = "NormalNC", strings = { formatted_filename } },
                   "%=",
+                  { hl = "NormalNC", strings = { tab_indicator() } },
                   { hl = "NormalNC", strings = { lsp } },
                   { hl = mode_hl,    strings = { search, location } },
                 })

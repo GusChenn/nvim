@@ -71,4 +71,6 @@ wc.add {
   { "cpp",        copy_path,               desc = "Copies the current file path to the clipboard", },
   { "spp",        show_path,               desc = "Shows the current file path", },
   { "<leader>fm", pick_model,              desc = "Pick model", },
+  { "<leader>L",  cmd "tabnext",           desc = "Pick model", },
+  { "<leader>H",  cmd "tabprevious",       desc = "Pick model", },
 }
