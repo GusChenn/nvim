@@ -70,3 +70,10 @@ autocmd("FileType", {
     vim.api.nvim_set_option_value("formatprg", "jq", { scope = 'local' })
   end,
 })
+
+-- enable spell checking for markdown files
+autocmd("FileType", {
+  desc = "Enable spell checking for markdown files",
+  pattern = { "markdown" },
+  command = "setlocal spell",
+})
