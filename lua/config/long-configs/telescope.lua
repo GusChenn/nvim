@@ -9,17 +9,19 @@ return {
   },
   extensions = {
     fzf = {
-      fuzzy = true, -- false will only do exact matching
+      fuzzy = true,                   -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
     },
     undo = {
       use_delta = true,
       use_custom_command = nil,
       side_by_side = true,
-      diff_context_lines = 10,
-      entry_format = "N∘ $ID, $STAT, $TIME",
+      vim_diff_opts = {
+        ctxlen = 10
+      },
+      entry_format = "  $ID, $STAT, $TIME",
       time_format = "",
       saved_only = false,
       mappings = {

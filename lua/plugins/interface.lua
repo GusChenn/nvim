@@ -39,12 +39,9 @@ return {
       keymaps = {
         ["g?"] = "actions.show_help",
         ["<CR>"] = "actions.select",
-        ["<C-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
         ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
         ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
         ["<C-p>"] = "actions.preview",
-        ["q"] = "actions.close",
-        ["<C-l>"] = "actions.refresh",
         ["-"] = "actions.parent",
         ["_"] = "actions.open_cwd",
         ["`"] = "actions.cd",
@@ -53,7 +50,11 @@ return {
         ["gx"] = "actions.open_external",
         ["g."] = "actions.toggle_hidden",
         ["g\\"] = "actions.toggle_trash",
+        ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+        ["q"] = "actions.close",
+        ["<C-l>"] = "actions.refresh",
       },
+      use_default_keymaps = false,
     },
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
@@ -147,28 +148,23 @@ return {
     cmd = { "Telescope" },
     event = "VeryLazy",
     config = function()
-      require("telescope").setup(require "config.long-configs.telescope")
-    end,
-    init = function()
       local telescope = require "telescope"
 
-      telescope.load_extension "fzf"
+      telescope.setup(require "config.long-configs.telescope")
       telescope.load_extension "undo"
     end,
+    keys = {
+      { "<leader>u", "<CMD> Telescope undo <CR>", desc = "Undo history" }
+    },
     dependencies = {
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build =
-        "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-      },
       "nvim-lua/plenary.nvim",
       "debugloop/telescope-undo.nvim",
-    },
-    {
-      "RRethy/nvim-treesitter-endwise",
-      lazy = false,
-      dependencies = {
-        "nvim-treesitter",
+      {
+        "RRethy/nvim-treesitter-endwise",
+        lazy = false,
+        dependencies = {
+          "nvim-treesitter",
+        },
       },
     },
   },

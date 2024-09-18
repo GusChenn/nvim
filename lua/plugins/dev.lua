@@ -50,36 +50,6 @@ return {
     end,
   },
   {
-    "nvim-telescope/telescope.nvim",
-    cmd = { "Telescope" },
-    event = "VeryLazy",
-    config = function()
-      require("telescope").setup(require "config.long-configs.telescope")
-    end,
-    init = function()
-      local telescope = require "telescope"
-
-      telescope.load_extension "fzf"
-      telescope.load_extension "undo"
-    end,
-    dependencies = {
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build =
-        "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-      },
-      "nvim-lua/plenary.nvim",
-      "debugloop/telescope-undo.nvim",
-    },
-    {
-      "RRethy/nvim-treesitter-endwise",
-      event = "BufEnter",
-      dependencies = {
-        "nvim-treesitter",
-      },
-    },
-  },
-  {
     "github/copilot.vim",
     event = "VeryLazy",
     init = function()
