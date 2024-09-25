@@ -26,7 +26,7 @@ require("catppuccin").setup {
       surface2 = "#aaaaaa",
       surface1 = "#bbbbbb",
       surface0 = "#cccccc",
-      base = "#ffffff",
+      base = "#fffff9",
       mantle = "#eeeeee",
       crust = "#dddddd",
     },

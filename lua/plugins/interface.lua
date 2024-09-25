@@ -18,6 +18,12 @@ return {
     priority = 1000,
   },
   {
+    -- Github theme
+    'projekt0n/github-nvim-theme',
+    lazy = false,
+    priority = 1000,
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     enabled = false,
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
