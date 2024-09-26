@@ -143,7 +143,6 @@ return {
     config = function()
       local gs = require "gitsigns"
       local wc = require "which-key"
-      local cmd = require("utils.plugin-helpers").cmd
 
       gs.setup {
         signs = {

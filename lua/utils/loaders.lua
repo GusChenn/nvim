@@ -55,15 +55,6 @@ loaders.load_lazy = function()
   }
 end
 
--- loaders.load_custom_highlights = function()
---   local highlights = require("options.custom-highlights").custom_personal_highlights()
---   local set_hl = vim.api.nvim_set_hl
---
---   for group, opts in ipairs(highlights) do
---     set_hl(0, group, opts)
---   end
--- end
-
 loaders.load_mini_modules = function(module_configs)
   local concat_plugin_root_name = function(module)
     return "mini." .. module
@@ -94,8 +85,13 @@ loaders.load_mappings = function()
 end
 
 loaders.load_colorscheme = function()
-  require("config.themes.catppuccin")
-  vim.cmd.colorscheme "catppuccin"
+  -- For catppuccin
+  -- require("config.themes.catppuccin")
+  -- vim.cmd.colorscheme "catppuccin"
+
+  -- For everfores
+  require("config.themes.everfores")
+  vim.cmd.colorscheme "everforest"
 end
 
 loaders.load_custom_highlights = function()

@@ -20,6 +20,19 @@ return {
   {
     -- Github theme
     'projekt0n/github-nvim-theme',
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "Tsuzat/NeoSolarized.nvim",
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "neanias/everforest-nvim",
+    version = false,
     lazy = false,
     priority = 1000,
   },
@@ -95,6 +108,7 @@ return {
     init = function()
       local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 
+      ---@diagnostic disable-next-line: inject-field
       parser_config.embedded_template = {
         install_info = {
           url                            = 'https://github.com/tree-sitter/tree-sitter-embedded-template',
@@ -380,23 +394,32 @@ return {
               active = function()
                 local _, mode_hl = MiniStatusline.section_mode({ trunc_width = 75 })
                 local git_branch = MiniStatusline.section_git({ icon = " " })
-                local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75, icon = "" })
+                local diagnostics = MiniStatusline.section_diagnostics({
+                  trunc_width = 75,
+                  icon = "",
+                  signs = {
+                    ERROR = " ",
+                    WARN = " ",
+                    INFO = " ",
+                    HINT = " "
+                  }
+                })
                 local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
                 local location = "󱨄 %P"
                 local search = MiniStatusline.section_searchcount({ trunc_width = 75 })
 
                 -- Format filename
-                local filename = vim.fn.expand('%:t')
-                local extension = filename:match("^.+%.(.+)$")
-                local filename_icon = require 'nvim-web-devicons'.get_icon(filename, extension, { default = true })
-                local formatted_filename = filename_icon .. " " .. filename
+                -- local filename = vim.fn.expand('%:t')
+                -- local extension = filename:match("^.+%.(.+)$")
+                -- local filename_icon = require 'nvim-web-devicons'.get_icon(filename, extension, { default = true })
+                -- local formatted_filename = filename_icon .. " " .. filename
 
                 -- Format git branch name
                 local formatted_git = ""
-                if #git_branch <= 13 then
+                if #git_branch <= 15 then
                   formatted_git = git_branch
                 else
-                  formatted_git = string.sub(git_branch, 1, 13) .. " "
+                  formatted_git = string.sub(git_branch, 1, 15) .. " "
                 end
 
                 -- Format tab numbers
@@ -407,9 +430,9 @@ return {
                 end
 
                 return MiniStatusline.combine_groups({
-                  { hl = "NormalNC", strings = { formatted_git, diagnostics } },
+                  { hl = "NormalNC", strings = { formatted_git } },
                   "%=",
-                  { hl = "NormalNC", strings = { formatted_filename } },
+                  { hl = "NormalNC", strings = { diagnostics } },
                   "%=",
                   { hl = "NormalNC", strings = { tab_indicator() } },
                   { hl = "NormalNC", strings = { lsp } },
@@ -468,14 +491,28 @@ return {
       }
     },
   },
-  -- {
-  --   'Bekaboo/dropbar.nvim',
-  --   event = "VeryLazy",
-  --   dependencies = {
-  --     'nvim-telescope/telescope-fzf-native.nvim'
-  --   },
-  --   opts = {},
-  -- },
+  {
+    'Bekaboo/dropbar.nvim',
+    event = "VeryLazy",
+    opts = {
+      icons = {
+        ui = {
+          bar = {
+            separator = ' / ',
+          },
+        },
+      },
+      bar = {
+        hover = false,
+        sources = function()
+          local sources = require('dropbar.sources')
+          return {
+            sources.path,
+          }
+        end,
+      }
+    }
+  },
   {
     'declancm/maximize.nvim',
     event = "VeryLazy",
@@ -494,7 +531,9 @@ return {
     config = true
   },
   {
+    -- Disabled because it was throwing errors about the lua version
     "rest-nvim/rest.nvim",
+    enabled = false,
     lazy = false,
   },
   {
