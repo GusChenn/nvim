@@ -49,9 +49,9 @@ M.commit_with_ai = function()
 end
 
 M.toggle_copilot_chat = function()
-  if not CopilotChatLoaded then
+  if not vim.g.copilot_chat_loaded then
     vim.cmd("CopilotChatLoad " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"))
-    CopilotChatLoaded = true
+    vim.g.copilot_chat_loaded = true
   else
     vim.cmd "CopilotChatToggle"
   end

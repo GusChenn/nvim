@@ -78,6 +78,7 @@ return {
       { "nvim-lua/plenary.nvim" },
     },
     opts = {
+      model = "gpt-4o",
       window = {
         layout = "float",
         width = 0.33,

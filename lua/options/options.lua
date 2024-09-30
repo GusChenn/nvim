@@ -9,6 +9,7 @@ local wo = vim.wo
 
 -- Personal global vars
 g.quickfix_context_expanded = false
+g.copilot_chat_loaded = false
 
 -- General globals
 

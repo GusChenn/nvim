@@ -153,8 +153,8 @@ return {
           vim.api.nvim_create_autocmd("InsertLeave", {
             callback = function()
               if
-                  require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-                  and not require("luasnip").session.jump_active
+                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+                and not require("luasnip").session.jump_active
               then
                 require("luasnip").unlink_current()
               end
@@ -184,7 +184,7 @@ return {
           { name = "nvim_lua" },
           { name = "path" },
           { name = "nvim_lsp_signature_help" },
-          { name = "lazydev",                group_index = 0 },
+          { name = "lazydev", group_index = 0 },
         },
         window = {
           completion = {
@@ -251,10 +251,10 @@ return {
       timeout = 1000,
     },
     init = function()
-      require("which-key").add({
-        { "<leader>gd", require("garbage-day.utils").stop_lsp,  desc = "Stop LSP servers", },
-        { "<leader>ge", require("garbage-day.utils").start_lsp, desc = "Start LSP servers", },
-      })
+      require("which-key").add {
+        { "<leader>gd", require("garbage-day.utils").stop_lsp, desc = "Stop LSP servers" },
+        { "<leader>ge", require("garbage-day.utils").start_lsp, desc = "Start LSP servers" },
+      }
     end,
   },
 }
