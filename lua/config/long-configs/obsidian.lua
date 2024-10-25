@@ -54,9 +54,24 @@ require("obsidian").setup {
     },
     ["<leader>on"] = {
       action = function()
-        return "<CMD> ObsidianNew <CR>"
+        -- Prompt the user for a task name
+        local task_name = vim.fn.input "Enter task name: "
+        if task_name == "" then
+          print "Task name cannot be empty"
+          return
+        end
+
+        local files = vim.fn.readdir(vim.fn.expand "%:p:h")
+
+        local task_number = #files + 1
+        task_name = task_number .. " " .. task_name
+
+        -- Create the new file
+        vim.cmd("ObsidianNew " .. task_name)
+
+        -- Applies the subtask template
+        vim.cmd "ObsidianTemplate Subtask template"
       end,
-      opts = { noremap = false, expr = true, buffer = true },
     },
     ["<leader>ot"] = {
       action = function()
@@ -103,7 +118,7 @@ require("obsidian").setup {
     },
     ["<leader>ft"] = {
       action = function()
-        return require("utils.plugin-helpers").pick_folder_files("database/tasks")
+        return require("utils.plugin-helpers").pick_folder_files "database/tasks"
       end,
     },
   },
@@ -213,8 +228,8 @@ require("obsidian").setup {
     -- A map for custom variables, the key should be the variable and the value a function
     substitutions = {
       daily_note_title = function()
-        return os.date("Standup topics: %a, %B %d")
-      end
+        return os.date "Standup topics: %a, %B %d"
+      end,
     },
   },
 
@@ -289,15 +304,15 @@ require("obsidian").setup {
   -- Optional, configure additional syntax highlighting / extmarks.
   -- This requires you have `conceallevel` set to 1 or 2. See `:help conceallevel` for more details.
   ui = {
-    enable = true,         -- set to false to disable all additional syntax features
+    enable = true, -- set to false to disable all additional syntax features
     update_debounce = 200, -- update delay after a text change (in milliseconds)
     -- Define how various check-boxes are displayed
     checkboxes = {
       -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-      [" "] = { char = "󰄱 ", hl_group = "ObsidianTodo" },
-      ["x"] = { char = " ", hl_group = "ObsidianDone" },
-      [">"] = { char = " ", hl_group = "ObsidianRightArrow" },
-      ["~"] = { char = "󰰱 ", hl_group = "ObsidianTilde" },
+      [" "] = { char = "󰄱  ", hl_group = "ObsidianTodo" },
+      ["x"] = { char = "  ", hl_group = "ObsidianDone" },
+      [">"] = { char = "  ", hl_group = "ObsidianRightArrow" },
+      ["~"] = { char = "󰰱  ", hl_group = "ObsidianTilde" },
       -- Replace the above with this if you don't have a patched font:
       -- [" "] = { char = "☐", hl_group = "ObsidianTodo" },
       -- ["x"] = { char = "✔", hl_group = "ObsidianDone" },

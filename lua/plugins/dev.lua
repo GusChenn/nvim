@@ -6,9 +6,9 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").add({
+      require("which-key").add {
         { "<leader>e", cmd "NvimTreeToggle", desc = "Toggle explorer" },
-      })
+      }
     end,
   },
   {
@@ -28,12 +28,12 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").add({
-        { "<leader>p",  cmd "Grapple toggle_tags",     desc = "Toggle grapple window", },
-        { "<leader>pp", cmd "Grapple tag",             desc = "Tag current window", },
-        { "<leader>l",  cmd "Grapple cycle_tags next", desc = "Grapple cycle to next tag" },
-        { "<leader>h",  cmd "Grapple cycle_tags prev", desc = "Grapple cycle to previous tag" },
-      })
+      require("which-key").add {
+        { "<leader>p", cmd "Grapple toggle_tags", desc = "Toggle grapple window" },
+        { "<leader>pp", cmd "Grapple tag", desc = "Tag current window" },
+        { "<leader>l", cmd "Grapple cycle_tags next", desc = "Grapple cycle to next tag" },
+        { "<leader>h", cmd "Grapple cycle_tags prev", desc = "Grapple cycle to previous tag" },
+      }
     end,
   },
   {
@@ -44,9 +44,9 @@ return {
     },
     opts = require "config.long-configs.nvim-ufo",
     init = function()
-      require("which-key").add({
+      require("which-key").add {
         { "fp", "za", desc = "Toggle fold (za)" },
-      })
+      }
     end,
   },
   {
@@ -55,10 +55,10 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").add({
-        { "<leader>cd", cmd "Copilot disable", desc = "Disable copilot virtual text", },
-        { "<leader>ce", cmd "Copilot enable",  desc = "Enable copilot virtual text", },
-      })
+      require("which-key").add {
+        { "<leader>cd", cmd "Copilot disable", desc = "Disable copilot virtual text" },
+        { "<leader>ce", cmd "Copilot enable", desc = "Enable copilot virtual text" },
+      }
     end,
   },
   {
@@ -100,9 +100,9 @@ return {
       show_folds = false,
       auto_follow_cursor = false,
 
-      callback = function()
-        vim.cmd("CopilotChatSave " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"))
-      end,
+      -- callback = function()
+      --   vim.cmd("CopilotChatSave " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"))
+      -- end,
 
       mappings = {
         reset = {
@@ -117,14 +117,35 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").add({
-        { "<leader>cm", require("utils.ai.ai-helpers").commit_with_ai, desc = "Generate commit message with ai", },
-        { "<leader>ct", cmd "CopilotChatTest",                         mode = "v",                               desc = "Generate test with ai", },
-      })
+      require("which-key").add {
+        { "<leader>cm", require("utils.ai.ai-helpers").commit_with_ai, desc = "Generate commit message with ai" },
+        {
+          "<leader>ct",
+          cmd "CopilotChatTest",
+          mode = "v",
+          desc = "Generate test with ai",
+        },
+      }
 
       require("which-key").add {
-        { "<A-T>", require("utils.ai.ai-helpers").toggle_copilot_chat, mode = { "n", "v" }, desc = "Toggle copilot chat", },
-        { "<A-E>", cmd "CopilotChatExplain",                           mode = "v",          desc = "Explain selection with ai", },
+        -- {
+        --   "<A-T>",
+        --   require("utils.ai.ai-helpers").toggle_copilot_chat,
+        --   mode = { "n", "v" },
+        --   desc = "Toggle copilot chat",
+        -- },
+        {
+          "<A-T>",
+          cmd "CopilotChatToggle",
+          mode = { "n", "v" },
+          desc = "Toggle copilot chat",
+        },
+        {
+          "<A-E>",
+          cmd "CopilotChatExplain",
+          mode = "v",
+          desc = "Explain selection with ai",
+        },
       }
     end,
   },
@@ -157,10 +178,10 @@ return {
       },
     },
     init = function()
-      require("which-key").add({
-        { "<A-F>", require("spectre").toggle, desc = "Toggle Spectre", },
-      })
-    end
+      require("which-key").add {
+        { "<A-F>", require("spectre").toggle, desc = "Toggle Spectre" },
+      }
+    end,
   },
   {
     "kawre/leetcode.nvim",
@@ -179,6 +200,6 @@ return {
   },
   {
     "tpope/vim-rails",
-    ft = { "ruby", "eruby" }
-  }
+    ft = { "ruby", "eruby" },
+  },
 }

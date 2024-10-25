@@ -6,7 +6,7 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
       require("which-key").add {
-        { "<leader>dd", cmd "Trouble diagnostics toggle", desc = "Toggle diagnostics", },
+        { "<leader>dd", cmd "Trouble diagnostics toggle", desc = "Toggle diagnostics" },
       }
     end,
   },
@@ -21,7 +21,7 @@ return {
       local cmd = require("utils.plugin-helpers").cmd
 
       require("which-key").add {
-        { "gbb", cmd "GitBlameToggle", desc = "Toggle git blame", },
+        { "gbb", cmd "GitBlameToggle", desc = "Toggle git blame" },
       }
     end,
   },
@@ -89,10 +89,10 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").add({
-        { "<leader>do", cmd "DiffviewOpen",  desc = "Open diffview", },
-        { "<leader>dc", cmd "DiffviewClose", desc = "Close diffview", },
-      })
+      require("which-key").add {
+        { "<leader>do", cmd "DiffviewOpen", desc = "Open diffview" },
+        { "<leader>dc", cmd "DiffviewClose", desc = "Close diffview" },
+      }
     end,
   },
   {
@@ -104,7 +104,7 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     opts = {
-      auto_show_console = false,
+      auto_show_console = true,
       disable_hint = true,
       disable_insert_on_commit = true,
       filewatcher = {
@@ -133,7 +133,7 @@ return {
       local cmd = require("utils.plugin-helpers").cmd
 
       require("which-key").add {
-        { "gs", cmd "Neogit", desc = "Open Neogit", },
+        { "gs", cmd "Neogit", desc = "Open Neogit" },
       }
     end,
   },
@@ -155,9 +155,9 @@ return {
         },
         on_attach = function()
           wc.add {
-            { "<leader>rh", gs.reset_hunk,   desc = "Reset hunk" },
+            { "<leader>rh", gs.reset_hunk, desc = "Reset hunk" },
             { "<leader>ph", gs.preview_hunk, desc = "Preview hunk" },
-            { "<leader>gd", gs.diffthis,     desc = "Diff" },
+            { "<leader>gd", gs.diffthis, desc = "Diff" },
           }
         end,
       }

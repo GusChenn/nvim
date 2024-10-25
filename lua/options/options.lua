@@ -31,7 +31,7 @@ g.VtrClearBeforeSend = 0
 
 -- nvim ufo default settings
 o.foldcolumn = "1" -- '0' is not bad
-o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 o.foldlevelstart = 99
 o.foldenable = true
 o.foldcolumn = "0"
@@ -68,6 +68,8 @@ o.signcolumn = "yes"
 o.splitbelow = true
 o.splitright = true
 o.undofile = true
+
+vim.o.background = "light"
 
 opt.linebreak = true
 opt.showbreak = ">>"

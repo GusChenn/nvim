@@ -7,6 +7,7 @@ return {
   },
   {
     "catppuccin/nvim",
+    enabled = false,
     name = "catppuccin",
     priority = 1000,
   },
@@ -19,7 +20,7 @@ return {
   },
   {
     -- Github theme
-    'projekt0n/github-nvim-theme',
+    "projekt0n/github-nvim-theme",
     enabled = false,
     lazy = false,
     priority = 1000,
@@ -44,17 +45,22 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").add({
-        "<leader>e", cmd "NvimTreeToggle", desc = "Toggle explorer"
-      })
+      require("which-key").add {
+        "<leader>e",
+        cmd "NvimTreeToggle",
+        desc = "Toggle explorer",
+      }
     end,
   },
   {
-    'stevearc/oil.nvim',
+    "stevearc/oil.nvim",
     event = "VeryLazy",
     ---@module 'oil'
     ---@type oil.SetupOpts
     opts = {
+      view_options = {
+        show_hidden = true,
+      },
       keymaps = {
         ["g?"] = "actions.show_help",
         ["<CR>"] = "actions.select",
@@ -80,10 +86,10 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").add({
-        { "<leader>e", cmd "Oil", desc = "Open Oil file explorer" }
-      })
-    end
+      require("which-key").add {
+        { "<leader>e", cmd "Oil", desc = "Open Oil file explorer" },
+      }
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -92,7 +98,7 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup {
         endwise = {
-          enable = true,
+          enable = false,
         },
         matchup = {
           enable = true,
@@ -106,18 +112,18 @@ return {
       }
     end,
     init = function()
-      local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 
       ---@diagnostic disable-next-line: inject-field
       parser_config.embedded_template = {
         install_info = {
-          url                            = 'https://github.com/tree-sitter/tree-sitter-embedded-template',
-          files                          = { 'src/parser.c' },
+          url = "https://github.com/tree-sitter/tree-sitter-embedded-template",
+          files = { "src/parser.c" },
           requires_generate_from_grammar = true,
         },
-        used_by = { 'erb' }
+        used_by = { "erb" },
       }
-    end
+    end,
   },
   {
     "brenoprata10/nvim-highlight-colors",
@@ -174,7 +180,7 @@ return {
       telescope.load_extension "undo"
     end,
     keys = {
-      { "<leader>u", "<CMD> Telescope undo <CR>", desc = "Undo history" }
+      { "<leader>u", "<CMD> Telescope undo <CR>", desc = "Undo history" },
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -268,11 +274,17 @@ return {
       local cmd = require("utils.plugin-helpers").cmd
       local neotest = require "neotest"
 
-      require("which-key").add({
-        { "<leader>nl", neotest.run.run,                                   desc = "Run closest test" },
-        { "<leader>nf", function() neotest.run.run(vim.fn.expand "%") end, desc = "Run all tests in file", },
-        { "<leader>np", cmd "Neotest output-panel",                        desc = "Toggle output panel", },
-        { "<leader>ns", cmd "Neotest summary",                             desc = "Toggle summary panel", },
+      require("which-key").add {
+        { "<leader>nl", neotest.run.run, desc = "Run closest test" },
+        {
+          "<leader>nf",
+          function()
+            neotest.run.run(vim.fn.expand "%")
+          end,
+          desc = "Run all tests in file",
+        },
+        { "<leader>np", cmd "Neotest output-panel", desc = "Toggle output panel" },
+        { "<leader>ns", cmd "Neotest summary", desc = "Toggle summary panel" },
         {
           "<leader>t",
           function()
@@ -296,8 +308,8 @@ return {
           end,
           desc = "Toggle test file",
         },
-        { "<leader>T", cmd "R", desc = "Toggle related file with vim rails", },
-      })
+        { "<leader>T", cmd "R", desc = "Toggle related file with vim rails" },
+      }
     end,
   },
   {
@@ -323,16 +335,22 @@ return {
   {
     "folke/persistence.nvim",
     dependencies = {
-      "echasnovski/mini.nvim",  -- necessary so it doesnt try to load the session before mini modules are up
-      "zeioth/garbage-day.nvim" -- necessary so it can load LSPs,
+      "echasnovski/mini.nvim", -- necessary so it doesnt try to load the session before mini modules are up
+      "zeioth/garbage-day.nvim", -- necessary so it can load LSPs,
     },
-    event = "BufReadPre",       -- this will only start session saving when an actual file was opened
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
     config = true,
     init = function()
-      require("which-key").add({
-        { "<leader>sl", function() require("persistence").load() end, desc = "Load last directory session" }
-      })
-    end
+      require("which-key").add {
+        {
+          "<leader>sl",
+          function()
+            require("persistence").load()
+          end,
+          desc = "Load last directory session",
+        },
+      }
+    end,
   },
   {
     "folke/flash.nvim",
@@ -350,10 +368,17 @@ return {
       },
     },
     init = function()
-      require("which-key").add({
-        { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      })
-    end
+      require("which-key").add {
+        {
+          "s",
+          mode = { "n", "x", "o" },
+          function()
+            require("flash").jump()
+          end,
+          desc = "Flash",
+        },
+      }
+    end,
   },
   {
     "echasnovski/mini.nvim",
@@ -392,21 +417,21 @@ return {
           config = {
             content = {
               active = function()
-                local _, mode_hl = MiniStatusline.section_mode({ trunc_width = 75 })
-                local git_branch = MiniStatusline.section_git({ icon = " " })
-                local diagnostics = MiniStatusline.section_diagnostics({
+                local _, mode_hl = MiniStatusline.section_mode { trunc_width = 75 }
+                local git_branch = MiniStatusline.section_git { icon = " " }
+                local diagnostics = MiniStatusline.section_diagnostics {
                   trunc_width = 75,
                   icon = "",
                   signs = {
                     ERROR = " ",
                     WARN = " ",
                     INFO = " ",
-                    HINT = " "
-                  }
-                })
-                local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
+                    HINT = " ",
+                  },
+                }
+                local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
                 local location = "󱨄 %P"
-                local search = MiniStatusline.section_searchcount({ trunc_width = 75 })
+                local search = MiniStatusline.section_searchcount { trunc_width = 75 }
 
                 -- Format filename
                 -- local filename = vim.fn.expand('%:t')
@@ -425,19 +450,19 @@ return {
                 -- Format tab numbers
                 local tab_indicator = function()
                   local current_tab = vim.fn.tabpagenr()
-                  local total_tabs = vim.fn.tabpagenr('$')
+                  local total_tabs = vim.fn.tabpagenr "$"
                   return string.format("  %d/%d", current_tab, total_tabs)
                 end
 
-                return MiniStatusline.combine_groups({
+                return MiniStatusline.combine_groups {
                   { hl = "NormalNC", strings = { formatted_git } },
                   "%=",
                   { hl = "NormalNC", strings = { diagnostics } },
                   "%=",
                   { hl = "NormalNC", strings = { tab_indicator() } },
                   { hl = "NormalNC", strings = { lsp } },
-                  { hl = mode_hl,    strings = { search, location } },
-                })
+                  { hl = mode_hl, strings = { search, location } },
+                }
               end,
             },
             use_icons = true,
@@ -446,7 +471,7 @@ return {
             -- 'laststatus' set to 2). To use global statusline in Neovim>=0.7.0, set
             -- this to `false` and 'laststatus' to 3.
             set_vim_settings = false,
-          }
+          },
         },
       }
 
@@ -456,20 +481,20 @@ return {
       local cmd = require("utils.plugin-helpers").cmd
       local wk = require "which-key"
 
-      wk.add({
-        { "ff", cmd "Pick files",     desc = "Pick files", },
-        { "fg", cmd "Pick grep_live", desc = "Pick live grep", },
-        { "fh", cmd "Pick oldfiles",  desc = "Pick oldfiles", },
-      })
+      wk.add {
+        { "ff", cmd "Pick files", desc = "Pick files" },
+        { "fg", cmd "Pick grep_live", desc = "Pick live grep" },
+        { "fh", cmd "Pick oldfiles", desc = "Pick oldfiles" },
+      }
 
-      wk.add({
-        { "ff", 'y<ESC> <CMD> Pick files<CR><C-r>"',     mode = "v", desc = "Search for selected text in files", },
-        { "fg", 'y<ESC> <CMD> Pick grep_live<CR><C-r>"', mode = "v", desc = "Search for selected text in live grep", },
-      })
+      wk.add {
+        { "ff", 'y<ESC> <CMD> Pick files<CR><C-r>"', mode = "v", desc = "Search for selected text in files" },
+        { "fg", 'y<ESC> <CMD> Pick grep_live<CR><C-r>"', mode = "v", desc = "Search for selected text in live grep" },
+      }
     end,
   },
   {
-    'stevearc/quicker.nvim',
+    "stevearc/quicker.nvim",
     event = "VeryLazy",
     ---@module "quicker"
     ---@type quicker.SetupOptions
@@ -482,59 +507,84 @@ return {
               require("quicker").collapse()
               vim.g.quickfix_context_expanded = false
             else
-              require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+              require("quicker").expand { before = 2, after = 2, add_to_existing = true }
               vim.g.quickfix_context_expanded = true
             end
           end,
           desc = "Toggle quickfix context",
         },
-      }
+      },
     },
   },
   {
-    'Bekaboo/dropbar.nvim',
+    "Bekaboo/dropbar.nvim",
     event = "VeryLazy",
     opts = {
       icons = {
         ui = {
           bar = {
-            separator = ' / ',
+            separator = " / ",
           },
         },
       },
       bar = {
         hover = false,
         sources = function()
-          local sources = require('dropbar.sources')
+          local sources = require "dropbar.sources"
           return {
             sources.path,
           }
         end,
-      }
-    }
+      },
+    },
   },
   {
-    'declancm/maximize.nvim',
+    "declancm/maximize.nvim",
     event = "VeryLazy",
-    config = true
+    config = true,
   },
   {
     "OXY2DEV/helpview.nvim",
     lazy = false, -- Recommended
     dependencies = {
-      "nvim-treesitter/nvim-treesitter"
-    }
+      "nvim-treesitter/nvim-treesitter",
+    },
   },
   {
-    'r-cha/encourage.nvim',
+    "r-cha/encourage.nvim",
     event = "VeryLazy",
-    config = true
+    config = true,
   },
   {
-    -- Disabled because it was throwing errors about the lua version
-    "rest-nvim/rest.nvim",
-    enabled = false,
+    "mistweaverco/kulala.nvim",
     lazy = false,
+    init = function()
+      require("which-key").add {
+        {
+          "<leader>rr",
+          function()
+            require("kulala").run()
+          end,
+          desc = "Open yankbank",
+        },
+      }
+
+      vim.filetype.add {
+        extension = {
+          ["http"] = "http",
+        },
+      }
+    end,
+    opts = {
+      icons = {
+        inlay = {
+          loading = " ",
+          done = " ",
+          error = " ",
+        },
+        lualine = "󱜿 ",
+      },
+    },
   },
   {
     "ptdewey/yankbank-nvim",
@@ -542,14 +592,32 @@ return {
     event = "VeryLazy",
     opts = {
       persist_type = "sqlite",
-      sep = ""
+      sep = "",
     },
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      require("which-key").add({
-        { "<leader>yb", cmd "YankBank", desc = "Open yankbank" }
-      })
-    end
-  }
+      require("which-key").add {
+        { "<leader>yb", cmd "YankBank", desc = "Open yankbank" },
+      }
+    end,
+  },
+  -- {
+  --   event = "VeryLazy",
+  --   "axkirillov/hbac.nvim",
+  --   config = true,
+  -- },
+  {
+    "EL-MASTOR/bufferlist.nvim",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    cmd = "BufferList",
+    config = true,
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").add {
+        { "<leader>b", cmd "BufferList", desc = "Open bufferlist" },
+      }
+    end,
+  },
 }
