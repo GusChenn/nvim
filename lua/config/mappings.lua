@@ -82,7 +82,6 @@ wc.add {
   { "<A-j>", cmd "TmuxNavigateDown", desc = "Focus pane down" },
   { "<A-h>", cmd "TmuxNavigateLeft", desc = "Focus pane left" },
   { "<A-l>", cmd "TmuxNavigateRight", desc = "Focus pane right" },
-  { "<leader>f", cmd "Maximize", desc = "Full screen current window" },
   { "cpp", copy_path, desc = "Copies the current file path to the clipboard" },
   { "spp", show_path, desc = "Shows the current file path" },
   { "<leader>fm", pick_model, desc = "Pick model" },

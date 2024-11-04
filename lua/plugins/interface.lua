@@ -539,9 +539,24 @@ return {
     },
   },
   {
-    "declancm/maximize.nvim",
+    "cdmill/focus.nvim",
     event = "VeryLazy",
     config = true,
+    init = function()
+      require("which-key").add {
+        {
+          "<leader>f",
+          function()
+            require("focus").toggle {
+              window = {
+                width = 0.9,
+              },
+            }
+          end,
+          desc = "Focus on current window",
+        },
+      }
+    end,
   },
   {
     "OXY2DEV/helpview.nvim",
