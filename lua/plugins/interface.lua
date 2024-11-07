@@ -5,6 +5,7 @@ return {
     cmd = "WhichKey",
     config = true,
   },
+  -- Colorschemes
   {
     "catppuccin/nvim",
     enabled = false,
@@ -33,7 +34,13 @@ return {
   },
   {
     "neanias/everforest-nvim",
+    enabled = false,
     version = false,
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "sainnhe/gruvbox-material",
     lazy = false,
     priority = 1000,
   },
@@ -98,7 +105,7 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup {
         endwise = {
-          enable = false,
+          enable = true,
         },
         matchup = {
           enable = true,
@@ -186,7 +193,9 @@ return {
       "nvim-lua/plenary.nvim",
       "debugloop/telescope-undo.nvim",
       {
-        "RRethy/nvim-treesitter-endwise",
+        -- Replaced it while https://github.com/RRethy/nvim-treesitter-endwise/pull/42 is not merged
+        -- "RRethy/nvim-treesitter-endwise",
+        "metiulekm/nvim-treesitter-endwise",
         lazy = false,
         dependencies = {
           "nvim-treesitter",
@@ -617,16 +626,20 @@ return {
       }
     end,
   },
-  -- {
-  --   event = "VeryLazy",
-  --   "axkirillov/hbac.nvim",
-  --   config = true,
-  -- },
+  {
+    "chrisgrieser/nvim-early-retirement",
+    opts = {
+      retirementAgeMins = 10,
+    },
+    event = "VeryLazy",
+  },
   {
     "EL-MASTOR/bufferlist.nvim",
     dependencies = "nvim-tree/nvim-web-devicons",
     cmd = "BufferList",
-    config = true,
+    opts = {
+      width = 150,
+    },
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 

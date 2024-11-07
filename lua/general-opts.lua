@@ -27,7 +27,7 @@ M.lsp = {
   ensure_installed = {
     "cssls",
     "lua_ls",
-    "solargraph",
+    "ruby_lsp",
     "pylyzer",
   },
 }

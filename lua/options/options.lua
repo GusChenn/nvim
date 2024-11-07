@@ -69,7 +69,7 @@ o.splitbelow = true
 o.splitright = true
 o.undofile = true
 
-vim.o.background = "light"
+vim.o.background = "dark"
 
 opt.linebreak = true
 opt.showbreak = ">>"

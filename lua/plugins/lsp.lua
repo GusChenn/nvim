@@ -16,7 +16,7 @@ return {
             typescript = { "prettier_d" },
             javascriptreact = { "prettier_d" },
             typescriptreact = { "prettier_d" },
-            ruby = { "trim_whitespace" },
+            ruby = { "rubocop" },
           },
           format_on_save = {
             timeout_ms = 500,
@@ -41,7 +41,7 @@ return {
         end,
 
         init = function()
-          vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
+          vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave", "TextChanged" }, {
             callback = function()
               require("lint").try_lint()
             end,
@@ -96,16 +96,12 @@ return {
             },
           })
         end,
-        ["solargraph"] = function()
-          -- require("lspconfig").solargraph.setup(with_base_capabilities {
-          --   filetypes = { "ruby", "eruby" },
-          -- })
-        end,
         ["ruby_lsp"] = function()
           require("lspconfig").ruby_lsp.setup(with_base_capabilities {
             filetypes = { "ruby", "eruby" },
           })
         end,
+        ["rubocop"] = function() end,
       }
 
       -- Customize diagnostics looks

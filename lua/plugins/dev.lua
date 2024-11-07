@@ -20,7 +20,7 @@ return {
     cmd = "Grapple",
     opts = {
       scope = "git_branch",
-      style = "basename",
+      style = "relative",
       win_opts = {
         border = "solid",
       },
@@ -80,7 +80,7 @@ return {
     opts = {
       model = "gpt-4o",
       window = {
-        layout = "float",
+        -- layout = "float",
         width = 0.33,
         height = 1,
         relative = "editor",
@@ -201,5 +201,13 @@ return {
   {
     "tpope/vim-rails",
     ft = { "ruby", "eruby" },
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").add {
+        { "<leader>rv", cmd "Eview", desc = "Edit view" },
+        { "<leader>rc", cmd "Econtroller", desc = "Edit controller" },
+      }
+    end,
   },
 }

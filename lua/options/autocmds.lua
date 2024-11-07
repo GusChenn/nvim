@@ -2,10 +2,15 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 local highlight = require "utils.highlight"
 
+-- This command is necessary so we dont change the current active tab after resizing
 autocmd({ "VimResized" }, {
   desc = "Auto resize panes when resizing nvim window",
   pattern = "*",
-  command = "tabdo wincmd =",
+  command = [[
+    let _auto_resize_current_tab = tabpagenr()
+    tabdo wincmd =
+    execute 'tabnext' _auto_resize_current_tab
+  ]],
 })
 
 -- enable when using catppuccin theme
@@ -68,7 +73,7 @@ autocmd("FileType", {
   desc = "Set formatprg to jq for json files",
   pattern = { "json" },
   callback = function()
-    vim.api.nvim_set_option_value("formatprg", "jq", { scope = 'local' })
+    vim.api.nvim_set_option_value("formatprg", "jq", { scope = "local" })
   end,
 })
 

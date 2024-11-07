@@ -90,8 +90,12 @@ loaders.load_colorscheme = function()
   -- vim.cmd.colorscheme "catppuccin"
 
   -- For everfores
-  require("config.themes.everfores")
-  vim.cmd.colorscheme "everforest"
+  -- require("config.themes.everfores")
+  -- vim.cmd.colorscheme "everforest"
+
+  -- For gruvbox
+  require "config.themes.gruvbox"
+  vim.cmd.colorscheme "gruvbox-material"
 end
 
 loaders.load_custom_highlights = function()
