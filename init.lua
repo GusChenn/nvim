@@ -17,6 +17,3 @@ loaders.load_colorscheme()
 
 -- Setup custom highlights
 loaders.load_custom_highlights()
-
--- Setup statuscolumn
-loaders.load_statuscolumn()

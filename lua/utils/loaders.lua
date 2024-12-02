@@ -109,8 +109,4 @@ loaders.load_custom_highlights = function()
   end
 end
 
-loaders.load_statuscolumn = function()
-  -- vim.o.statuscolumn = "%!v:lua.custom_status_column()"
-end
-
 return loaders

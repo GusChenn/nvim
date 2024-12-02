@@ -13,9 +13,6 @@ g.copilot_chat_loaded = false
 
 -- General globals
 
--- g.mapleader = " "
--- g.maplocalleader = "\\"
-
 g.tmux_navigator_no_mappings = 1
 g.matchup_matchparen_offscreen = {}
 g.lastplace_ignore = "gitcommit,gitrebase,hgcommit,svn,xxd"
@@ -94,7 +91,7 @@ opt.fillchars = {
 }
 opt.conceallevel = 2
 
--- wo.number = false
+wo.number = false
 opt.viewoptions = {
   "cursor",
   "folds",
