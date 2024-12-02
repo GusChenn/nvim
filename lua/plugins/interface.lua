@@ -173,6 +173,8 @@ return {
           "lsp",
         },
         min_count_to_highlight = 2,
+        large_file_cutoff = 1000,
+        large_file_config = nil,
       }
     end,
   },
@@ -181,14 +183,105 @@ return {
     cmd = { "Telescope" },
     event = "VeryLazy",
     config = function()
-      local telescope = require "telescope"
+      local telescopeConfig = require "telescope.config"
 
-      telescope.setup(require "config.long-configs.telescope")
-      telescope.load_extension "undo"
+      local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+      table.insert(vimgrep_arguments, "--pcre2")
+
+      -- I want to search in hidden/dot files.
+      table.insert(vimgrep_arguments, "--hidden")
+      -- -- I don't want to search in the `.git` directory.
+      table.insert(vimgrep_arguments, "--glob")
+      table.insert(vimgrep_arguments, "!**/.git/*")
+
+      local function filenameFirst(_, path)
+        local tail = vim.fs.basename(path)
+        local parent = vim.fs.dirname(path)
+        if parent == "." then
+          return tail
+        end
+        return string.format("%s\t\t%s", tail, parent)
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "TelescopeResults",
+        callback = function(ctx)
+          vim.api.nvim_buf_call(ctx.buf, function()
+            vim.fn.matchadd("TelescopeParent", "\t\t.*$")
+            vim.api.nvim_set_hl(0, "TelescopeParent", { link = "Comment" })
+          end)
+        end,
+      })
+
+      require("telescope").setup {
+        defaults = {
+          borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+          results_title = false,
+          prompt_title = false,
+          preview_title = false,
+          prompt_prefix = "  ",
+          selection_caret = "  ",
+          layout_strategy = "flex",
+          vimgrep_arguments = vimgrep_arguments,
+          layout_config = {
+            horizontal = {
+              width = 0.9,
+              height = 0.9,
+            },
+            vertical = {
+              width = 0.9,
+              height = 0.9,
+            },
+          },
+        },
+        pickers = {
+          find_files = {
+            -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+            find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+            path_display = filenameFirst,
+          },
+          git_status = {
+            path_display = filenameFirst,
+          },
+          live_grep = {
+            path_display = filenameFirst,
+          },
+        },
+        extensions = {
+          fzf = {
+            fuzzy = true, -- false will only do exact matching
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true, -- override the file sorter
+            case_mode = "respect_case", -- or "ignore_case" or "respect_case"
+          },
+          undo = {
+            use_delta = true,
+            use_custom_command = nil,
+            side_by_side = true,
+            vim_diff_opts = {
+              ctxlen = 10,
+            },
+            entry_format = "  $ID, $STAT, $TIME",
+            time_format = "",
+            saved_only = false,
+            mappings = {
+              i = {
+                ["<cr>"] = require("telescope-undo.actions").yank_additions,
+                ["<C-y>"] = require("telescope-undo.actions").yank_deletions,
+                ["<C-r>"] = require("telescope-undo.actions").restore,
+              },
+              n = {
+                ["y"] = require("telescope-undo.actions").yank_additions,
+                ["Y"] = require("telescope-undo.actions").yank_deletions,
+                ["u"] = require("telescope-undo.actions").restore,
+              },
+            },
+          },
+        },
+      }
+
+      require("telescope").load_extension "fzf"
     end,
-    keys = {
-      { "<leader>u", "<CMD> Telescope undo <CR>", desc = "Undo history" },
-    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       "debugloop/telescope-undo.nvim",
@@ -201,24 +294,34 @@ return {
           "nvim-treesitter",
         },
       },
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+      },
     },
-  },
-  {
-    "epwalsh/obsidian.nvim",
-    version = "*",
-    event = {
-      "BufReadPre " .. vim.fn.expand "~/" .. "Repos/studies/second-brain/Software Engineer Studies/**/**.md",
-      "BufNewFile " .. vim.fn.expand "~/" .. "Repos/studies/second-brain/Software Engineer Studies/**/**.md",
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
-      "nvim-telescope/telescope.nvim",
-      "nvim-treesitter",
-      "epwalsh/pomo.nvim",
-    },
-    config = function()
-      require "config.long-configs.obsidian"
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+      local wk = require "which-key"
+
+      wk.add {
+        { "ff", cmd "Telescope find_files", desc = "Pick files" },
+        { "fg", cmd "Telescope live_grep", desc = "Pick live grep" },
+        { "fh", cmd "Telescope oldfiles", desc = "Pick oldfiles" },
+        { "<leader>u", cmd "Telescope undo", desc = "Undo history" },
+        { "<leader>b", cmd "Telescope buffers", desc = "Open bufferlist" },
+        {
+          "ff",
+          'y<ESC> <CMD> Telescope find_files<CR><C-r>"',
+          mode = "v",
+          desc = "Search for selected text in files",
+        },
+        {
+          "fg",
+          'y<ESC> <CMD> Telescope live_grep<CR><C-r>"',
+          mode = "v",
+          desc = "Search for selected text in live grep",
+        },
+      }
     end,
   },
   {
@@ -450,10 +553,10 @@ return {
 
                 -- Format git branch name
                 local formatted_git = ""
-                if #git_branch <= 15 then
+                if #git_branch <= 25 then
                   formatted_git = git_branch
                 else
-                  formatted_git = string.sub(git_branch, 1, 15) .. " "
+                  formatted_git = string.sub(git_branch, 1, 25) .. " "
                 end
 
                 -- Format tab numbers
@@ -486,21 +589,22 @@ return {
 
       loaders.load_mini_modules(module_configs)
     end,
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-      local wk = require "which-key"
-
-      wk.add {
-        { "ff", cmd "Pick files", desc = "Pick files" },
-        { "fg", cmd "Pick grep_live", desc = "Pick live grep" },
-        { "fh", cmd "Pick oldfiles", desc = "Pick oldfiles" },
-      }
-
-      wk.add {
-        { "ff", 'y<ESC> <CMD> Pick files<CR><C-r>"', mode = "v", desc = "Search for selected text in files" },
-        { "fg", 'y<ESC> <CMD> Pick grep_live<CR><C-r>"', mode = "v", desc = "Search for selected text in live grep" },
-      }
-    end,
+    -- commented out because i am using telescope
+    -- init = function()
+    --   local cmd = require("utils.plugin-helpers").cmd
+    --   local wk = require "which-key"
+    --
+    --   wk.add {
+    --     { "ff", cmd "Pick files", desc = "Pick files" },
+    --     { "fg", cmd "Pick grep_live", desc = "Pick live grep" },
+    --     { "fh", cmd "Pick oldfiles", desc = "Pick oldfiles" },
+    --   }
+    --
+    --   wk.add {
+    --     { "ff", 'y<ESC> <CMD> Pick files<CR><C-r>"', mode = "v", desc = "Search for selected text in files" },
+    --     { "fg", 'y<ESC> <CMD> Pick grep_live<CR><C-r>"', mode = "v", desc = "Search for selected text in live grep" },
+    --   }
+    -- end,
   },
   {
     "stevearc/quicker.nvim",
@@ -634,17 +738,22 @@ return {
     event = "VeryLazy",
   },
   {
-    "EL-MASTOR/bufferlist.nvim",
-    dependencies = "nvim-tree/nvim-web-devicons",
-    cmd = "BufferList",
-    opts = {
-      width = 150,
-    },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").add {
-        { "<leader>b", cmd "BufferList", desc = "Open bufferlist" },
+    "mcauley-penney/visual-whitespace.nvim",
+    event = "VeryLazy",
+    config = true,
+  },
+  {
+    "luukvbaal/statuscol.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("statuscol").setup {
+        relculright = true,
+        thousands = ".",
+        ft_ignore = {
+          "help",
+          "neo-tree",
+          "toggleterm",
+        },
       }
     end,
   },

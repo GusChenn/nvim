@@ -16,6 +16,7 @@ return {
       },
     },
     max_file_size = 80 * 1024,
+    delay = 0,
   },
   indent = {
     enable = false,

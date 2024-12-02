@@ -117,7 +117,8 @@ return {
         section = { "➡", "⬇" },
       },
       integrations = {
-        telescope = true,
+        telescope = false,
+        mini_pick = true,
         diffview = true,
       },
       mappings = {

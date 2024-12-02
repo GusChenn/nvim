@@ -32,11 +32,11 @@ return {
           local lint = require "lint"
 
           lint.linters_by_ft = {
-            typescriptreact = { "eslint" },
-            typescript = { "eslint" },
-            javascriptreact = { "eslint" },
-            javascript = { "eslint" },
-            ruby = { "rubocop" },
+            typescriptreact = { "eslint_d" },
+            typescript = { "eslint_d" },
+            javascriptreact = { "eslint_d" },
+            javascript = { "eslint_d" },
+            -- ruby = { "rubocop" },
           }
         end,
 
@@ -236,7 +236,6 @@ return {
   },
   {
     "zeioth/garbage-day.nvim",
-    enabled = false,
     event = "VeryLazy",
     dependencies = {
       "neovim/nvim-lspconfig",

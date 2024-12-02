@@ -12,6 +12,20 @@ M.custom_highlights = function()
 
     -- Flash --
     FlashLabel = { bg = "NvimLightGreen", bold = true, italic = true },
+
+    -- TreeSitter --
+    ["@type.ruby"] = { link = "Yellow" },
+
+    -- Telescope --
+    TelescopePromptNormal = { link = "Visual" },
+    TelescopePromptBorder = { link = "Visual" },
+    TelescopePromptTitle = { link = "Visual" },
+    TelescopePreviewNormal = { link = "StatusLine" },
+    TelescopePreviewBorder = { link = "StatusLine" },
+    TelescopePreviewTitle = { link = "StatusLine" },
+    TelescopeResultsNormal = { link = "StatusLine" },
+    TelescopeResultsBorder = { link = "StatusLine" },
+    TelescopeResultsTitle = { link = "StatusLine" },
   }
 end
 

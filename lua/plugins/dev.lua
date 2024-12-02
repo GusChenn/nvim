@@ -78,7 +78,7 @@ return {
       { "nvim-lua/plenary.nvim" },
     },
     opts = {
-      model = "gpt-4o",
+      model = "claude-3.5-sonnet",
       window = {
         -- layout = "float",
         width = 0.33,
@@ -166,12 +166,23 @@ return {
     event = "VeryLazy",
     cmd = "Spectre",
     opts = {
+      find_engine = {
+        ["rg"] = {
+          args = {
+            "--pcre2",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+          },
+        },
+      },
       replace_engine = {
         ["sed"] = {
           cmd = "sed",
           args = {
             "-i",
-            "",
             "-E",
           },
         },
@@ -182,21 +193,6 @@ return {
         { "<A-F>", require("spectre").toggle, desc = "Toggle Spectre" },
       }
     end,
-  },
-  {
-    "kawre/leetcode.nvim",
-    lazy = false,
-    build = ":TSUpdate html",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-
-      -- optional
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = true,
   },
   {
     "tpope/vim-rails",
