@@ -3,11 +3,11 @@ local loaders = require "utils.loaders"
 -- Bootstrap lazy.nvim
 loaders.bootstrap_lazy_nvim()
 
--- Setup options
-loaders.load_options()
-
 -- Setup lazy.nvim alongside plugins
 loaders.load_lazy()
+
+-- Setup options
+loaders.load_options()
 
 -- Setup mappings
 loaders.load_mappings()
@@ -17,3 +17,6 @@ loaders.load_colorscheme()
 
 -- Setup custom highlights
 loaders.load_custom_highlights()
+
+-- Setup statuscolumn
+loaders.load_statuscolumn()

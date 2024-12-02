@@ -742,19 +742,105 @@ return {
     event = "VeryLazy",
     config = true,
   },
-  {
-    "luukvbaal/statuscol.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("statuscol").setup {
-        relculright = true,
-        thousands = ".",
-        ft_ignore = {
-          "help",
-          "neo-tree",
-          "toggleterm",
-        },
-      }
-    end,
-  },
+  -- {
+  --   "luukvbaal/statuscol.nvim",
+  --   enabled = false,
+  --   lazy = false,
+  --   dependencies = {
+  --     "lewis6991/gitsigns.nvim",
+  --   },
+  --   config = function()
+  --     local function get_num_wraps()
+  --       local winid = vim.api.nvim_get_current_win()
+  --
+  --       local winfo = vim.fn.getwininfo(winid)[1]
+  --       local bufwidth = winfo["width"] - winfo["textoff"]
+  --
+  --       -- subtract one to solve issue where the cursor is right on the edge of a line
+  --       -- and makes it so that the last line should be the end of the wraps but isn't
+  --       local line_length = vim.fn.strdisplaywidth(vim.fn.getline(vim.v.lnum)) - 1
+  --
+  --       return math.floor(line_length / bufwidth)
+  --     end
+  --
+  --     local function hl_str(hl, str)
+  --       return "%#" .. hl .. "#" .. str .. "%*"
+  --     end
+  --
+  --     require("statuscol").setup {
+  --       setopt = false,
+  --       relculright = true,
+  --       thousands = ".",
+  --       ft_ignore = {
+  --         "help",
+  --         "neo-tree",
+  --         "toggleterm",
+  --       },
+  --       segments = {
+  --         -- {
+  --         --   sign = {
+  --         --     namespace = { "gitsigns" },
+  --         --   },
+  --         --   condition = {
+  --         --     function(args)
+  --         --       return vim.wo[args.win].number or vim.b[args.buf].gitsigns_status
+  --         --     end,
+  --         --   },
+  --         -- },
+  --         {
+  --           condition = {
+  --             function()
+  --               return vim.wo.number or vim.wo.relativenumber
+  --             end,
+  --           },
+  --           text = {
+  --             " ",
+  --             "%=",
+  --             function(args)
+  --               local mode = vim.fn.mode()
+  --               local normalized_mode = vim.fn.strtrans(mode):lower():gsub("%W", "")
+  --
+  --               -- case 1
+  --               if normalized_mode ~= "v" and vim.v.virtnum == 0 then
+  --                 return require("statuscol.builtin").lnumfunc(args)
+  --               end
+  --
+  --               if vim.v.virtnum < 0 then
+  --                 return "-"
+  --               end
+  --
+  --               local line = require("statuscol.builtin").lnumfunc(args)
+  --
+  --               if vim.v.virtnum > 0 then
+  --                 local num_wraps = get_num_wraps()
+  --
+  --                 if vim.v.virtnum == num_wraps then
+  --                   line = "└"
+  --                 else
+  --                   line = "├"
+  --                 end
+  --               end
+  --
+  --               -- Highlight cases
+  --               if normalized_mode == "v" then
+  --                 local pos_list =
+  --                   vim.fn.getregionpos(vim.fn.getpos "v", vim.fn.getpos ".", { type = mode, eol = true })
+  --                 local s_row, e_row = pos_list[1][1][2], pos_list[#pos_list][2][2]
+  --
+  --                 if vim.v.lnum >= s_row and vim.v.lnum <= e_row then
+  --                   return hl_str("CursorLineNr", line)
+  --                 end
+  --               end
+  --
+  --               return vim.fn.line "." == vim.v.lnum and hl_str("CursorLineNr", line) or hl_str("LineNr", line)
+  --             end,
+  --             " ",
+  --           },
+  --         },
+  --         { text = { "    " }, hl = "Normal" },
+  --         { text = { " " }, hl = "Normal" },
+  --       },
+  --     }
+  --   end,
+  -- },
 }

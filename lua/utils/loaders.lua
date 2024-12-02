@@ -14,6 +14,9 @@ loaders.bootstrap_lazy_nvim = function()
 end
 
 loaders.load_lazy = function()
+  vim.g.mapleader = " "
+  vim.g.maplocalleader = "\\"
+
   require("lazy").setup {
     defaults = {
       lazy = true,
@@ -104,6 +107,10 @@ loaders.load_custom_highlights = function()
   for group, opts in pairs(custom_hls) do
     vim.api.nvim_set_hl(0, group, opts)
   end
+end
+
+loaders.load_statuscolumn = function()
+  -- vim.o.statuscolumn = "%!v:lua.custom_status_column()"
 end
 
 return loaders
