@@ -26,7 +26,7 @@ autocmd({ "VimResized" }, {
 
 autocmd({ "FileType" }, {
   desc = "Disable cmp in certain filetypes",
-  pattern = "gitcommit,gitrebase,text,markdown",
+  pattern = "gitcommit,gitrebase,text,markdown,copilot-chat",
   command = "lua require('cmp').setup.buffer { enabled = false}",
   group = augroup("cmp_disable", { clear = true }),
 })
@@ -50,23 +50,9 @@ autocmd({ "FileType" }, {
 })
 
 autocmd({ "BufRead" }, {
-  desc = "Treat slim and erb files as ruby files",
+  desc = "Treat slim files as ruby files",
   pattern = { "*.slim" },
   command = [[setfiletype ruby]],
-})
-
-autocmd({ "FileType" }, {
-  desc = "Make vim not trigger an auto indent when typing a dot on ruby files",
-  pattern = { "ruby", "*.slim" },
-  command = "setlocal indentkeys-=.",
-})
-
-autocmd({ "BufEnter" }, {
-  desc = "Close diffview with 'q'",
-  pattern = { "DiffviewFilePanel", "diffview://*" },
-  callback = function()
-    vim.keymap.set("n", "q", "<CMD> DiffviewClose <CR>", { buffer = true })
-  end,
 })
 
 autocmd("FileType", {
@@ -77,25 +63,8 @@ autocmd("FileType", {
   end,
 })
 
--- enable spell checking for markdown files
 autocmd("FileType", {
   desc = "Enable spell checking for markdown files",
   pattern = { "markdown" },
   command = "setlocal spell",
-})
-
-autocmd({ "BufEnter", "CursorMoved", "CursorHoldI" }, {
-  callback = function()
-    local win_h = vim.api.nvim_win_get_height(0) -- height of window
-    local off = math.min(vim.o.scrolloff, math.floor(win_h / 2)) -- scroll offset
-    local dist = vim.fn.line "$" - vim.fn.line "." -- distance from current line to last line
-    local rem = vim.fn.line "w$" - vim.fn.line "w0" + 1 -- num visible lines in current window
-
-    if dist < off and win_h - rem + dist < off then
-      local view = vim.fn.winsaveview()
-      view.topline = view.topline + off - (win_h - rem + dist)
-      vim.fn.winrestview(view)
-    end
-  end,
-  desc = "When at eob, bring the current line towards center screen",
 })

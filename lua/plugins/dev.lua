@@ -72,7 +72,7 @@ return {
       "CopilotChatLoad",
       "CopilotChatFixDiagnostic",
     },
-    branch = "canary",
+    branch = "main",
     dependencies = {
       { "github/copilot.vim" },
       { "nvim-lua/plenary.nvim" },

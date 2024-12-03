@@ -27,7 +27,7 @@ g.VtrOrientation = "h"
 g.VtrClearBeforeSend = 0
 
 -- nvim ufo default settings
-o.foldcolumn = "1" -- '0' is not bad
+o.foldcolumn = "0"
 o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 o.foldmethod = "expr"
@@ -44,7 +44,6 @@ opt.guicursor = {
   "a:Cursor/Cursor-blinkwait1-blinkon1-blinkoff1",
 }
 
--- hide fold column
 o.showtabline = 0 -- to hide tabline
 
 o.laststatus = 3
@@ -70,7 +69,7 @@ o.ruler = false
 -- disable nvim intro
 opt.shortmess:append "sI"
 
-o.signcolumn = "yes:1"
+o.signcolumn = "yes"
 o.synmaxcol = 1000
 o.splitbelow = true
 o.splitright = true
@@ -92,10 +91,6 @@ opt.fillchars = {
 opt.conceallevel = 2
 
 wo.number = false
-opt.viewoptions = {
-  "cursor",
-  "folds",
-}
 
 -- Set shell
 -- vim.api.nvim_set_option("shell", "/usr/bin/zsh")
