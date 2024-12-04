@@ -89,11 +89,11 @@ end
 
 loaders.load_colorscheme = function()
   -- For catppuccin
-  -- require("config.themes.catppuccin")
+  -- require "config.themes.catppuccin"
   -- vim.cmd.colorscheme "catppuccin"
 
   -- For everfores
-  -- require("config.themes.everfores")
+  -- require "config.themes.everfores"
   -- vim.cmd.colorscheme "everforest"
 
   -- For gruvbox

@@ -106,7 +106,7 @@ return {
 
       -- Customize diagnostics looks
       vim.diagnostic.config {
-        virtual_text = false,
+        virtual_text = true,
         underline = true,
         update_in_insert = false,
         severity_sort = true,
@@ -135,7 +135,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lua",
-      -- "zbirenbaum/copilot-cmp",
       "onsails/lspkind.nvim",
       -- Snippet engine
       {
@@ -175,8 +174,8 @@ return {
         },
         sources = cmp.config.sources {
           { name = "nvim_lsp" },
-          { name = "luasnip" },
           { name = "buffer" },
+          { name = "luasnip" },
           { name = "nvim_lua" },
           { name = "path" },
           { name = "nvim_lsp_signature_help" },

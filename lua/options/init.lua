@@ -1,8 +1,8 @@
 -- Set vim globals
-require("options.options")
+require "options.options"
 
 -- Custom autocmds
-require("options.autocmds")
+require "options.autocmds"
 
 -- Custom user commands
-require("options.commands")
+require "options.commands"

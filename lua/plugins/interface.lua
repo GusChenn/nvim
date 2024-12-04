@@ -13,26 +13,6 @@ return {
     priority = 1000,
   },
   {
-    -- More high contrast
-    "scottmckendry/cyberdream.nvim",
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-  },
-  {
-    -- Github theme
-    "projekt0n/github-nvim-theme",
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-  },
-  {
-    "Tsuzat/NeoSolarized.nvim",
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-  },
-  {
     "neanias/everforest-nvim",
     enabled = false,
     version = false,
@@ -71,7 +51,11 @@ return {
       keymaps = {
         ["g?"] = "actions.show_help",
         ["<CR>"] = "actions.select",
-        ["<C-h>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
+        ["<C-h>"] = {
+          "actions.select",
+          opts = { horizontal = true },
+          desc = "Open the entry in a horizontal split",
+        },
         ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
         ["<C-p>"] = "actions.preview",
         ["-"] = "actions.parent",
@@ -82,7 +66,11 @@ return {
         ["gx"] = "actions.open_external",
         ["g."] = "actions.toggle_hidden",
         ["g\\"] = "actions.toggle_trash",
-        ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+        ["<C-v>"] = {
+          "actions.select",
+          opts = { vertical = true },
+          desc = "Open the entry in a vertical split",
+        },
         ["q"] = "actions.close",
         ["<C-l>"] = "actions.refresh",
       },
@@ -347,6 +335,10 @@ return {
         },
         diagnostic = {
           enabled = false,
+        },
+        status = {
+          virtual_text = true,
+          signs = false,
         },
         log_level = vim.log.levels.ERROR,
         icons = {
@@ -741,5 +733,66 @@ return {
     "mcauley-penney/visual-whitespace.nvim",
     event = "VeryLazy",
     config = true,
+  },
+  {
+    "luukvbaal/statuscol.nvim",
+    enabled = false,
+    lazy = false,
+    config = function()
+      -- local builtin = require("statuscol.builtin")
+      require("statuscol").setup {
+        -- configuration goes here, for example:
+        setopt = true,
+        relculright = true,
+        ft_ignore = { "oil" },
+        segments = {
+          {
+            text = { " " },
+          },
+          {
+            sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
+            click = "v:lua.ScSa",
+          },
+          -- {
+          --   sign = {
+          --     namespace = { "GitSigns" },
+          --     maxwidth = 1,
+          --     colwidth = 1,
+          --     fillchar = "│",
+          --     fillcharhl = "@comment",
+          --   },
+          -- },
+          -- {
+          --   sign = {
+          --     namespace = { "<diagnostic/gitsigns>" },
+          --     maxwidth = 1,
+          --     colwidth = 1,
+          --   },
+          --   condition = {
+          --     function()
+          --       return true
+          --     end,
+          --   },
+          -- },
+          -- { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+          -- {
+          --   sign = { namespace = { "diagnostic/signs" }, maxwidth = 2, auto = true },
+          --   click = "v:lua.ScSa"
+          -- },
+          -- { text = { builtin.lnumfunc }, click = "v:lua.ScLa", },
+          -- {
+          --   sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
+          --   click = "v:lua.ScSa"
+          -- },
+        },
+      }
+    end,
+  },
+  {
+    "aidancz/eolmark.nvim",
+    event = "BufReadPre",
+    opts = {
+      mark = " 󱞧",
+    },
   },
 }

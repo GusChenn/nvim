@@ -78,7 +78,7 @@ o.undofile = true
 vim.o.background = "dark"
 
 opt.linebreak = true
-opt.showbreak = "↵ "
+opt.showbreak = "󱞩 "
 opt.breakindent = true
 o.breakindentopt = "list:-1"
 opt.timeoutlen = 200

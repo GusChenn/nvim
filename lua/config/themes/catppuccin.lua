@@ -1,6 +1,6 @@
 require("catppuccin").setup {
   -- transparent_background = true,
-  flavour = "latte",
+  flavour = "mocha",
   color_overrides = {
     latte = {
       rosewater = "#cc7983",
