@@ -17,15 +17,18 @@ M.custom_highlights = function()
     ["@type.ruby"] = { link = "Yellow" },
 
     -- Telescope --
-    TelescopePromptNormal = { link = "Visual" },
-    TelescopePromptBorder = { link = "Visual" },
-    TelescopePromptTitle = { link = "Visual" },
+    TelescopePromptNormal = { link = "Pmenu" },
+    TelescopePromptBorder = { link = "Pmenu" },
+    TelescopePromptTitle = { link = "Pmenu" },
     TelescopePreviewNormal = { link = "StatusLine" },
     TelescopePreviewBorder = { link = "StatusLine" },
     TelescopePreviewTitle = { link = "StatusLine" },
     TelescopeResultsNormal = { link = "StatusLine" },
     TelescopeResultsBorder = { link = "StatusLine" },
     TelescopeResultsTitle = { link = "StatusLine" },
+
+    -- Change selected text color
+    Visual = { fg = "#e78a4e", bg = "#3c3836" },
   }
 end
 

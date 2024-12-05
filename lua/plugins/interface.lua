@@ -491,6 +491,12 @@ return {
     config = function()
       local loaders = require "utils.loaders"
 
+      local hl_line = require("utils.plugin-helpers").highlight_line
+      local hl_str = require("utils.plugin-helpers").highlight_string
+      local pad_icons = require("utils.plugin-helpers").pad_icons
+      local icons = require("utils.constants").icons
+      local group_number = require("utils.plugin-helpers").group_number
+
       local module_configs = {
         { module = "ai" },
         { module = "bufremove" },
@@ -521,59 +527,173 @@ return {
           config = {
             content = {
               active = function()
-                local _, mode_hl = MiniStatusline.section_mode { trunc_width = 75 }
                 local git_branch = MiniStatusline.section_git { icon = " " }
-                local diagnostics = MiniStatusline.section_diagnostics {
-                  trunc_width = 75,
-                  icon = "",
-                  signs = {
-                    ERROR = " ",
-                    WARN = " ",
-                    INFO = " ",
-                    HINT = " ",
-                  },
-                }
-                local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
-                local location = "󱨄 %P"
-                local search = MiniStatusline.section_searchcount { trunc_width = 75 }
-
-                -- Format filename
-                -- local filename = vim.fn.expand('%:t')
-                -- local extension = filename:match("^.+%.(.+)$")
-                -- local filename_icon = require 'nvim-web-devicons'.get_icon(filename, extension, { default = true })
-                -- local formatted_filename = filename_icon .. " " .. filename
 
                 -- Format git branch name
-                local formatted_git = ""
-                if #git_branch <= 25 then
-                  formatted_git = git_branch
-                else
-                  formatted_git = string.sub(git_branch, 1, 25) .. " "
+                local formatted_git_branch = function()
+                  local icon = git_branch:sub(1, 4)
+                  local git_branch_without_details = git_branch:match ".*/(.+)$" or git_branch:sub(6)
+
+                  return hl_str(icon, "Orange") .. hl_line "Normal" .. " " .. git_branch_without_details
+                end
+
+                -- Format diagnostics
+                local diagnostics = function()
+                  return MiniStatusline.section_diagnostics {
+                    trunc_width = 75,
+                    icon = "",
+                    signs = {
+                      ERROR = hl_line "Red" .. "• ",
+                      WARN = hl_line "Yellow" .. "• ",
+                      INFO = hl_line "Green" .. "• ",
+                      HINT = hl_line "Blue" .. "• ",
+                    },
+                  } .. hl_line "Normal"
+                end
+
+                -- Format LSP status
+                local lsp = function()
+                  local lsp_icons = ""
+                  local buf_id = vim.api.nvim_get_current_buf()
+
+                  local clients = vim.lsp.get_clients { buf_id }
+                  for _, client in ipairs(clients) do
+                    local client_icon = icons[client.name] or " "
+
+                    lsp_icons = lsp_icons .. client_icon
+                  end
+
+                  return pad_icons(lsp_icons, 1)
                 end
 
                 -- Format tab numbers
                 local tab_indicator = function()
+                  local text = ""
                   local current_tab = vim.fn.tabpagenr()
                   local total_tabs = vim.fn.tabpagenr "$"
-                  return string.format("  %d/%d", current_tab, total_tabs)
+
+                  -- loop through all tabs and concatenate one "•" in the text variable for each tab
+                  for i = 1, total_tabs do
+                    if i == current_tab then
+                      text = text .. hl_str("• ", "Orange")
+                    else
+                      text = text .. hl_str("◦ ", "Normal")
+                    end
+                  end
+
+                  return text .. hl_line "Normal"
+                end
+
+                -- From https://github.com/mcauley-penney/nvim
+                local file_info = function()
+                  local function get_filesize()
+                    local suffix = { "b", "k", "M", "G", "T", "P", "E" }
+                    local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
+
+                    -- Handle invalid file size
+                    if fsize < 0 then
+                      return "0b"
+                    end
+
+                    local i = math.floor(math.log(fsize) / math.log(1024))
+                    -- Ensure index is within suffix range
+                    i = math.min(i, #suffix - 1)
+
+                    return string.format("%.1f%s", fsize / 1024 ^ i, suffix[i + 1])
+                  end
+
+                  local function get_vlinecount_str()
+                    local raw_count = vim.fn.line "." - vim.fn.line "v"
+                    raw_count = raw_count < 0 and raw_count - 1 or raw_count + 1
+
+                    return group_number(math.abs(raw_count), ",")
+                  end
+
+                  local function is_user_typing_search()
+                    local cmd_type = vim.fn.getcmdtype()
+                    return cmd_type == "/" or cmd_type == "?"
+                  end
+
+                  if vim.v.hlsearch == 1 and not is_user_typing_search() then
+                    local sinfo = vim.fn.searchcount()
+                    local search_stat = sinfo.incomplete > 0 and "press enter"
+                      or sinfo.total > 0 and ("%s/%s"):format(sinfo.current, sinfo.total)
+                      or nil
+
+                    if search_stat ~= nil then
+                      return table.concat { icons.searchcount, " ", search_stat, " " }
+                    end
+                  end
+
+                  local lines = group_number(vim.api.nvim_buf_line_count(0), ",")
+
+                  local wc_table = vim.fn.wordcount()
+                  if not wc_table.visual_words or not wc_table.visual_chars then
+                    -- Normal mode word count and file info
+                    return table.concat {
+                      hl_str(icons.fileinfo, "DiagnosticInfo"),
+                      hl_line "Normal",
+                      " ",
+                      get_filesize(),
+                      "  ",
+                      lines,
+                      " lines  ",
+                      group_number(wc_table.words, ","),
+                      " words ",
+                    }
+                  else
+                    -- Visual selection mode: line count, word count, and char count
+                    return table.concat {
+                      hl_str(icons.visual_block, "DiagnosticInfo"),
+                      hl_line "Normal",
+                      " ",
+                      get_vlinecount_str(),
+                      " lines  ",
+                      group_number(wc_table.visual_words, ","),
+                      " words  ",
+                      group_number(wc_table.visual_chars, ","),
+                      " chars",
+                    }
+                  end
+                end
+
+                -- From https://github.com/mcauley-penney/nvim
+                local function scrollbar()
+                  local sbar_chars = {
+                    "▔",
+                    "🮂",
+                    "🬂",
+                    "🮃",
+                    "▀",
+                    "▄",
+                    "▃",
+                    "🬭",
+                    "▂",
+                    "▁",
+                  }
+
+                  local cur_line = vim.api.nvim_win_get_cursor(0)[1]
+                  local lines = vim.api.nvim_buf_line_count(0)
+
+                  local i = math.floor((cur_line - 1) / lines * #sbar_chars) + 1
+                  local sbar = string.rep(sbar_chars[i], 2)
+
+                  return hl_str(sbar, "Orange") .. hl_line "Normal"
                 end
 
                 return MiniStatusline.combine_groups {
-                  { hl = "NormalNC", strings = { formatted_git } },
+                  { hl = "NormalNC", strings = { formatted_git_branch() } },
+                  { hl = "NormalNC", strings = { diagnostics() } },
                   "%=",
-                  { hl = "NormalNC", strings = { diagnostics } },
-                  "%=",
+                  { hl = "NormalNC", strings = { file_info() } },
                   { hl = "NormalNC", strings = { tab_indicator() } },
-                  { hl = "NormalNC", strings = { lsp } },
-                  { hl = mode_hl, strings = { search, location } },
+                  { hl = "NormalNC", strings = { scrollbar() } },
+                  { hl = "NormalNC", strings = { lsp() } },
                 }
               end,
             },
             use_icons = true,
 
-            -- Whether to set Vim's settings for statusline (make it always shown with
-            -- 'laststatus' set to 2). To use global statusline in Neovim>=0.7.0, set
-            -- this to `false` and 'laststatus' to 3.
             set_vim_settings = false,
           },
         },
@@ -676,37 +796,6 @@ return {
     config = true,
   },
   {
-    "mistweaverco/kulala.nvim",
-    lazy = false,
-    init = function()
-      require("which-key").add {
-        {
-          "<leader>rr",
-          function()
-            require("kulala").run()
-          end,
-          desc = "Open yankbank",
-        },
-      }
-
-      vim.filetype.add {
-        extension = {
-          ["http"] = "http",
-        },
-      }
-    end,
-    opts = {
-      icons = {
-        inlay = {
-          loading = " ",
-          done = " ",
-          error = " ",
-        },
-        lualine = "󱜿 ",
-      },
-    },
-  },
-  {
     "ptdewey/yankbank-nvim",
     dependencies = "kkharji/sqlite.lua",
     event = "VeryLazy",
@@ -787,12 +876,5 @@ return {
         },
       }
     end,
-  },
-  {
-    "aidancz/eolmark.nvim",
-    event = "BufReadPre",
-    opts = {
-      mark = " 󱞧",
-    },
   },
 }
