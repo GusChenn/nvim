@@ -106,7 +106,14 @@ return {
 
       -- Customize diagnostics looks
       vim.diagnostic.config {
-        virtual_text = true,
+        virtual_text = {
+          prefix = "",
+          hl_mode = "combine",
+          virt_text_pos = "eol",
+          format = function(diagnostic)
+            return "● " .. diagnostic.message
+          end,
+        },
         underline = true,
         update_in_insert = false,
         severity_sort = true,
