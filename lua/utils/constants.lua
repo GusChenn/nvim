@@ -5,7 +5,7 @@ local constants = {
     rubocop = "󱚝 ",
     cssls = " ",
     ["GitHub Copilot"] = " ",
-    searchcount = " ",
+    ts_ls = " ",
     fileinfo = "󰈚 ",
     visual_block = "󰒉 ",
   },

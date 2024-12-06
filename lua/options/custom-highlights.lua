@@ -16,6 +16,9 @@ M.custom_highlights = function()
     -- TreeSitter --
     ["@type.ruby"] = { link = "Yellow" },
 
+    -- StatusLine --
+    StatusLine = { link = "NormalNC" },
+
     -- Telescope --
     TelescopePromptNormal = { link = "Pmenu" },
     TelescopePromptBorder = { link = "Pmenu" },

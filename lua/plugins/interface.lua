@@ -534,7 +534,11 @@ return {
                   local icon = git_branch:sub(1, 4)
                   local git_branch_without_details = git_branch:match ".*/(.+)$" or git_branch:sub(6)
 
-                  return hl_str(icon, "Orange") .. hl_line "Normal" .. " " .. git_branch_without_details
+                  if git_branch_without_details == "" then
+                    return hl_line "NormalNC"
+                  end
+
+                  return icon .. " " .. git_branch_without_details
                 end
 
                 -- Format diagnostics
@@ -548,7 +552,7 @@ return {
                       INFO = hl_line "Green" .. "• ",
                       HINT = hl_line "Blue" .. "• ",
                     },
-                  } .. hl_line "Normal"
+                  } .. hl_line "NormalNC"
                 end
 
                 -- Format LSP status
@@ -577,11 +581,11 @@ return {
                     if i == current_tab then
                       text = text .. hl_str("• ", "Orange")
                     else
-                      text = text .. hl_str("◦ ", "Normal")
+                      text = text .. hl_str("◦ ", "NormalNC")
                     end
                   end
 
-                  return text .. hl_line "Normal"
+                  return text .. hl_line "NormalNC"
                 end
 
                 -- From https://github.com/mcauley-penney/nvim
@@ -609,22 +613,6 @@ return {
                     return group_number(math.abs(raw_count), ",")
                   end
 
-                  local function is_user_typing_search()
-                    local cmd_type = vim.fn.getcmdtype()
-                    return cmd_type == "/" or cmd_type == "?"
-                  end
-
-                  if vim.v.hlsearch == 1 and not is_user_typing_search() then
-                    local sinfo = vim.fn.searchcount()
-                    local search_stat = sinfo.incomplete > 0 and "press enter"
-                      or sinfo.total > 0 and ("%s/%s"):format(sinfo.current, sinfo.total)
-                      or nil
-
-                    if search_stat ~= nil then
-                      return table.concat { icons.searchcount, " ", search_stat, " " }
-                    end
-                  end
-
                   local lines = group_number(vim.api.nvim_buf_line_count(0), ",")
 
                   local wc_table = vim.fn.wordcount()
@@ -632,7 +620,7 @@ return {
                     -- Normal mode word count and file info
                     return table.concat {
                       hl_str(icons.fileinfo, "DiagnosticInfo"),
-                      hl_line "Normal",
+                      hl_line "NormalNC",
                       " ",
                       get_filesize(),
                       "  ",
@@ -645,7 +633,7 @@ return {
                     -- Visual selection mode: line count, word count, and char count
                     return table.concat {
                       hl_str(icons.visual_block, "DiagnosticInfo"),
-                      hl_line "Normal",
+                      hl_line "NormalNC",
                       " ",
                       get_vlinecount_str(),
                       " lines  ",
@@ -678,7 +666,7 @@ return {
                   local i = math.floor((cur_line - 1) / lines * #sbar_chars) + 1
                   local sbar = string.rep(sbar_chars[i], 2)
 
-                  return hl_str(sbar, "Orange") .. hl_line "Normal"
+                  return hl_str(sbar, "Orange") .. hl_line "NormalNC"
                 end
 
                 return MiniStatusline.combine_groups {
@@ -687,8 +675,8 @@ return {
                   "%=",
                   { hl = "NormalNC", strings = { file_info() } },
                   { hl = "NormalNC", strings = { tab_indicator() } },
-                  { hl = "NormalNC", strings = { scrollbar() } },
                   { hl = "NormalNC", strings = { lsp() } },
+                  { hl = "NormalNC", strings = { scrollbar() } },
                 }
               end,
             },

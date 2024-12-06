@@ -206,4 +206,9 @@ return {
       }
     end,
   },
+  {
+    "Hashino/doing.nvim",
+    event = "VeryLazy",
+    config = true,
+  },
 }
