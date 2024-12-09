@@ -25,21 +25,6 @@ return {
     priority = 1000,
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    enabled = false,
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    opts = require "config.long-configs.nvim-tree",
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").add {
-        "<leader>e",
-        cmd "NvimTreeToggle",
-        desc = "Toggle explorer",
-      }
-    end,
-  },
-  {
     "stevearc/oil.nvim",
     event = "VeryLazy",
     ---@module 'oil'
@@ -106,19 +91,11 @@ return {
         },
       }
     end,
-    init = function()
-      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-      ---@diagnostic disable-next-line: inject-field
-      parser_config.embedded_template = {
-        install_info = {
-          url = "https://github.com/tree-sitter/tree-sitter-embedded-template",
-          files = { "src/parser.c" },
-          requires_generate_from_grammar = true,
-        },
-        used_by = { "erb" },
-      }
-    end,
+  },
+  {
+    -- Provides treesitter hl to erb files. Not declared as treesitter dependecy so it can be lazy loaded
+    "tree-sitter/tree-sitter-embedded-template",
+    ft = "erb",
   },
   {
     "brenoprata10/nvim-highlight-colors",
@@ -777,11 +754,6 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
-  },
-  {
-    "r-cha/encourage.nvim",
-    event = "VeryLazy",
-    config = true,
   },
   {
     "ptdewey/yankbank-nvim",

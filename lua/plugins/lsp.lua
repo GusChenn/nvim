@@ -254,7 +254,7 @@ return {
     },
     init = function()
       require("which-key").add {
-        { "<leader>gd", require("garbage-day.utils").stop_lsp, desc = "Stop LSP servers" },
+        { "<leader>gD", require("garbage-day.utils").stop_lsp, desc = "Stop LSP servers" },
         { "<leader>ge", require("garbage-day.utils").start_lsp, desc = "Start LSP servers" },
       }
     end,
