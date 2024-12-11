@@ -2,7 +2,6 @@ local M = {}
 
 M.commit_with_ai = function()
   local copilot_chat = require "CopilotChat"
-  local select = require "CopilotChat.select"
   local prompts = require "utils.ai.prompts"
 
   local commit_response = function(response)
@@ -24,6 +23,7 @@ M.commit_with_ai = function()
 
     local neogit_commit_popup = require("neogit.popups.commit").create {}
 
+    ---@diagnostic disable-next-line: missing-parameter
     a.run(function()
       async_commit(neogit_commit_popup)
     end)
@@ -37,9 +37,6 @@ M.commit_with_ai = function()
   local has_diffs = os.execute "git diff --exit-code --cached --quiet"
   if has_diffs ~= 0 then
     copilot_chat.ask(prompts.commit, {
-      selection = function(source)
-        return select.gitdiff(source, true)
-      end,
       callback = commit_response,
       kind = "user",
     })
