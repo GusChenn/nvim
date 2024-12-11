@@ -26,16 +26,11 @@ return {
   },
   {
     "kevinhwang91/nvim-ufo",
-    event = "UIEnter",
+    lazy = false,
     dependencies = {
       "kevinhwang91/promise-async",
     },
     opts = require "config.long-configs.nvim-ufo",
-    init = function()
-      require("which-key").add {
-        { "fp", "za", desc = "Toggle fold (za)" },
-      }
-    end,
   },
   {
     "github/copilot.vim",

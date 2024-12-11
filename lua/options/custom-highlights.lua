@@ -13,6 +13,11 @@ M.custom_highlights = function()
     -- StatusLine --
     StatusLine = { link = "NormalNC" },
 
+    -- Treesitter --
+    Define = { italic = true },
+    Keyword = { italic = true },
+    ["@variable.builtin"] = { italic = true },
+
     -- Telescope -- chore: remove this and add colorscheme-specific overrides
     -- TelescopePromptNormal = { link = "Pmenu" },
     -- TelescopePromptBorder = { link = "Pmenu" },

@@ -108,7 +108,7 @@ return {
     event = "VeryLazy",
     opts = {
       ---@usage 'background'|'foreground'|'virtual'
-      render = "virtual",
+      render = "background", -- virtual was causing performance issues
       virtual_symbol = "⬤ ",
 
       enable_named_colors = true,
@@ -853,10 +853,46 @@ return {
 
       require("which-key").add {
         { "<leader>pa", ":Postit add ", desc = "Start adding a postit" },
-        { "<leader>pt", cmd "Postit toggle", desc = "Toggle postit visibility" },
+        { "<leader>tp", cmd "Postit toggle", desc = "Toggle postit visibility" },
         { "<leader>pn", cmd "Postit next", desc = "Next postit" },
         { "<leader>pe", cmd "Postit edit", desc = "Edit postits in buffer" },
       }
+    end,
+  },
+  {
+    "Tyler-Barham/floating-help.nvim",
+    cmd = "FloatingHelp",
+    keys = { "<leader>th" },
+    opts = {
+      width = 0.6, -- Whole numbers are columns/rows
+      height = 0.9, -- Decimals are a percentage of the editor
+      position = "W", -- NW,N,NW,W,C,E,SW,S,SE (C==center)
+      border = "rounded", -- rounded,double,single
+    },
+    init = function()
+      local fh = require "floating-help"
+
+      require("which-key").add {
+        { "<leader>th", fh.toggle, desc = "Toggle floating help" },
+      }
+
+      -- Only replace cmds, not search; only replace the first instance
+      local function cmd_abbrev(abbrev, expansion)
+        local cmd = "cabbr "
+          .. abbrev
+          .. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
+          .. expansion
+          .. '" : "'
+          .. abbrev
+          .. '")<CR>'
+        vim.cmd(cmd)
+      end
+
+      -- Redirect `:h` to `:FloatingHelp`
+      cmd_abbrev("h", "FloatingHelp")
+      cmd_abbrev("help", "FloatingHelp")
+      cmd_abbrev("helpc", "FloatingHelpClose")
+      cmd_abbrev("helpclose", "FloatingHelpClose")
     end,
   },
 }

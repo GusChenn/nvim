@@ -4,7 +4,7 @@ require("oldworld").setup {
     comments = { italic = true },
     keywords = {}, -- style for keywords
     identifiers = {}, -- style for identifiers
-    functions = { bold = true }, -- style for functions
+    functions = {}, -- style for functions
     variables = {}, -- style for variables
     booleans = { italic = true }, -- style for booleans
   },

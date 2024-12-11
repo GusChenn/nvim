@@ -21,6 +21,11 @@ M.capabilities = function()
     },
   }
 
+  capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
+
   return capabilities
 end
 

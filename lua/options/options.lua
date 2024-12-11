@@ -29,7 +29,7 @@ g.VtrClearBeforeSend = 0
 -- nvim ufo default settings
 o.foldcolumn = "0"
 o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Removed this because im using ufo
 o.foldmethod = "expr"
 o.foldlevelstart = 99
 o.foldenable = true

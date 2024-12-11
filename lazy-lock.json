@@ -16,6 +16,7 @@
   "dropbar.nvim": { "branch": "master", "commit": "321cbc7a6be672f15e3ec5ceaab7a90b4dec6122" },
   "everforest-nvim": { "branch": "main", "commit": "3598755ade98f87e66415cb0e15d3f99b895bdf8" },
   "flash.nvim": { "branch": "main", "commit": "34c7be146a91fec3555c33fe89c7d643f6ef5cf1" },
+  "floating-help.nvim": { "branch": "main", "commit": "1e61cb6804b7aac7fb0ccfdccbbd01a0a4c92241" },
   "focus.nvim": { "branch": "main", "commit": "a3990e834105c2a931af9c2ae68d9e9c7508aa36" },
   "garbage-day.nvim": { "branch": "main", "commit": "750ef08ae6031ee3683014c5349144340c08ead6" },
   "gitblame": { "branch": "master", "commit": "2883a7460f611c2705b23f12d58d398d5ce6ec00" },
