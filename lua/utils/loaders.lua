@@ -64,6 +64,11 @@ loaders.load_lazy = function()
         },
       },
     },
+    dev = {
+      path = "~/Repos/projects/lua/",
+      patterns = { "postit-nvim" },
+      fallback = false,
+    },
   }
 end
 
@@ -106,8 +111,12 @@ loaders.load_colorscheme = function()
   -- vim.cmd.colorscheme "everforest"
 
   -- For gruvbox
-  require "config.themes.gruvbox"
-  vim.cmd.colorscheme "gruvbox-material"
+  -- require "config.themes.gruvbox"
+  -- vim.cmd.colorscheme "gruvbox-material"
+
+  -- For oldworld
+  require "config.themes.oldworld"
+  vim.cmd.colorscheme "oldworld"
 end
 
 loaders.load_custom_highlights = function()
