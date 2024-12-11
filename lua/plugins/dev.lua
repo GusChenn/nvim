@@ -1,17 +1,5 @@
 return {
   {
-    "nvim-tree/nvim-tree.lua",
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    opts = require "config.long-configs.nvim-tree",
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").add {
-        { "<leader>e", cmd "NvimTreeToggle", desc = "Toggle explorer" },
-      }
-    end,
-  },
-  {
     "cbochs/grapple.nvim",
     dependencies = {
       { "nvim-tree/nvim-web-devicons", lazy = true },
@@ -205,10 +193,5 @@ return {
         { "<leader>rc", cmd "Econtroller", desc = "Edit controller" },
       }
     end,
-  },
-  {
-    "Hashino/doing.nvim",
-    event = "VeryLazy",
-    config = true,
   },
 }
