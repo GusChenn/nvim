@@ -21,6 +21,12 @@ return {
   },
   {
     "sainnhe/gruvbox-material",
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "dgox16/oldworld.nvim",
     lazy = false,
     priority = 1000,
   },
@@ -556,7 +562,7 @@ return {
                   -- loop through all tabs and concatenate one "•" in the text variable for each tab
                   for i = 1, total_tabs do
                     if i == current_tab then
-                      text = text .. hl_str("• ", "Orange")
+                      text = text .. hl_str("● ", "Added")
                     else
                       text = text .. hl_str("◦ ", "NormalNC")
                     end
@@ -572,7 +578,7 @@ return {
                     local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
 
                     -- Handle invalid file size
-                    if fsize < 0 then
+                    if fsize <= 0 then
                       return "0b"
                     end
 
@@ -596,7 +602,7 @@ return {
                   if not wc_table.visual_words or not wc_table.visual_chars then
                     -- Normal mode word count and file info
                     return table.concat {
-                      hl_str(icons.fileinfo, "DiagnosticInfo"),
+                      hl_str(icons.fileinfo, "Added"),
                       hl_line "NormalNC",
                       " ",
                       get_filesize(),
@@ -609,7 +615,7 @@ return {
                   else
                     -- Visual selection mode: line count, word count, and char count
                     return table.concat {
-                      hl_str(icons.visual_block, "DiagnosticInfo"),
+                      hl_str(icons.visual_block, "Added"),
                       hl_line "NormalNC",
                       " ",
                       get_vlinecount_str(),
@@ -643,7 +649,7 @@ return {
                   local i = math.floor((cur_line - 1) / lines * #sbar_chars) + 1
                   local sbar = string.rep(sbar_chars[i], 2)
 
-                  return hl_str(sbar, "Orange") .. hl_line "NormalNC"
+                  return hl_str(sbar, "Added") .. hl_line "NormalNC"
                 end
 
                 return MiniStatusline.combine_groups {
@@ -834,6 +840,22 @@ return {
           --   click = "v:lua.ScSa"
           -- },
         },
+      }
+    end,
+  },
+  {
+    dir = "~/Repos/postit-nvim",
+    opts = {},
+    dev = true,
+    cmd = "Postit",
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").add {
+        { "<leader>pa", ":Postit add ", desc = "Start adding a postit" },
+        { "<leader>pt", cmd "Postit toggle", desc = "Toggle postit visibility" },
+        { "<leader>pn", cmd "Postit next", desc = "Next postit" },
+        { "<leader>pe", cmd "Postit edit", desc = "Edit postits in buffer" },
       }
     end,
   },
