@@ -36,6 +36,12 @@ return {
     ---@module 'oil'
     ---@type oil.SetupOpts
     opts = {
+      columns = {
+        "icon",
+        -- "permissions",
+        "size",
+        -- "mtime",
+      },
       view_options = {
         show_hidden = true,
       },
@@ -105,12 +111,10 @@ return {
   },
   {
     "brenoprata10/nvim-highlight-colors",
-    event = "VeryLazy",
+    filetype = { "erb", "html", "css", "scss", "javascript", "typescript", "typescriptreact", "javascriptreact" },
     opts = {
       ---@usage 'background'|'foreground'|'virtual'
       render = "background", -- virtual was causing performance issues
-      virtual_symbol = "⬤ ",
-
       enable_named_colors = true,
       enable_tailwind = true,
     },

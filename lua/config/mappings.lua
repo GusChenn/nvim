@@ -87,4 +87,6 @@ wc.add {
   { "jk", "<ESC>", mode = "i", desc = "Quit insert mode with jk" },
   { "kj", "<ESC>", mode = "i", desc = "Quit insert mode with kj" },
   { "<leader>fs", "I# frozen_string_literal: true<CR><ESC>Doclass", desc = "Add frozen string magic comment" },
+  { "<C-h>", "<C-o>h", mode = "i", desc = "Move left in insert mode" },
+  { "<C-l>", "<C-o>l", mode = "i", desc = "Move right in insert mode" },
 }

@@ -136,15 +136,6 @@ return {
           mode = "v",
           desc = "Generate test with ai",
         },
-      }
-
-      require("which-key").add {
-        -- {
-        --   "<A-T>",
-        --   require("utils.ai.ai-helpers").toggle_copilot_chat,
-        --   mode = { "n", "v" },
-        --   desc = "Toggle copilot chat",
-        -- },
         {
           "<A-T>",
           cmd "CopilotChatToggle",
@@ -216,5 +207,51 @@ return {
         { "<leader>rc", cmd "Econtroller", desc = "Edit controller" },
       }
     end,
+  },
+  {
+    "ldelossa/gh.nvim",
+    cmd = "GHOpenPR",
+    dependencies = {
+      {
+        "ldelossa/litee.nvim",
+        cmd = "GHOpenPR",
+        config = function()
+          require("litee.lib").setup {
+            tree = {
+              icon_set = "codicons",
+              icon_set_custom = {
+                Collapsed = " ",
+                Expanded = "",
+                IndentGuide = " ",
+              },
+            },
+          }
+        end,
+      },
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("litee.gh").setup {
+        icon_set = "codicons",
+      }
+    end,
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").add {
+        { "<leader>ghpo", cmd "GHOpenPR", desc = "Open a GH PR" },
+        { "<leader>ghpc", cmd "GHClosePR", desc = "Close a GH PR" },
+        { "<leader>ghtc", cmd "GHCreateThread", desc = "Start a GH thread" },
+        { "<leader>ghtt", cmd "GHToggleThreads", desc = "Toggle a thread" },
+        { "<leader>ghrc", cmd "GHStartReview", desc = "Start a GH review" },
+        { "<leader>ghrs", cmd "GHSubmitReview", desc = "Submit a GH review" },
+        { "<leader>ghe", cmd "LTPanel", desc = "Toggle litee panel" },
+      }
+    end,
+  },
+  {
+    "grzegorzszczepanek/gamify.nvim",
+    event = "VeryLazy",
+    opts = {},
   },
 }

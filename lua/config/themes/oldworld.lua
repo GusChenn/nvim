@@ -44,5 +44,6 @@ require("oldworld").setup {
     TelescopeResultsNormal = { link = "Pmenu" },
     TelescopeResultsBorder = { link = "Pmenu" },
     TelescopeResultsTitle = { link = "Pmenu" },
+    SpellBad = { link = "Underlined" },
   },
 }

@@ -4,5 +4,8 @@
         "vim",
         "MiniStatusline",
         "MiniPick"
+    ],
+    "diagnostics.disable": [
+        "missing-fields"
     ]
 }

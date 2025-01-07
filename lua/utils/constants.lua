@@ -3,6 +3,7 @@ local constants = {
     lua_ls = " ",
     ruby_lsp = " ",
     rubocop = "󱚝 ",
+    clangd = "C",
     cssls = " ",
     ["GitHub Copilot"] = " ",
     ts_ls = " ",
