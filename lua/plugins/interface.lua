@@ -451,12 +451,12 @@ return {
     end,
   },
   {
-    "folke/ts-comments.nvim",
+    "folke/ts-comments.nvim", -- Helps define the correct comment string according to language
     event = "VeryLazy",
     config = true,
   },
   {
-    "farmergreg/vim-lastplace",
+    "farmergreg/vim-lastplace", -- Keeps position when reopening files
     event = "UIEnter",
   },
   {
@@ -465,7 +465,7 @@ return {
       "echasnovski/mini.nvim", -- necessary so it doesnt try to load the session before mini modules are up
       "zeioth/garbage-day.nvim", -- necessary so it can load LSPs,
     },
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    keys = { "<leader>sl" },
     config = true,
     init = function()
       require("which-key").add {
@@ -485,6 +485,7 @@ return {
     opts = {
       modes = {
         search = {
+          enabled = true,
           label = {
             style = "overlay",
           },
@@ -502,7 +503,7 @@ return {
           function()
             require("flash").jump()
           end,
-          desc = "Flash",
+          desc = "Flash jump",
         },
       }
     end,

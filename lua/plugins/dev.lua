@@ -111,10 +111,6 @@ return {
       show_folds = false,
       auto_follow_cursor = false,
 
-      -- callback = function()
-      --   vim.cmd("CopilotChatSave " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"))
-      -- end,
-
       mappings = {
         reset = {
           normal = "<leader><C-l>",
