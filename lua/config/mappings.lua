@@ -70,6 +70,7 @@ wc.add {
   },
   { "<C-q>", cmd "noautocmd w", desc = "Save file without autocmds" },
   { "<C-s>", cmd "w", desc = "Save file with autocmds" },
+  { "<leader>w", cmd "w", desc = "Save file with autocmds" },
   { "cb", close_all_buffers, desc = "Close all buffers except the current one" },
   { "<C-l>", cmd "noh", desc = "Clear highlights" },
   {

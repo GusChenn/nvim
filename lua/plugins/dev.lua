@@ -193,7 +193,7 @@ return {
     end,
   },
   {
-    "tpope/vim-rails",
+    "tpope/vim-rails", -- TODO: See if this is causing lag
     ft = { "ruby", "eruby" },
     init = function()
       local cmd = require("utils.plugin-helpers").cmd

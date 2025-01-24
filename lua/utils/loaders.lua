@@ -115,8 +115,33 @@ loaders.load_colorscheme = function()
   -- vim.cmd.colorscheme "gruvbox-material"
 
   -- For oldworld
-  require "config.themes.oldworld"
-  vim.cmd.colorscheme "oldworld"
+  -- require "config.themes.oldworld"
+  -- vim.cmd.colorscheme "oldworld"
+
+  -- For eva01
+  vim.cmd.colorscheme "eva01-LCL"
+
+  -- For eva01-custom
+  -- require("config.themes.eva01-custom").setup()
+
+  -- For zenbones
+  -- require "config.themes.zenbones"
+  -- vim.cmd.colorscheme "forestbones"
+
+  -- For github theme
+  -- require "config.themes.github"
+  -- vim.cmd.colorscheme "github_light_high_contrast"
+
+  -- For rose-pine
+  -- require "config.themes.rose-pine"
+  -- vim.cmd.colorscheme "rose-pine"
+
+  -- For poimadres
+  -- require "config.themes.poimadres"
+  -- vim.cmd.colorscheme "poimadres"
+
+  -- For noirbuddy
+  -- require "config.themes.noirbuddy"
 end
 
 loaders.load_custom_highlights = function()

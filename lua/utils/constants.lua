@@ -2,6 +2,7 @@ local constants = {
   icons = {
     lua_ls = " ",
     ruby_lsp = " ",
+    solargraph = " ",
     rubocop = "󱚝 ",
     clangd = "C",
     cssls = " ",

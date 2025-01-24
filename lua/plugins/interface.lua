@@ -6,6 +6,13 @@ return {
     config = true,
   },
   -- Colorschemes
+  -- Install without configuration
+  {
+    "projekt0n/github-nvim-theme",
+    enabled = false,
+    name = "github-theme",
+    priority = 1000,
+  },
   {
     "catppuccin/nvim",
     enabled = false,
@@ -27,6 +34,48 @@ return {
   },
   {
     "dgox16/oldworld.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "p00f/alabaster.nvim", -- minimal, but doesnt work that well with rails
+    enabled = false,
+    lazy = false,
+    priority = 1000,
+    init = function()
+      vim.g.alabaster_dim_comments = true
+      vim.g.alabaster_floatborder = true
+    end,
+  },
+  {
+    "rose-pine/neovim",
+    enabled = false,
+    name = "rose-pine",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "zenbones-theme/zenbones.nvim",
+    enabled = false,
+    dependencies = "rktjmp/lush.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "olivercederborg/poimandres.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "hachy/eva01.vim",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "jesseleite/nvim-noirbuddy",
+    dependencies = {
+      { "tjdevries/colorbuddy.nvim" },
+    },
     lazy = false,
     priority = 1000,
   },
@@ -107,7 +156,7 @@ return {
   {
     -- Provides treesitter hl to erb files. Not declared as treesitter dependecy so it can be lazy loaded
     "tree-sitter/tree-sitter-embedded-template",
-    ft = "erb",
+    ft = "eruby",
   },
   {
     "brenoprata10/nvim-highlight-colors",
@@ -360,8 +409,8 @@ return {
           enabled = false,
         },
         status = {
-          virtual_text = true,
-          signs = false,
+          virtual_text = false,
+          signs = true,
         },
         log_level = vim.log.levels.ERROR,
         icons = {
@@ -935,5 +984,10 @@ return {
       cmd_abbrev("helpc", "FloatingHelpClose")
       cmd_abbrev("helpclose", "FloatingHelpClose")
     end,
+  },
+  {
+    "wurli/contextindent.nvim",
+    opts = { pattern = "*" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
   },
 }
