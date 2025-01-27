@@ -102,10 +102,11 @@ return {
           })
         end,
         ["solargraph"] = function()
-          -- require("lspconfig").ruby_lsp.setup(with_base_capabilities {
+          -- require("lspconfig").solargraph.setup(with_base_capabilities {
           --   filetypes = { "ruby", "eruby" },
           -- })
         end,
+        ["rubocop"] = function() end,
       }
 
       -- Customize diagnostics looks

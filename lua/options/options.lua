@@ -75,7 +75,7 @@ o.splitbelow = true
 o.splitright = true
 o.undofile = true
 
-vim.o.background = "dark"
+vim.o.background = "light"
 
 opt.linebreak = true
 opt.showbreak = "󱞩 "

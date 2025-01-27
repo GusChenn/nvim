@@ -119,7 +119,7 @@ loaders.load_colorscheme = function()
   -- vim.cmd.colorscheme "oldworld"
 
   -- For eva01
-  vim.cmd.colorscheme "eva01-LCL"
+  -- vim.cmd.colorscheme "eva01-LCL"
 
   -- For eva01-custom
   -- require("config.themes.eva01-custom").setup()
@@ -142,6 +142,10 @@ loaders.load_colorscheme = function()
 
   -- For noirbuddy
   -- require "config.themes.noirbuddy"
+
+  -- For nightfox
+  require "config.themes.nightfox"
+  vim.cmd.colorscheme "dawnfox"
 end
 
 loaders.load_custom_highlights = function()

@@ -34,6 +34,7 @@ return {
   },
   {
     "dgox16/oldworld.nvim",
+    enabled = false,
     lazy = false,
     priority = 1000,
   },
@@ -73,9 +74,15 @@ return {
   },
   {
     "jesseleite/nvim-noirbuddy",
+    enabled = false,
     dependencies = {
       { "tjdevries/colorbuddy.nvim" },
     },
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "EdenEast/nightfox.nvim",
     lazy = false,
     priority = 1000,
   },
@@ -278,12 +285,12 @@ return {
           vimgrep_arguments = vimgrep_arguments,
           layout_config = {
             horizontal = {
-              width = 0.9,
-              height = 0.9,
+              width = 9999,
+              height = 9999,
             },
             vertical = {
-              width = 0.9,
-              height = 0.9,
+              width = 9999,
+              height = 9999,
             },
           },
         },
