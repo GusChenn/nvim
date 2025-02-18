@@ -13,15 +13,27 @@ autocmd({ "VimResized" }, {
   ]],
 })
 
--- enable when using catppuccin theme
--- autocmd({ "BufEnter" }, {
---   desc = "Change background color for copilot-chat buffers",
---   pattern = "copilot-chat",
+-- not working
+-- vim.api.nvim_create_autocmd("FileType", {
+--   desc = "Change background color for codecompanion buffers",
+--   pattern = "codecompanion",
 --   callback = function()
---     vim.api.nvim_set_hl(0, 'CopilotChatBg', { bg = '#f0f0f0' })
---     vim.wo.winhighlight = 'Normal:CopilotChatBg'
+--     -- Create a temporary highlight group with the new background color
+--     vim.api.nvim_set_hl(0, "CodeCompanionTempBg", { bg = "#f0f0f0" })
+--     -- Iterate over all open windows
+--     for _, win in ipairs(vim.api.nvim_list_wins()) do
+--       -- Get the buffer associated with the window
+--       local buf = vim.api.nvim_win_get_buf(win)
+--       -- Check if the buffer's filetype is 'codecompanion'
+--       local filetype = vim.api.nvim_get_option_value("filetype", { buf = buf })
+--       if filetype == "codecompanion" then
+--         -- Apply the winhighlight to the window
+--         vim.print("triggering on win " .. win .. "with buffer " .. buf)
+--         vim.api.nvim_set_option_value("winhighlight", "Normal:CodeCompanionTempBg", { win = win + 1 })
+--         break
+--       end
+--     end
 --   end,
---   group = augroup("copilot_chat_bg", { clear = true }),
 -- })
 
 autocmd({ "FileType" }, {

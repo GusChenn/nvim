@@ -74,6 +74,7 @@ return {
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
+    enabled = false, -- disabled because im trying codecompanion
     cmd = {
       "CopilotChatOpen",
       "CopilotChatToggle",
@@ -148,18 +149,6 @@ return {
     end,
   },
   {
-    "folke/lazydev.nvim",
-    ft = "lua",
-    opts = {
-      library = {
-        { path = "luvit-meta/library", words = { "vim%.uv" } },
-      },
-    },
-    dependencies = {
-      { "Bilal2453/luvit-meta", lazy = true },
-    },
-  },
-  {
     "nvim-pack/nvim-spectre",
     event = "VeryLazy",
     cmd = "Spectre",
@@ -193,7 +182,7 @@ return {
     end,
   },
   {
-    "tpope/vim-rails", -- TODO: See if this is causing lag
+    "tpope/vim-rails",
     ft = { "ruby", "eruby" },
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
@@ -205,49 +194,148 @@ return {
     end,
   },
   {
-    "ldelossa/gh.nvim",
-    cmd = "GHOpenPR",
-    dependencies = {
-      {
-        "ldelossa/litee.nvim",
-        cmd = "GHOpenPR",
-        config = function()
-          require("litee.lib").setup {
-            tree = {
-              icon_set = "codicons",
-              icon_set_custom = {
-                Collapsed = " ",
-                Expanded = "",
-                IndentGuide = " ",
-              },
-            },
-          }
-        end,
+    "grzegorzszczepanek/gamify.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
+  {
+    "yetone/avante.nvim",
+    enabled = false, -- disabled because im trying codecompanion
+    event = "VeryLazy",
+    lazy = false,
+    version = "*",
+    opts = {
+      provider = "copilot",
+      windows = {
+        sidebar_header = {
+          rounded = false,
+        },
+        input = {
+          prefix = "󰏫 ",
+        },
+        edit = {
+          border = "single",
+        },
+        ask = {
+          border = "single",
+          start_insert = false,
+        },
       },
-      "nvim-telescope/telescope.nvim",
     },
-    config = function()
-      require("litee.gh").setup {
-        icon_set = "codicons",
-      }
-    end,
+    build = "make",
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "nvim-telescope/telescope.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvim-tree/nvim-web-devicons",
+      "zbirenbaum/copilot.lua",
+    },
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
       require("which-key").add {
-        { "<leader>ghpo", cmd "GHOpenPR", desc = "Open a GH PR" },
-        { "<leader>ghpc", cmd "GHClosePR", desc = "Close a GH PR" },
-        { "<leader>ghtc", cmd "GHCreateThread", desc = "Start a GH thread" },
-        { "<leader>ghtt", cmd "GHToggleThreads", desc = "Toggle a thread" },
-        { "<leader>ghrc", cmd "GHStartReview", desc = "Start a GH review" },
-        { "<leader>ghrs", cmd "GHSubmitReview", desc = "Submit a GH review" },
-        { "<leader>ghe", cmd "LTPanel", desc = "Toggle litee panel" },
+        { "<A-T>", cmd "AvanteChat", desc = "Open avante chat" },
       }
     end,
   },
   {
-    "grzegorzszczepanek/gamify.nvim",
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim",
+    },
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      strategies = {
+        chat = {
+          adapter = "copilot",
+          roles = {
+            llm = " ",
+            -- user = " ", -- commented out because enabling this causes the chat to not work for some reason
+          },
+          slash_commands = {
+            ["file"] = {
+              opts = {
+                provider = "telescope", -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
+                contains_code = true,
+              },
+            },
+          },
+        },
+        inline = {
+          adapter = "copilot",
+          keymaps = {
+            accept_change = {
+              modes = { n = "ga" },
+              description = "Accept the suggested change",
+            },
+            reject_change = {
+              modes = { n = "gr" },
+              description = "Reject the suggested change",
+            },
+          },
+        },
+      },
+      display = {
+        chat = {
+          icons = {
+            pinned_buffer = "󰏫 ",
+            watched_buffer = "watch",
+          },
+          window = {
+            position = "right",
+            border = "single",
+            opts = {
+              cursorline = true,
+            },
+            show_header_separator = false,
+            separator = "",
+          },
+        },
+        action_palette = {
+          provider = "telescope",
+        },
+      },
+      adapters = {
+        copilot = function()
+          return require("codecompanion.adapters").extend("copilot", {
+            schema = {
+              model = {
+                -- default = "claude-3.5-sonnet",
+                default = "o3-mini-2025-01-31",
+              },
+            },
+          })
+        end,
+      },
+    },
+    init = function()
+      local cmd = require("utils.plugin-helpers").cmd
+
+      require("which-key").add {
+        {
+          "<A-T>",
+          cmd "CodeCompanionChat Toggle",
+          mode = { "n", "v" },
+          desc = "Toggle codecompanion chat",
+        },
+      }
+    end,
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+      },
+    },
+    dependencies = {
+      { "Bilal2453/luvit-meta", lazy = true },
+    },
   },
 }

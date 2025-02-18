@@ -1,15 +1,14 @@
 return {
-  -- Too new for now
   {
     "OXY2DEV/markview.nvim",
-    ft = { "markdown" },
+    event = "VeryLazy",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
       require("markview").setup {
-        horizontal_rules = {},
+        max_length = 99999,
         checkboxes = {
           checked = {
             text = " ",
@@ -24,22 +23,33 @@ return {
 
           custom = {},
         },
-        list_items = {
-          enable = false,
+        preview = {
+          filetypes = {
+            "markdown",
+            "codecompanion",
+          },
+          ignore_filetypes = {},
+          ignore_buftypes = {},
         },
-        headings = {
-          shift_width = 2,
-          heading_1 = {
-            sign = "",
-            sign_hl = "MarkviewHeading2Sign",
+        markdown = {
+          horizontal_rules = {},
+          list_items = {
+            enable = false,
           },
-          heading_2 = {
-            sign = "",
-            sign_hl = "MarkviewHeading2Sign",
-          },
-          heading_3 = {
-            sign = "",
-            sign_hl = "MarkviewHeading2Sign",
+          headings = {
+            shift_width = 2,
+            heading_1 = {
+              sign = "",
+              sign_hl = "MarkviewHeading2Sign",
+            },
+            heading_2 = {
+              sign = "",
+              sign_hl = "MarkviewHeading2Sign",
+            },
+            heading_3 = {
+              sign = "",
+              sign_hl = "MarkviewHeading2Sign",
+            },
           },
         },
         code_blocks = {
@@ -68,24 +78,13 @@ return {
             if string.gsub(vim.fn.getline ".", " ", "") == "" then
               vim.api.nvim_put({ "- [ ] " }, "", false, true)
             else
-              vim.cmd "CheckboxNext"
+              vim.cmd "Checkbox toggle"
             end
           end,
           desc = "Toggle checkbox state",
         },
       }
     end,
-  },
-  {
-    "lukas-reineke/headlines.nvim",
-    enabled = false,
-    ft = { "markdown" },
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    config = {
-      markdown = {
-        fat_headlines = true,
-      },
-    },
   },
   {
     "epwalsh/obsidian.nvim",

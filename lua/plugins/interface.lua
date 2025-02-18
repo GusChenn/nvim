@@ -155,7 +155,7 @@ return {
         ensure_installed = require("general-opts").treesitter.ensure_installed,
         highlight = {
           enable = true,
-          additional_vim_regex_highlighting = true,
+          additional_vim_regex_highlighting = false,
         },
       }
     end,
@@ -240,10 +240,10 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    cmd = { "Telescope" },
     event = "VeryLazy",
     config = function()
       local telescopeConfig = require "telescope.config"
+      local telescope_actions = require "telescope.actions"
 
       local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
       table.insert(vimgrep_arguments, "--pcre2")
@@ -263,18 +263,26 @@ return {
         return string.format("%s\t\t%s", tail, parent)
       end
 
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "TelescopeResults",
-        callback = function(ctx)
-          vim.api.nvim_buf_call(ctx.buf, function()
-            vim.fn.matchadd("TelescopeParent", "\t\t.*$")
-            vim.api.nvim_set_hl(0, "TelescopeParent", { link = "Comment" })
-          end)
-        end,
-      })
+      -- vim.api.nvim_create_autocmd("FileType", {
+      --   pattern = "TelescopeResults",
+      --   callback = function(ctx)
+      --     vim.api.nvim_buf_call(ctx.buf, function()
+      --       vim.fn.matchadd("TelescopeParent", "\t\t.*$")
+      --       vim.api.nvim_set_hl(0, "TelescopeParent", { link = "Comment" })
+      --     end)
+      --   end,
+      -- })
+
+      local base_mappings = {
+        ["<C-j>"] = telescope_actions.cycle_history_next,
+        ["<C-k>"] = telescope_actions.cycle_history_prev,
+      }
 
       require("telescope").setup {
         defaults = {
+          mappings = {
+            i = base_mappings,
+          },
           borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
           results_title = false,
           prompt_title = false,
@@ -531,35 +539,6 @@ return {
             require("persistence").load()
           end,
           desc = "Load last directory session",
-        },
-      }
-    end,
-  },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      modes = {
-        search = {
-          enabled = true,
-          label = {
-            style = "overlay",
-          },
-        },
-        char = {
-          enabled = false,
-        },
-      },
-    },
-    init = function()
-      require("which-key").add {
-        {
-          "s",
-          mode = { "n", "x", "o" },
-          function()
-            require("flash").jump()
-          end,
-          desc = "Flash jump",
         },
       }
     end,

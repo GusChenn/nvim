@@ -536,6 +536,9 @@ local groups = {
     AerialTypeParameter = { link = "@lsp.type.typeParameter" },
     AerialVariable = { link = "@variable" },
   },
+  dawnfox = {
+    FloatBorder = { link = "NormalFloat" },
+  },
 }
 
 require("nightfox").setup {
