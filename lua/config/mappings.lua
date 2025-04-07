@@ -2,6 +2,34 @@ local wc = require "which-key"
 local cmd = require("utils.plugin-helpers").cmd
 local pick_folder_files = require("utils.plugin-helpers").pick_folder_files
 
+local toggle_case = function()
+  -- Get the word under cursor
+  local current_word = vim.fn.expand "<cword>"
+
+  -- Determine if the word is in camel/pascal case or snake case
+  local is_snake_case = current_word:find "_" ~= nil
+
+  local new_word
+
+  if is_snake_case then
+    -- Convert from snake_case to camelCase
+    new_word = current_word:gsub("_(%w)", function(c)
+      return c:upper()
+    end)
+  else
+    -- Convert from camelCase/PascalCase to snake_case
+    new_word = current_word:gsub("(%u)", function(c)
+      return "_" .. c:lower()
+    end)
+    -- Remove leading underscore if it exists
+    new_word = new_word:gsub("^_", "")
+  end
+
+  -- Replace the word
+  vim.fn.setreg("z", new_word)
+  vim.cmd 'normal! viw"zp'
+end
+
 local safe_close = function()
   local is_buffer_in_multiple_splits = function()
     local current_buf = vim.api.nvim_get_current_buf()
@@ -90,4 +118,5 @@ wc.add {
   { "<leader>fs", "I# frozen_string_literal: true<CR><ESC>Doclass", desc = "Add frozen string magic comment" },
   { "<C-h>", "<C-o>h", mode = "i", desc = "Move left in insert mode" },
   { "<C-l>", "<C-o>l", mode = "i", desc = "Move right in insert mode" },
+  { "<leader>cc", toggle_case, desc = "Toggle between camel case and snake case" },
 }

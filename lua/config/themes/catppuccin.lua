@@ -1,6 +1,20 @@
 require("catppuccin").setup {
   -- transparent_background = true,
-  flavour = "latte",
+  flavour = "mocha",
+  styles = {
+    comments = { "italic" }, -- Change the style of comments
+    conditionals = { "italic" },
+    loops = {},
+    functions = {},
+    keywords = {},
+    strings = {},
+    variables = {},
+    numbers = {},
+    booleans = {},
+    properties = {},
+    types = {},
+    operators = {},
+  },
   color_overrides = {
     latte = {
       rosewater = "#cc7983",
@@ -34,19 +48,25 @@ require("catppuccin").setup {
   term_colors = true,
   integrations = {
     cmp = true,
-    flash = true,
+    flash = false,
     gitsigns = true,
     mini = {
-      enabled = true,
+      enabled = false,
     },
     mason = true,
     markdown = true,
     neogit = true,
     neotest = true,
-    nvimtree = true,
+    nvimtree = false,
     ufo = true,
     telescope = { enabled = true, style = "nvchad" },
     treesitter = true,
-    lsp_saga = true,
+    lsp_saga = false,
   },
+  ---@diagnostic disable-next-line: unused-local
+  custom_highlights = function(_colors)
+    return {
+      FloatBorder = { link = "NormalFloat" },
+    }
+  end,
 }

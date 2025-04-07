@@ -9,20 +9,6 @@ return {
     config = function()
       require("markview").setup {
         max_length = 99999,
-        checkboxes = {
-          checked = {
-            text = " ",
-            hl = "MarkviewCheckboxChecked",
-            scope_hl = "Comment",
-          },
-          unchecked = {
-            text = " ",
-            hl = "MarkviewCheckboxUnchecked",
-            scope_hl = nil,
-          },
-
-          custom = {},
-        },
         preview = {
           filetypes = {
             "markdown",
@@ -34,21 +20,21 @@ return {
         markdown = {
           horizontal_rules = {},
           list_items = {
-            enable = false,
+            shift_width = 2,
           },
           headings = {
-            shift_width = 2,
+            shift_width = 1,
             heading_1 = {
               sign = "",
-              sign_hl = "MarkviewHeading2Sign",
+              -- sign_hl = "MarkviewHeading2Sign",
             },
             heading_2 = {
               sign = "",
-              sign_hl = "MarkviewHeading2Sign",
+              -- sign_hl = "MarkviewHeading2Sign",
             },
             heading_3 = {
               sign = "",
-              sign_hl = "MarkviewHeading2Sign",
+              -- sign_hl = "MarkviewHeading2Sign",
             },
           },
         },
@@ -70,19 +56,10 @@ return {
       }
 
       local wk = require "which-key"
+      local cmd = require("utils.plugin-helpers").cmd
 
       wk.add {
-        {
-          "<CR>",
-          function()
-            if string.gsub(vim.fn.getline ".", " ", "") == "" then
-              vim.api.nvim_put({ "- [ ] " }, "", false, true)
-            else
-              vim.cmd "Checkbox toggle"
-            end
-          end,
-          desc = "Toggle checkbox state",
-        },
+        { "<C-Space>", cmd "Checkbox toggle", desc = "Toggle checkbox state" },
       }
     end,
   },
@@ -102,26 +79,16 @@ return {
     },
     config = function()
       require("obsidian").setup {
-        -- A list of workspace names, paths, and configuration overrides.
-        -- If you use the Obsidian app, the 'path' of a workspace should generally be
-        -- your vault root (where the `.obsidian` folder is located).
-        -- When obsidian.nvim is loaded by your plugin manager, it will automatically set
-        -- the workspace to the first workspace in the list whose `path` is a parent of the
-        -- current markdown file being edited.
         workspaces = {
           {
             name = "Personal",
             path = "~/Repos/second-brain/obsidian-vault",
           },
         },
-
-        log_level = vim.log.levels.INFO,
-
         completion = {
           nvim_cmp = true,
           min_chars = 2,
         },
-
         mappings = {
           ["<leader>oft"] = {
             action = function()
@@ -145,12 +112,6 @@ return {
               vim.cmd "ObsidianTemplate Subtask template"
             end,
           },
-          ["<leader>ot"] = {
-            action = function()
-              return "<CMD> ObsidianTemplate <CR>"
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-          },
           ["<leader>off"] = {
             action = function()
               return "<CMD> ObsidianQuickSwitch <CR>"
@@ -169,25 +130,25 @@ return {
             end,
             opts = { noremap = false, expr = true, buffer = true },
           },
-          ["<leader>gf"] = {
+          ["gf"] = {
             action = function()
               return require("obsidian").util.gf_passthrough()
             end,
             opts = { noremap = false, expr = true, buffer = true },
           },
-          ["<leader>oT"] = {
+          ["<leader>ot"] = {
             action = function()
               return "<CMD> ObsidianToday <CR>"
             end,
             opts = { noremap = false, expr = true, buffer = true },
           },
-          ["<leader>ft"] = {
+          ["<leader>oT"] = {
             action = function()
-              return require("utils.plugin-helpers").pick_folder_files "database/tasks"
+              return "<CMD> ObsidianTomorrow <CR>"
             end,
+            opts = { noremap = false, expr = true, buffer = true },
           },
         },
-
         ---@param spec { id: string, dir: obsidian.Path, title: string|? }
         ---@return string|obsidian.Path The full path to the new note.
         note_path_func = function(spec)
@@ -200,6 +161,14 @@ return {
           return path:with_suffix ".md"
         end,
 
+        daily_notes = {
+          folder = "obsidian-vault/Notes/dailies",
+          date_format = "%Y-%m-%d",
+          alias_format = "%B %-d, %Y",
+          default_tags = { "daily-notes" },
+          template = "daily",
+        },
+
         templates = {
           folder = "obsidian-vault/Templates",
           date_format = "%Y-%m-%d",
@@ -207,7 +176,7 @@ return {
           -- A map for custom variables, the key should be the variable and the value a function
           substitutions = {
             daily_note_title = function()
-              return os.date "Standup topics: %a, %B %d"
+              return os.date "%a, %B %d"
             end,
           },
         },

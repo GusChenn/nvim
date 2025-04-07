@@ -13,6 +13,10 @@ g.copilot_chat_loaded = false
 
 -- General globals
 
+-- enable undercurl
+vim.cmd [[let &t_Cs = "\e[4:3m"]]
+vim.cmd [[let &t_Ce = "\e[4:0m"]]
+
 g.tmux_navigator_no_mappings = 1
 g.matchup_matchparen_offscreen = {}
 g.lastplace_ignore = "gitcommit,gitrebase,hgcommit,svn,xxd"
@@ -75,7 +79,7 @@ o.splitbelow = true
 o.splitright = true
 o.undofile = true
 
-vim.o.background = "light"
+vim.o.background = "dark" -- dark or light
 
 opt.linebreak = true
 opt.showbreak = "󱞩 "

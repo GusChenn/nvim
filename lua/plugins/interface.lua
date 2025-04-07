@@ -9,55 +9,45 @@ return {
   -- Install without configuration
   {
     "projekt0n/github-nvim-theme",
-    enabled = false,
+    enabled = true,
     name = "github-theme",
     priority = 1000,
   },
   {
     "catppuccin/nvim",
-    enabled = false,
+    enabled = true,
     name = "catppuccin",
     priority = 1000,
   },
   {
     "neanias/everforest-nvim",
-    enabled = false,
+    enabled = true,
     version = false,
     lazy = false,
     priority = 1000,
   },
   {
     "sainnhe/gruvbox-material",
-    enabled = false,
+    enabled = true,
     lazy = false,
     priority = 1000,
   },
   {
     "dgox16/oldworld.nvim",
-    enabled = false,
+    enabled = true,
     lazy = false,
     priority = 1000,
-  },
-  {
-    "p00f/alabaster.nvim", -- minimal, but doesnt work that well with rails
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    init = function()
-      vim.g.alabaster_dim_comments = true
-      vim.g.alabaster_floatborder = true
-    end,
   },
   {
     "rose-pine/neovim",
-    enabled = false,
+    enabled = true,
     name = "rose-pine",
     lazy = false,
     priority = 1000,
   },
   {
     "zenbones-theme/zenbones.nvim",
-    enabled = false,
+    enabled = true,
     dependencies = "rktjmp/lush.nvim",
     lazy = false,
     priority = 1000,
@@ -75,9 +65,7 @@ return {
   {
     "jesseleite/nvim-noirbuddy",
     enabled = false,
-    dependencies = {
-      { "tjdevries/colorbuddy.nvim" },
-    },
+    dependencies = { { "tjdevries/colorbuddy.nvim" } },
     lazy = false,
     priority = 1000,
   },
@@ -148,10 +136,10 @@ return {
         endwise = {
           enable = true,
         },
-        matchup = {
-          enable = true,
-          disable_virtual_text = true,
-        },
+        -- matchup = {
+        --   enable = true,
+        --   disable_virtual_text = true,
+        -- },
         ensure_installed = require("general-opts").treesitter.ensure_installed,
         highlight = {
           enable = true,
@@ -210,35 +198,6 @@ return {
     },
   },
   {
-    "RRethy/vim-illuminate",
-    event = { "UIEnter" },
-    config = function()
-      require("illuminate").configure {
-        modes_denylist = {
-          "i",
-          "ic",
-          "ix",
-        },
-        filetypes_denylist = {
-          "dirbuf",
-          "dirvish",
-          "fugitive",
-          "copilot-chat",
-          "NvimTree",
-          "[Quickfix List]",
-        },
-        providers = {
-          "regex",
-          "treesitter",
-          "lsp",
-        },
-        min_count_to_highlight = 2,
-        large_file_cutoff = 1000,
-        large_file_config = nil,
-      }
-    end,
-  },
-  {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
     config = function()
@@ -263,16 +222,6 @@ return {
         return string.format("%s\t\t%s", tail, parent)
       end
 
-      -- vim.api.nvim_create_autocmd("FileType", {
-      --   pattern = "TelescopeResults",
-      --   callback = function(ctx)
-      --     vim.api.nvim_buf_call(ctx.buf, function()
-      --       vim.fn.matchadd("TelescopeParent", "\t\t.*$")
-      --       vim.api.nvim_set_hl(0, "TelescopeParent", { link = "Comment" })
-      --     end)
-      --   end,
-      -- })
-
       local base_mappings = {
         ["<C-j>"] = telescope_actions.cycle_history_next,
         ["<C-k>"] = telescope_actions.cycle_history_prev,
@@ -283,22 +232,26 @@ return {
           mappings = {
             i = base_mappings,
           },
-          borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+          -- borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+          borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
           results_title = false,
           prompt_title = false,
           preview_title = false,
           prompt_prefix = "  ",
           selection_caret = "  ",
-          layout_strategy = "flex",
+          layout_strategy = "vertical",
           vimgrep_arguments = vimgrep_arguments,
           layout_config = {
             horizontal = {
-              width = 9999,
-              height = 9999,
+              height = vim.o.lines, -- Maximally available lines
+              width = vim.o.columns, -- Maximally available columns
             },
             vertical = {
-              width = 9999,
-              height = 9999,
+              height = vim.o.lines, -- Maximally available lines
+              width = vim.o.columns, -- Maximally available columns
+              prompt_position = "bottom",
+              preview_height = 0.5,
+              preview_cutoff = 1,
             },
           },
         },
@@ -394,14 +347,7 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    ft = {
-      "typescriptreact",
-      "tsx",
-      "html",
-      "xml",
-      "eruby",
-      "embedded_template",
-    },
+    event = "VeryLazy",
     config = true,
   },
   {
@@ -421,7 +367,7 @@ return {
           require "neotest-rspec",
         },
         diagnostic = {
-          enabled = false,
+          enabled = true,
         },
         status = {
           virtual_text = false,
@@ -475,6 +421,7 @@ return {
           desc = "Run all tests in file",
         },
         { "<leader>np", cmd "Neotest output-panel", desc = "Toggle output panel" },
+        { "<leader>na", cmd "Neotest attach", desc = "Attach to currently running test" },
         { "<leader>ns", cmd "Neotest summary", desc = "Toggle summary panel" },
         {
           "<leader>t",
@@ -505,6 +452,7 @@ return {
   },
   {
     "andymass/vim-matchup",
+    enabled = false,
     event = "VeryLazy",
     config = function()
       vim.g.matchup_matchparen_nomode = "i"
@@ -527,10 +475,11 @@ return {
     "folke/persistence.nvim",
     dependencies = {
       "echasnovski/mini.nvim", -- necessary so it doesnt try to load the session before mini modules are up
-      "zeioth/garbage-day.nvim", -- necessary so it can load LSPs,
     },
-    keys = { "<leader>sl" },
-    config = true,
+    event = "BufReadPre",
+    config = {
+      branch = false,
+    },
     init = function()
       require("which-key").add {
         {
@@ -748,22 +697,6 @@ return {
 
       loaders.load_mini_modules(module_configs)
     end,
-    -- commented out because i am using telescope
-    -- init = function()
-    --   local cmd = require("utils.plugin-helpers").cmd
-    --   local wk = require "which-key"
-    --
-    --   wk.add {
-    --     { "ff", cmd "Pick files", desc = "Pick files" },
-    --     { "fg", cmd "Pick grep_live", desc = "Pick live grep" },
-    --     { "fh", cmd "Pick oldfiles", desc = "Pick oldfiles" },
-    --   }
-    --
-    --   wk.add {
-    --     { "ff", 'y<ESC> <CMD> Pick files<CR><C-r>"', mode = "v", desc = "Search for selected text in files" },
-    --     { "fg", 'y<ESC> <CMD> Pick grep_live<CR><C-r>"', mode = "v", desc = "Search for selected text in live grep" },
-    --   }
-    -- end,
   },
   {
     "stevearc/quicker.nvim",
@@ -812,7 +745,7 @@ return {
   },
   {
     "cdmill/focus.nvim",
-    event = "VeryLazy",
+    mappings = "<leader>f",
     config = true,
     init = function()
       require("which-key").add {
@@ -863,77 +796,18 @@ return {
   {
     "mcauley-penney/visual-whitespace.nvim",
     event = "VeryLazy",
-    config = true,
-  },
-  {
-    "luukvbaal/statuscol.nvim",
-    enabled = false,
-    lazy = false,
-    config = function()
-      -- local builtin = require("statuscol.builtin")
-      require("statuscol").setup {
-        -- configuration goes here, for example:
-        setopt = true,
-        relculright = true,
-        ft_ignore = { "oil" },
-        segments = {
-          {
-            text = { " " },
-          },
-          {
-            sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
-            click = "v:lua.ScSa",
-          },
-          -- {
-          --   sign = {
-          --     namespace = { "GitSigns" },
-          --     maxwidth = 1,
-          --     colwidth = 1,
-          --     fillchar = "│",
-          --     fillcharhl = "@comment",
-          --   },
-          -- },
-          -- {
-          --   sign = {
-          --     namespace = { "<diagnostic/gitsigns>" },
-          --     maxwidth = 1,
-          --     colwidth = 1,
-          --   },
-          --   condition = {
-          --     function()
-          --       return true
-          --     end,
-          --   },
-          -- },
-          -- { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-          -- {
-          --   sign = { namespace = { "diagnostic/signs" }, maxwidth = 2, auto = true },
-          --   click = "v:lua.ScSa"
-          -- },
-          -- { text = { builtin.lnumfunc }, click = "v:lua.ScLa", },
-          -- {
-          --   sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
-          --   click = "v:lua.ScSa"
-          -- },
-        },
-      }
-    end,
-  },
-  {
-    dir = "~/Repos/postit-nvim",
-    opts = {},
-    dev = true,
-    cmd = "Postit",
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").add {
-        { "<leader>pa", ":Postit add ", desc = "Start adding a postit" },
-        { "<leader>tp", cmd "Postit toggle", desc = "Toggle postit visibility" },
-        { "<leader>pn", cmd "Postit next", desc = "Next postit" },
-        { "<leader>pe", cmd "Postit edit", desc = "Edit postits in buffer" },
-      }
-    end,
+    opts = {
+      highlight = { link = "Visual" },
+      space_char = "·",
+      tab_char = "→",
+      nl_char = "󱞥 ",
+      cr_char = "←",
+      enabled = true,
+      excluded = {
+        filetypes = {},
+        buftypes = {},
+      },
+    },
   },
   {
     "Tyler-Barham/floating-help.nvim",
@@ -942,7 +816,7 @@ return {
     opts = {
       width = 0.6, -- Whole numbers are columns/rows
       height = 0.9, -- Decimals are a percentage of the editor
-      position = "W", -- NW,N,NW,W,C,E,SW,S,SE (C==center)
+      position = "C", -- NW,N,NW,W,C,E,SW,S,SE (C==center)
       border = "rounded", -- rounded,double,single
     },
     init = function()
@@ -973,6 +847,7 @@ return {
   },
   {
     "wurli/contextindent.nvim",
+    event = "VeryLazy",
     opts = { pattern = "*" },
     dependencies = { "nvim-treesitter/nvim-treesitter" },
   },

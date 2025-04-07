@@ -10,6 +10,11 @@ return {
         "stevearc/conform.nvim",
         event = "BufReadPre",
         opts = {
+          -- formatters = {
+          --   rubocop = {
+          --     command = "/Users/gchen/.local/share/nvim/mason/bin/rubocop",
+          --   },
+          -- },
           formatters_by_ft = {
             lua = { "stylua" },
             javascript = { "prettier_d" },
@@ -19,7 +24,7 @@ return {
             ruby = { "rubocop" },
           },
           format_on_save = {
-            timeout_ms = 500,
+            timeout_ms = 2000,
             lsp_format = "fallback",
           },
         },
@@ -27,7 +32,6 @@ return {
       {
         "mfussenegger/nvim-lint",
         event = "BufReadPre",
-        -- ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
         config = function()
           local lint = require "lint"
 
@@ -111,16 +115,8 @@ return {
 
       -- Customize diagnostics looks
       vim.diagnostic.config {
-        -- virtual_text = {
-        --   prefix = "",
-        --   hl_mode = "combine",
-        --   virt_text_pos = "eol",
-        --   format = function(diagnostic)
-        --     return "● " .. diagnostic.message
-        --   end,
-        -- },
         virtual_text = false,
-        underline = true,
+        undercurl = true,
         update_in_insert = false,
         severity_sort = true,
         float = {
@@ -200,11 +196,11 @@ return {
             side_padding = 1,
             winhighlight = "Normal:MiniPickNormal,CursorLine:PmenuSel,Search:None",
             scrollbar = false,
-            border = "solid",
+            border = "single",
           },
           documentation = {
-            winhighlight = "Normal:MiniPickNormal",
-            border = "solid",
+            winhighlight = "Normal:MiniPickNormal,CursorLine:PmenuSel,Search:None",
+            border = "single",
           },
         },
         formatting = {

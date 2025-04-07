@@ -54,8 +54,8 @@ loaders.load_lazy = function()
       rtp = {
         disabled_plugins = {
           "gzip",
-          "matchit",
-          "matchparen",
+          -- "matchit",
+          -- "matchparen",
           "netrwPlugin",
           "tarPlugin",
           "tohtml",
@@ -136,7 +136,7 @@ loaders.load_colorscheme = function()
   -- require "config.themes.rose-pine"
   -- vim.cmd.colorscheme "rose-pine"
 
-  -- For poimadres
+  -- For pfalseoimadres
   -- require "config.themes.poimadres"
   -- vim.cmd.colorscheme "poimadres"
 
@@ -144,8 +144,13 @@ loaders.load_colorscheme = function()
   -- require "config.themes.noirbuddy"
 
   -- For nightfox
-  require "config.themes.nightfox"
-  vim.cmd.colorscheme "dawnfox"
+  if vim.o.background == "light" then
+    require "config.themes.nightfox"
+    vim.cmd.colorscheme "dawnfox"
+  else
+    require "config.themes.catppuccin"
+    vim.cmd.colorscheme "catppuccin"
+  end
 end
 
 loaders.load_custom_highlights = function()

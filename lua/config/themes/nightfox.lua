@@ -4,9 +4,14 @@ local options = {
   styles = {
     comments = "italic",
     conditionals = "italic",
-    keywords = "bold,italic",
+    keywords = "bold",
     types = "bold",
     functions = "bold",
+    constants = "NONE",
+    numbers = "NONE",
+    operators = "NONE",
+    strings = "italic",
+    variables = "NONE",
   },
 }
 

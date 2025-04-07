@@ -73,82 +73,6 @@ return {
     end,
   },
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    enabled = false, -- disabled because im trying codecompanion
-    cmd = {
-      "CopilotChatOpen",
-      "CopilotChatToggle",
-      "CopilotChatExplain",
-      "CopilotChatTest",
-      "CopilotChatCommitStaged",
-      "CopilotChatLoad",
-      "CopilotChatFixDiagnostic",
-    },
-    branch = "main",
-    dependencies = {
-      { "github/copilot.vim" },
-      { "nvim-lua/plenary.nvim" },
-    },
-    opts = {
-      model = "claude-3.5-sonnet",
-      window = {
-        -- layout = "float",
-        width = 0.33,
-        height = 1,
-        relative = "editor",
-        col = 9999,
-        title = "  Copilot Chat",
-        border = "solid",
-      },
-
-      context = "buffers",
-
-      question_header = "󰙊 ",
-      answer_header = " ",
-      error_header = " ",
-      separator = " ",
-
-      show_help = false,
-      show_folds = false,
-      auto_follow_cursor = false,
-
-      mappings = {
-        reset = {
-          normal = "<leader><C-l>",
-        },
-        complete = {
-          detail = "Use @<Tab> or /<Tab> for options.",
-          insert = "<S-Tab>",
-        },
-      },
-    },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").add {
-        { "<leader>cm", require("utils.ai.ai-helpers").commit_with_ai, desc = "Generate commit message with ai" },
-        {
-          "<leader>ct",
-          cmd "CopilotChatTest",
-          mode = "v",
-          desc = "Generate test with ai",
-        },
-        {
-          "<A-T>",
-          cmd "CopilotChatToggle",
-          mode = { "n", "v" },
-          desc = "Toggle copilot chat",
-        },
-        {
-          "<A-E>",
-          cmd "CopilotChatExplain",
-          mode = "v",
-          desc = "Explain selection with ai",
-        },
-      }
-    end,
-  },
-  {
     "nvim-pack/nvim-spectre",
     event = "VeryLazy",
     cmd = "Spectre",
@@ -190,54 +114,57 @@ return {
       require("which-key").add {
         { "<leader>rv", cmd "Eview", desc = "Edit view" },
         { "<leader>rc", cmd "Econtroller", desc = "Edit controller" },
+        { "<leader>to", "a<%=  %><ESC>3ha", desc = "Create a rails view tag" },
+        { "<leader>te", "a<% end %><ESC>", desc = "Create a end rails view tag" },
       }
     end,
   },
   {
-    "grzegorzszczepanek/gamify.nvim",
-    event = "VeryLazy",
-    opts = {},
+    "Davidyz/VectorCode",
+    lazy = false,
+    version = "*", -- optional, depending on whether you're on nightly or release
+    build = "pipx upgrade vectorcode", -- optional but recommended if you set `version = "*"`
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("vectorcode").setup {
+        async_opts = {
+          debounce = 10,
+          events = { "BufWritePost", "InsertEnter", "BufReadPost" },
+          exclude_this = true,
+          n_query = 1,
+          notify = false,
+          query_cb = require("vectorcode.utils").make_surrounding_lines_cb(-1),
+          run_on_register = false,
+        },
+        async_backend = "default", -- or "lsp"
+        exclude_this = true,
+        n_query = 1,
+        notify = true,
+        timeout_ms = 5000,
+        on_setup = {
+          update = false, -- set to true to enable update when `setup` is called.
+        },
+      }
+    end,
   },
   {
-    "yetone/avante.nvim",
-    enabled = false, -- disabled because im trying codecompanion
-    event = "VeryLazy",
+    "ravitemer/mcphub.nvim",
     lazy = false,
-    version = "*",
-    opts = {
-      provider = "copilot",
-      windows = {
-        sidebar_header = {
-          rounded = false,
-        },
-        input = {
-          prefix = "󰏫 ",
-        },
-        edit = {
-          border = "single",
-        },
-        ask = {
-          border = "single",
-          start_insert = false,
-        },
-      },
-    },
-    build = "make",
     dependencies = {
-      "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      "nvim-telescope/telescope.nvim",
-      "hrsh7th/nvim-cmp",
-      "nvim-tree/nvim-web-devicons",
-      "zbirenbaum/copilot.lua",
     },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").add {
-        { "<A-T>", cmd "AvanteChat", desc = "Open avante chat" },
+    build = "npm install -g mcp-hub@latest",
+    config = function()
+      require("mcphub").setup {
+        port = 3001,
+        config = vim.fn.expand "~/.config/nvim/mcpservers.json",
+        shutdown_delay = 0, -- Wait 0ms before shutting down server after last client exits
+        log = {
+          level = vim.log.levels.WARN,
+          to_file = false,
+          file_path = nil,
+          prefix = "MCPHub",
+        },
       }
     end,
   },
@@ -247,72 +174,91 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "nvim-telescope/telescope.nvim",
+      "Davidyz/VectorCode",
+      "ravitemer/mcphub.nvim",
     },
     event = "VeryLazy",
-    opts = {
-      strategies = {
-        chat = {
-          adapter = "copilot",
-          roles = {
-            llm = " ",
-            -- user = " ", -- commented out because enabling this causes the chat to not work for some reason
+    opts = function()
+      return {
+        strategies = {
+          chat = {
+            adapter = "copilot",
+            roles = {
+              llm = " ",
+            },
+            slash_commands = {
+              ["file"] = {
+                opts = {
+                  provider = "telescope", -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
+                  contains_code = true,
+                },
+              },
+              codebase = require("vectorcode.integrations").codecompanion.chat.make_slash_command(),
+            },
+            tools = {
+              vectorcode = {
+                description = "Run VectorCode to retrieve the project context.",
+                callback = require("vectorcode.integrations").codecompanion.chat.make_tool(),
+              },
+              ["mcp"] = {
+                callback = require "mcphub.extensions.codecompanion",
+                description = "Call tools and resources from the MCP Servers",
+                opts = {
+                  requires_approval = true,
+                },
+              },
+            },
           },
-          slash_commands = {
-            ["file"] = {
+          inline = {
+            adapter = "copilot",
+            keymaps = {
+              accept_change = {
+                modes = { n = "ga" },
+                description = "Accept the suggested change",
+              },
+              reject_change = {
+                modes = { n = "gr" },
+                description = "Reject the suggested change",
+              },
+            },
+          },
+        },
+        display = {
+          chat = {
+            icons = {
+              pinned_buffer = "󰏫 ",
+              watched_buffer = "watch",
+            },
+            window = {
+              position = "right",
+              border = "single",
               opts = {
-                provider = "telescope", -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
-                contains_code = true,
+                cursorline = true,
               },
+              show_header_separator = false,
+              separator = "",
             },
           },
-        },
-        inline = {
-          adapter = "copilot",
-          keymaps = {
-            accept_change = {
-              modes = { n = "ga" },
-              description = "Accept the suggested change",
-            },
-            reject_change = {
-              modes = { n = "gr" },
-              description = "Reject the suggested change",
-            },
+          action_palette = {
+            provider = "telescope",
           },
         },
-      },
-      display = {
-        chat = {
-          icons = {
-            pinned_buffer = "󰏫 ",
-            watched_buffer = "watch",
-          },
-          window = {
-            position = "right",
-            border = "single",
-            opts = {
-              cursorline = true,
-            },
-            show_header_separator = false,
-            separator = "",
-          },
-        },
-        action_palette = {
-          provider = "telescope",
-        },
-      },
-      adapters = {
-        copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            schema = {
-              model = {
-                -- default = "claude-3.5-sonnet",
-                default = "o3-mini-2025-01-31",
+        adapters = {
+          copilot = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "claude-3.7-sonnet-thought",
+                  -- default = "claude-3.7-sonnet",
+                  -- default = "o3-mini-2025-01-31",
+                  -- default = "gpt-4o-2024-08-06",
+                },
               },
-            },
-          })
-        end,
-      },
-    },
+            })
+          end,
+        },
+      }
+    end,
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 

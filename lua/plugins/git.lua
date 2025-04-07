@@ -27,6 +27,7 @@ return {
   },
   {
     "tpope/vim-fugitive",
+    enabled = false,
     cmd = { "G" },
   },
   -- {
@@ -113,7 +114,7 @@ return {
       disable_insert_on_commit = true,
       filewatcher = {
         interval = 1000,
-        enabled = false,
+        enabled = true,
       },
       signs = {
         hunk = { "", "" },
@@ -121,8 +122,8 @@ return {
         section = { "➡", "⬇" },
       },
       integrations = {
-        telescope = false,
-        mini_pick = true,
+        telescope = true,
+        mini_pick = false,
         diffview = false,
       },
       mappings = {
