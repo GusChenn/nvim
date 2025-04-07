@@ -477,9 +477,7 @@ return {
       "echasnovski/mini.nvim", -- necessary so it doesnt try to load the session before mini modules are up
     },
     event = "BufReadPre",
-    config = {
-      branch = false,
-    },
+    opts = {},
     init = function()
       require("which-key").add {
         {

@@ -18,7 +18,9 @@ return {
           ignore_buftypes = {},
         },
         markdown = {
-          horizontal_rules = {},
+          code_blocks = {
+            style = "simple",
+          },
           list_items = {
             shift_width = 2,
           },
@@ -38,8 +40,15 @@ return {
             },
           },
         },
-        code_blocks = {
-          style = "simple",
+        markdown_inline = {
+          checkboxes = {
+            unchecked = { text = "󰄰", hl = "MarkviewCheckboxPending", scope_hl = "Normal" },
+            ["n"] = {
+              text = "",
+              hl = "MarkviewCheckboxUnchecked",
+              scope_hl = "MarkviewCheckboxUnchecked",
+            },
+          },
         },
       }
 

@@ -117,6 +117,8 @@ wc.add {
   { "kj", "<ESC>", mode = "i", desc = "Quit insert mode with kj" },
   { "<leader>fs", "I# frozen_string_literal: true<CR><ESC>Doclass", desc = "Add frozen string magic comment" },
   { "<C-h>", "<C-o>h", mode = "i", desc = "Move left in insert mode" },
+  { "<C-j>", "<C-o>j", mode = "i", desc = "Move down in insert mode" },
+  { "<C-k>", "<C-o>k", mode = "i", desc = "Move up in insert mode" },
   { "<C-l>", "<C-o>l", mode = "i", desc = "Move right in insert mode" },
   { "<leader>cc", toggle_case, desc = "Toggle between camel case and snake case" },
 }
