@@ -161,9 +161,23 @@ return {
         },
         on_attach = function()
           wc.add {
-            { "<leader>rh", gs.reset_hunk, desc = "Reset hunk" },
-            { "<leader>ph", gs.preview_hunk, desc = "Preview hunk" },
-            { "<leader>gd", gs.diffthis, desc = "Diff" },
+            { "<leader>hr", gs.reset_hunk, desc = "Reset hunk" },
+            { "<leader>hP", gs.preview_hunk, desc = "Preview hunk" },
+            { "<leader>gd", gs.diffthis, desc = "Diffthis" },
+            {
+              "<leader>hn",
+              function()
+                gs.nav_hunk "next"
+              end,
+              desc = "Next hunk",
+            },
+            {
+              "<leader>hp",
+              function()
+                gs.nav_hunk "prev"
+              end,
+              desc = "Previous hunk",
+            },
           }
         end,
       }

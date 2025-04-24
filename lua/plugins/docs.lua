@@ -25,7 +25,7 @@ return {
             shift_width = 2,
           },
           headings = {
-            shift_width = 1,
+            shift_width = 2,
             heading_1 = {
               sign = "",
               -- sign_hl = "MarkviewHeading2Sign",
@@ -218,5 +218,11 @@ return {
         },
       }
     end,
+  },
+  {
+    "nvzone/typr",
+    dependencies = "nvzone/volt",
+    opts = {},
+    cmd = { "Typr", "TyprStats" },
   },
 }

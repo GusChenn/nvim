@@ -844,9 +844,21 @@ return {
     end,
   },
   {
-    "wurli/contextindent.nvim",
-    event = "VeryLazy",
-    opts = { pattern = "*" },
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    "OXY2DEV/ui.nvim",
+    lazy = false,
+    -- init = function()
+    --   require("ui").setup {
+    --     cmdline = {
+    --       styles = {
+    --         default = {
+    --           condition = nil,
+    --           icon = {
+    --             { "hello" },
+    --           },
+    --         },
+    --       },
+    --     },
+    --   }
+    -- end,
   },
 }

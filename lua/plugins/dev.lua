@@ -184,7 +184,9 @@ return {
           chat = {
             adapter = "copilot",
             roles = {
-              llm = " ",
+              llm = function(adapter)
+                return " " .. " - " .. adapter.parameters.model
+              end,
             },
             slash_commands = {
               ["file"] = {
@@ -219,6 +221,45 @@ return {
               reject_change = {
                 modes = { n = "gr" },
                 description = "Reject the suggested change",
+              },
+            },
+          },
+        },
+        prompt_library = {
+          ["Suggest Refactoring"] = {
+            strategy = "chat",
+            description = "Suggest refactoring for provided piece of code.",
+            opts = {
+              modes = { "v" },
+              short_name = "refactor",
+              auto_submit = false,
+              stop_context_insertion = true,
+              user_prompt = false,
+            },
+            prompts = {
+              {
+                role = "system",
+                content = function(context)
+                  return [[Act as a seasoned ]]
+                    .. context.filetype
+                    .. [[ programmer with over 20 years of commercial experience.
+      Your task is to suggest refactoring of a specified piece of code to improve its efficiency,
+      readability, and maintainability without altering its functionality. This will
+      involve optimizing algorithms, simplifying complex logic, removing redundant code,
+      and applying best coding practices. Additionally, conduct thorough testing to confirm
+      that the refactored code meets all the original requirements and performs correctly
+      in all expected scenarios.]]
+                end,
+              },
+              {
+                role = "user",
+                content = function(context)
+                  local text = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+                  return "I have the following code:\n\n```" .. context.filetype .. "\n" .. text .. "\n```\n\n"
+                end,
+                opts = {
+                  contains_code = true,
+                },
               },
             },
           },
@@ -263,12 +304,9 @@ return {
       local cmd = require("utils.plugin-helpers").cmd
 
       require("which-key").add {
-        {
-          "<A-T>",
-          cmd "CodeCompanionChat Toggle",
-          mode = { "n", "v" },
-          desc = "Toggle codecompanion chat",
-        },
+        { "<A-T>", cmd "CodeCompanionChat Toggle", mode = { "n", "v" }, desc = "Toggle codecompanion chat" },
+        { "<leader>ai", cmd "CodeCompanion", mode = { "n", "v" }, desc = "Inline codecompanion prompt" },
+        { "<leader>aa", cmd "CodeCompanionActions", mode = { "n", "v" }, desc = "Open codecompanion actions" },
       }
     end,
   },
