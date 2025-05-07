@@ -3,114 +3,166 @@ return {
     "neovim/nvim-lspconfig",
     event = "VeryLazy",
     dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-      "williamboman/mason.nvim",
       "hrsh7th/nvim-cmp",
-      {
-        "stevearc/conform.nvim",
-        event = "BufReadPre",
-        opts = {
-          -- formatters = {
-          --   rubocop = {
-          --     command = "/Users/gchen/.local/share/nvim/mason/bin/rubocop",
-          --   },
-          -- },
-          formatters_by_ft = {
-            lua = { "stylua" },
-            javascript = { "prettier_d" },
-            typescript = { "prettier_d" },
-            javascriptreact = { "prettier_d" },
-            typescriptreact = { "prettier_d" },
-            ruby = { "rubocop" },
-          },
-          format_on_save = {
-            timeout_ms = 2000,
-            lsp_format = "fallback",
-          },
-        },
-      },
-      {
-        "mfussenegger/nvim-lint",
-        event = "BufReadPre",
-        config = function()
-          local lint = require "lint"
-
-          lint.linters_by_ft = {
-            typescriptreact = { "eslint_d" },
-            typescript = { "eslint_d" },
-            javascriptreact = { "eslint_d" },
-            javascript = { "eslint_d" },
-            -- ruby = { "rubocop" },
-          }
-        end,
-
-        init = function()
-          vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave", "TextChanged" }, {
-            callback = function()
-              require("lint").try_lint()
-            end,
-          })
-        end,
-      },
+      -- {
+      --   "stevearc/conform.nvim",
+      --   event = "BufReadPre",
+      --   opts = {
+      --     -- formatters = {
+      --       -- rubocop = {
+      --       --   command = "/Users/gchen/.local/share/nvim/mason/bin/rubocop",
+      --       -- },
+      --     -- },
+      --     formatters_by_ft = {
+      --       lua = { "stylua" },
+      --       javascript = { "prettierd" },
+      --       typescript = { "prettierd" },
+      --       javascriptreact = { "prettierd" },
+      --       typescriptreact = { "prettierd" },
+      --       ruby = { "rubocop" },
+      --     },
+      --     format_on_save = {
+      --       timeout_ms = 2000,
+      --       lsp_format = "fallback",
+      --     },
+      --   },
+      -- },
+      -- {
+      --   "mfussenegger/nvim-lint",
+      --   event = "BufReadPre",
+      --   config = function()
+      --     local lint = require "lint"
+      --
+      --     lint.linters_by_ft = {
+      --       typescriptreact = { "eslintd" },
+      --       typescript = { "eslintd" },
+      --       javascriptreact = { "eslintd" },
+      --       javascript = { "eslintd" },
+      --       -- ruby = { "rubocop" },
+      --     }
+      --   end,
+      --
+      --   init = function()
+      --     vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave", "TextChanged" }, {
+      --       callback = function()
+      --         require("lint").try_lint()
+      --       end,
+      --     })
+      --   end,
+      -- },
     },
     config = function()
-      local mason_lspconfig = require "mason-lspconfig"
       local lsp = require "utils.lsp"
 
-      require("mason").setup()
-      require("mason-lspconfig").setup()
-
-      mason_lspconfig.setup {
-        ensure_installed = require("general-opts").lsp.ensure_installed,
-        automatic_installation = false,
+      vim.lsp.config["ruby_lsp"] = {
+        cmd = { "ruby-lsp" },
+        on_attach = lsp.on_attach,
+        capabilities = lsp.capabilities(),
+        on_init = lsp.on_init,
       }
 
-      local with_base_capabilities = function(extra_opts)
-        local base_capabilities = {
-          on_attach = lsp.on_attach,
-          capabilities = lsp.capabilities(),
-          on_init = lsp.on_init,
-        }
+      vim.lsp.config["eslint"] = {
+        on_attach = lsp.on_attach,
+        capabilities = lsp.capabilities(),
+        on_init = lsp.on_init,
+      }
 
-        return vim.tbl_deep_extend("force", base_capabilities, extra_opts or {})
-      end
+      vim.lsp.config["lua_ls"] = {
+        on_attach = lsp.on_attach,
+        capabilities = lsp.capabilities(),
+        on_init = function(client, bufnr)
+          lsp.on_init(client, bufnr)
 
-      mason_lspconfig.setup_handlers {
-        function(server_name)
-          require("lspconfig")[server_name].setup(with_base_capabilities())
-        end,
-        ["ts_ls"] = function()
-          require("lspconfig").ts_ls.setup(with_base_capabilities {
-            -- root_dir = vim.fs.dirname(vim.fs.find(".git", { path = startpath, upward = true })[1]),
-            single_file_support = false,
-          })
-        end,
-        ["eslint"] = function()
-          require("lspconfig").eslint.setup(with_base_capabilities {
-            on_attach = function(client, bufnr)
-              lsp.on_attach(client, bufnr)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if
+                path ~= vim.fn.stdpath "config"
+                and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+            then
+              return
+            end
+          end
 
-              vim.api.nvim_create_autocmd("BufWritePre", {
-                buffer = bufnr,
-                command = "EslintFixAll",
-              })
-            end,
-            settings = {
-              packageManager = "yarn",
+          client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+            runtime = {
+              -- Tell the language server which version of Lua you're using (most
+              -- likely LuaJIT in the case of Neovim)
+              version = "LuaJIT",
+              -- Tell the language server how to find Lua modules same way as Neovim
+              -- (see `:h lua-module-load`)
+              path = {
+                "lua/?.lua",
+                "lua/?/init.lua",
+              },
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+                -- Depending on the usage, you might want to add additional paths
+                -- here.
+                -- '${3rd}/luv/library'
+                -- '${3rd}/busted/library'
+              },
+              -- Or pull in all of 'runtimepath'.
+              -- NOTE: this is a lot slower and will cause issues when working on
+              -- your own configuration.
+              -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+              -- library = {
+              --   vim.api.nvim_get_runtime_file('', true),
+              -- }
             },
           })
         end,
-        ["ruby_lsp"] = function()
-          require("lspconfig").ruby_lsp.setup(with_base_capabilities {
-            filetypes = { "ruby", "eruby" },
+        settings = {
+          Lua = {},
+        },
+      }
+
+      vim.lsp.config["efm"] = {
+        cmd = { "efm-langserver" },
+        on_attach = function(client, bufnr)
+          lsp.on_attach(client, bufnr)
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format {
+                async = true,
+              }
+            end,
           })
         end,
-        ["solargraph"] = function()
-          -- require("lspconfig").solargraph.setup(with_base_capabilities {
-          --   filetypes = { "ruby", "eruby" },
-          -- })
-        end,
-        ["rubocop"] = function() end,
+        capabilities = lsp.capabilities(),
+        on_init = lsp.on_init,
+        filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+        init_options = { documentFormatting = true, codeAction = true },
+        settings = {
+          rootMarkers = { ".git/" },
+          languages = {
+            javascript = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
+            typescript = { { formatCommand = 'prettierd "${INPUT}', formatStdin = true } },
+            javascriptreact = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
+            typescriptreact = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
+            -- lua = {
+            --   {
+            --     formatCommand = "stylua --search-parent-directories -",
+            --     formatStdin = true,
+            --     lintCommand = "luacheck -",
+            --     lintStdin = true,
+            --     lintIgnoreExitCode = true,
+            --     lintFormats = { "%f(%l): %m" },
+            --   },
+            -- },
+          },
+        },
+      }
+
+      vim.lsp.enable {
+        "ruby_lsp",
+        "eslint",
+        "efm",
+        "ts_ls",
+        "lua_ls",
       }
 
       -- Customize diagnostics looks
@@ -123,7 +175,7 @@ return {
           header = "  ᵈⁱᵃᵍⁿᵒˢᵗⁱᶜˢ",
           source = true,
           prefix = " ",
-          border = "solid",
+          border = "single",
           suffix = "",
           format = function(diagnostic)
             return string.sub(diagnostic.message, 1, -2)
@@ -158,8 +210,8 @@ return {
           vim.api.nvim_create_autocmd("InsertLeave", {
             callback = function()
               if
-                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-                and not require("luasnip").session.jump_active
+                  require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+                  and not require("luasnip").session.jump_active
               then
                 require("luasnip").unlink_current()
               end
@@ -189,7 +241,7 @@ return {
           { name = "nvim_lua" },
           { name = "path" },
           { name = "nvim_lsp_signature_help" },
-          { name = "lazydev", group_index = 0 },
+          { name = "lazydev",                group_index = 0 },
         },
         window = {
           completion = {
@@ -234,9 +286,6 @@ return {
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
-        completion = {
-          autocomplete = false,
-        },
         sources = cmp.config.sources({
           { name = "path" },
         }, {
@@ -261,7 +310,7 @@ return {
     },
     init = function()
       require("which-key").add {
-        { "<leader>gD", require("garbage-day.utils").stop_lsp, desc = "Stop LSP servers" },
+        { "<leader>gD", require("garbage-day.utils").stop_lsp,  desc = "Stop LSP servers" },
         { "<leader>ge", require("garbage-day.utils").start_lsp, desc = "Start LSP servers" },
       }
     end,

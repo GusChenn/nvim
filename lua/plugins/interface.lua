@@ -653,26 +653,20 @@ return {
 
                 -- From https://github.com/mcauley-penney/nvim
                 local function scrollbar()
-                  local sbar_chars = {
-                    "▔",
-                    "🮂",
-                    "🬂",
-                    "🮃",
-                    "▀",
-                    "▄",
-                    "▃",
-                    "🬭",
-                    "▂",
-                    "▁",
-                  }
+                  -- Get current scroll percentage
+                  local percent = math.floor(vim.fn.line "." * 100 / vim.fn.line "$")
+                  local icon = ""
 
-                  local cur_line = vim.api.nvim_win_get_cursor(0)[1]
-                  local lines = vim.api.nvim_buf_line_count(0)
+                  -- Choose icon based on percentage
+                  if percent < 33 then
+                    icon = " " -- Scroll up icon
+                  elseif percent < 66 then
+                    icon = " " -- Scroll both ways icon
+                  else
+                    icon = "󱁫 " -- Scroll down icon
+                  end
 
-                  local i = math.floor((cur_line - 1) / lines * #sbar_chars) + 1
-                  local sbar = string.rep(sbar_chars[i], 2)
-
-                  return hl_str(sbar, "Added") .. hl_line "NormalNC"
+                  return "%p%% " .. icon
                 end
 
                 return MiniStatusline.combine_groups {
@@ -844,21 +838,51 @@ return {
     end,
   },
   {
-    "OXY2DEV/ui.nvim",
+    "folke/snacks.nvim",
+    event = "VeryLazy",
+    opts = {
+      notifier = {},
+      image = {},
+      bigfile = {},
+      scratch = {},
+    },
+    init = function()
+      _G.dd = function(...)
+        Snacks.debug.inspect(...)
+      end
+      _G.bt = function()
+        Snacks.debug.backtrace()
+      end
+      vim.print = _G.dd
+    end,
+  },
+  {
+    "Chaitanyabsprip/fastaction.nvim",
     lazy = false,
-    -- init = function()
-    --   require("ui").setup {
-    --     cmdline = {
-    --       styles = {
-    --         default = {
-    --           condition = nil,
-    --           icon = {
-    --             { "hello" },
-    --           },
-    --         },
-    --       },
-    --     },
-    --   }
-    -- end,
+    opts = {
+      dismiss_keys = { "j", "k", "<c-c>", "q" },
+      override_function = function(_) end,
+      keys = "qwertyuiopasdfghlzxcvbnm",
+      popup = {
+        border = "rounded",
+        hide_cursor = true,
+        highlight = {
+          divider = "FloatBorder",
+          key = "MoreMsg",
+          title = "Title",
+          window = "NormalFloat",
+        },
+        title = "Select one of:",
+      },
+      priority = {
+        -- dart = {
+        --   { pattern = "organize import", key ="o", order = 1 },
+        --   { pattern = "extract method", key ="x", order = 2 },
+        --   { pattern = "extract widget", key ="e", order = 3 },
+        -- },
+      },
+      register_ui_select = false,
+      format_right_section = nil,
+    },
   },
 }

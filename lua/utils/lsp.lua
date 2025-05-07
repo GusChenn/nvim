@@ -108,7 +108,8 @@ M.on_attach = function(_, bufnr)
     {
       "ca",
       buffer = bufnr,
-      vim.lsp.buf.code_action,
+      -- vim.lsp.buf.code_action, -- default code actions
+      require("fastaction").code_action,
       desc = "Code action",
       mode = { "n", "v" },
     },
