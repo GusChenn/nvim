@@ -516,7 +516,7 @@ return {
               config = {
                 border = "solid",
               },
-              prompt_cursor = " ",
+              prompt_caret = " ",
               prompt_prefix = "  ",
             },
           },
@@ -841,7 +841,7 @@ return {
     "folke/snacks.nvim",
     event = "VeryLazy",
     opts = {
-      notifier = {},
+      -- notifier = {},
       image = {},
       bigfile = {},
       scratch = {},

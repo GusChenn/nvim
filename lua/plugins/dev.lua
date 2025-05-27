@@ -176,6 +176,7 @@ return {
       "nvim-telescope/telescope.nvim",
       "Davidyz/VectorCode",
       "ravitemer/mcphub.nvim",
+      "banjo/contextfiles.nvim"
     },
     event = "VeryLazy",
     opts = function()
@@ -263,6 +264,37 @@ return {
               },
             },
           },
+          ["Document last messages"] = {
+            strategy = "chat",
+            description = "Summarize the latest messages between the user and the AI for documentation purposes.",
+            opts = {
+              is_slash_cmd = true,
+              short_name = "doc",
+              auto_submit = true,
+              stop_context_insertion = true,
+              user_prompt = false,
+            },
+            prompts = {
+              {
+                role = "system",
+                content = function(_context)
+                  return [[Act as a seasoned project manager with over 20 years of experience in software development.
+                  Your task is to summarize the last few messages exchanged between you and the user. You just need to summarize messages
+                  that where not included in any summary yet. Avoid bein redundant or repetitive. Take into consideration the previously generated summaries that you are aware of.
+                  You can include code snippets in the summary if they are relevant to the context.]]
+                end,
+              },
+              {
+                role = "user",
+                content = function(_context)
+                  return "Can you summarize the last few messages exchanged between us? I need this for documentation purposes."
+                end,
+                opts = {
+                  contains_code = true,
+                },
+              },
+            },
+          },
         },
         display = {
           chat = {
@@ -289,7 +321,7 @@ return {
             return require("codecompanion.adapters").extend("copilot", {
               schema = {
                 model = {
-                  default = "claude-3.7-sonnet-thought",
+                  default = "gemini-2.5-pro",
                   -- default = "claude-3.7-sonnet",
                   -- default = "o3-mini-2025-01-31",
                   -- default = "gpt-4o-2024-08-06",
@@ -298,10 +330,26 @@ return {
             })
           end,
         },
+        extensions = {
+          contextfiles = {
+            opts = {
+              -- your contextfiles configuration here
+              -- or leave it empty to use the default configuration
+            },
+          },
+        }
       }
     end,
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
+
+      -- Could not configure this mapping with which-key
+      vim.keymap.set('i', '<C-a>', 'copilot#Accept("\\<CR>")', {
+        expr = true,
+        replace_keycodes = false,
+        silent = true
+      })
+      vim.g.copilot_no_tab_map = true
 
       require("which-key").add {
         { "<A-T>", cmd "CodeCompanionChat Toggle", mode = { "n", "v" }, desc = "Toggle codecompanion chat" },

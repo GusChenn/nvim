@@ -84,7 +84,7 @@ return {
       "hrsh7th/nvim-cmp",
       "nvim-telescope/telescope.nvim",
       "nvim-treesitter",
-      "epwalsh/pomo.nvim",
+      "OXY2DEV/markview.nvim"
     },
     config = function()
       require("obsidian").setup {
