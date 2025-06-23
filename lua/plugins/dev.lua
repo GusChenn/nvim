@@ -156,7 +156,7 @@ return {
     build = "npm install -g mcp-hub@latest",
     config = function()
       require("mcphub").setup {
-        port = 3001,
+        port = 37373,
         config = vim.fn.expand "~/.config/nvim/mcpservers.json",
         shutdown_delay = 0, -- Wait 0ms before shutting down server after last client exits
         log = {
@@ -187,8 +187,13 @@ return {
             adapter = "copilot",
             roles = {
               llm = function(adapter)
-                return " " .. " - " .. adapter.parameters.model
+                return string.format(
+                  "  %s%s",
+                  adapter.formatted_name,
+                  " (" .. (adapter.schema.model.default or "unknown") .. ")"
+                )
               end,
+              user = "GusChenn"
             },
             slash_commands = {
               ["file"] = {
@@ -198,19 +203,6 @@ return {
                 },
               },
               codebase = require("vectorcode.integrations").codecompanion.chat.make_slash_command(),
-            },
-            tools = {
-              vectorcode = {
-                description = "Run VectorCode to retrieve the project context.",
-                callback = require("vectorcode.integrations").codecompanion.chat.make_tool(),
-              },
-              ["mcp"] = {
-                callback = require "mcphub.extensions.codecompanion",
-                description = "Call tools and resources from the MCP Servers",
-                opts = {
-                  requires_approval = true,
-                },
-              },
             },
           },
           inline = {
@@ -368,6 +360,45 @@ return {
               ---Enable detailed logging for history extension
               enable_logging = false,
             }
+          },
+          vectorcode = {
+          ---@type VectorCode.CodeCompanion.ExtensionOpts
+            opts = {
+              tool_group = {
+                -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
+                enabled = true,
+                -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
+                -- if you use @vectorcode_vectorise, it'll be very handy to include
+                -- `file_search` here.
+                extras = {},
+                collapse = false, -- whether the individual tools should be shown in the chat
+              },
+              tool_opts = {
+                ---@type VectorCode.CodeCompanion.LsToolOpts
+                ls = {},
+                ---@type VectorCode.CodeCompanion.VectoriseToolOpts
+                vectorise = {},
+                ---@type VectorCode.CodeCompanion.QueryToolOpts
+                query = {
+                  max_num = { chunk = -1, document = -1 },
+                  default_num = { chunk = 50, document = 10 },
+                  include_stderr = false,
+                  use_lsp = false,
+                  no_duplicate = true,
+                  chunk_mode = false,
+                }
+              }
+            }
+          },
+          mcphub = {
+            callback = "mcphub.extensions.codecompanion",
+            description = "Call tools and resources from the MCP Servers",
+            opts = {
+              requires_approval = true,
+              show_result_in_chat = true,  -- Show mcp tool results in chat
+              make_vars = true,            -- Convert resources to #variables
+              make_slash_commands = true,  -- Add prompts as /slash commands
+            },
           },
         }
       }

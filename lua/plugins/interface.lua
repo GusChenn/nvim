@@ -651,7 +651,6 @@ return {
                   end
                 end
 
-                -- From https://github.com/mcauley-penney/nvim
                 local function scrollbar()
                   -- Get current scroll percentage
                   local percent = math.floor(vim.fn.line "." * 100 / vim.fn.line "$")
@@ -669,10 +668,21 @@ return {
                   return "%p%% " .. icon
                 end
 
+                -- Format CodeCompanion loader
+                -- For this to work, the autocmd from line 101 in the autocmds file is necessary
+                local function code_companion_spinner()
+                  if _G.codecompanion_processing then
+                    return '󰟶 LLM thinking 󰟶 '
+                  else
+                    return ' LLM done!  '
+                  end
+                end
+
                 return MiniStatusline.combine_groups {
                   { hl = "NormalNC", strings = { formatted_git_branch() } },
                   { hl = "NormalNC", strings = { diagnostics() } },
                   "%=",
+                  { hl = "NormalNC", strings = { code_companion_spinner() } },
                   { hl = "NormalNC", strings = { file_info() } },
                   { hl = "NormalNC", strings = { tab_indicator() } },
                   { hl = "NormalNC", strings = { lsp() } },

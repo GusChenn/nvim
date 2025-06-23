@@ -148,8 +148,10 @@ loaders.load_colorscheme = function()
     require "config.themes.nightfox"
     vim.cmd.colorscheme "dawnfox"
   else
-    require "config.themes.catppuccin"
-    vim.cmd.colorscheme "catppuccin"
+    -- require "config.themes.catppuccin"
+    -- vim.cmd.colorscheme "catppuccin"
+    require "config.themes.everfores"
+    vim.cmd.colorscheme "everforest"
   end
 end
 

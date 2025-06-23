@@ -81,7 +81,7 @@ autocmd("FileType", {
   command = "setlocal spell",
 })
 
-vim.api.nvim_create_autocmd("LspProgress", {
+autocmd("LspProgress", {
   desc = "Displays spinner while LSP is processing",
   callback = function(ev)
     local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
@@ -93,5 +93,20 @@ vim.api.nvim_create_autocmd("LspProgress", {
           or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
       end,
     })
+  end,
+})
+
+local group = augroup("CodeCompanionHooks", {})
+
+autocmd({ "User" }, {
+  desc = "Handle CodeCompanion request events. Necessary so the codecompanion statusline spinner works",
+  pattern = "CodeCompanionRequest*",
+  group = group,
+  callback = function(request)
+    if request.match == "CodeCompanionRequestStarted" then
+      _G.codecompanion_processing = true
+    elseif request.match == "CodeCompanionRequestFinished" then
+      _G.codecompanion_processing = false
+    end
   end,
 })
