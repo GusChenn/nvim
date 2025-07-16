@@ -1,5 +1,8 @@
+local python_icon = " "
+
 local constants = {
   icons = {
+    python = python_icon,
     lua_ls = " ",
     ruby_lsp = " ",
     solargraph = " ",
@@ -10,6 +13,9 @@ local constants = {
     ts_ls = " ",
     fileinfo = "󰈚 ",
     visual_block = "󰒉 ",
+    efm = " ",
+    eslint = "󰱺 ",
+    ruff = python_icon,
   },
   hl_map = {
     [vim.diagnostic.severity.ERROR] = "DiagnosticError",

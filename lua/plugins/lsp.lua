@@ -4,40 +4,99 @@ return {
     event = "VeryLazy",
     dependencies = {
       "hrsh7th/nvim-cmp",
-      -- {
-      --   "stevearc/conform.nvim",
-      --   event = "BufReadPre",
-      --   opts = {
-      --     -- formatters = {
-      --       -- rubocop = {
-      --       --   command = "/Users/gchen/.local/share/nvim/mason/bin/rubocop",
-      --       -- },
-      --     -- },
-      --     formatters_by_ft = {
-      --       lua = { "stylua" },
-      --       javascript = { "prettierd" },
-      --       typescript = { "prettierd" },
-      --       javascriptreact = { "prettierd" },
-      --       typescriptreact = { "prettierd" },
-      --       ruby = { "rubocop" },
-      --     },
-      --     format_on_save = {
-      --       timeout_ms = 2000,
-      --       lsp_format = "fallback",
-      --     },
-      --   },
-      -- },
+      {
+        "stevearc/conform.nvim",
+        event = "BufReadPre",
+        opts = function()
+          local function safe_use_project_ruff()
+            local python_project_root = require('utils.lsp').python_project_root_path()
+
+            if not python_project_root then
+              require('conform.log').error("Ruff formatter: no Python project root found. Please ensure you are in a Python project.")
+
+              return {
+                command = 'ruff'
+              }
+            end
+
+            local ruff_bin_path = require('utils.lsp').python_project_root_path() .. '/.venv/bin/ruff'
+
+            if vim.fn.executable(ruff_bin_path) == 1 then
+              return {
+                command = require('conform.util').find_executable({ ruff_bin_path, }, 'ruff'),
+              }
+            else
+              require('conform.log').error("Ruff formatter: no bin installed in this project. Please install it (uv init; uv add --dev ruff)")
+
+              return {
+                command = 'ruff'
+              }
+            end
+          end
+
+          local function safe_use_project_rubocop()
+            local ruby_project_root = require('utils.lsp').ruby_project_root_path()
+
+            if not ruby_project_root then
+              require('conform.log').error("Rubocop formatter: no Ruby project root found. Please ensure you are in a Ruby project.")
+
+              return {
+                command = 'rubocop'
+              }
+            end
+
+            local rubocop_bin_path = require('utils.lsp').ruby_project_root_path() .. '/bin/rubocop'
+
+            if vim.fn.executable(rubocop_bin_path) == 1 then
+              return {
+                command = require('conform.util').find_executable({ rubocop_bin_path, }, 'rubocop'), }
+            else
+              require('conform.log').error("Rubocop formatter: no bin installed in this project. Please install it (gem install rubocop)")
+
+              return {
+                command = 'rubocop'
+              }
+            end
+          end
+
+          return {
+            log_level = vim.log.levels.DEBUG,
+            formatters = {
+                rubocop = safe_use_project_rubocop(),
+                ruff_format = safe_use_project_ruff(),
+                ruff_fix = safe_use_project_ruff(),
+                ruff_organize_imports = safe_use_project_ruff(),
+              },
+              formatters_by_ft = {
+                lua = { "stylua" },
+                javascript = { "eslint_d" },
+                typescript = { "eslint_d" },
+                javascriptreact = { "eslint_d" },
+                typescriptreact = { "eslint_d" },
+                ruby = { "rubocop" },
+                python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
+              },
+              format_on_save = {
+                timeout_ms = 2000,
+                lsp_format = "never",
+              },
+            }
+        end
+      },
       -- {
       --   "mfussenegger/nvim-lint",
+      --   enabled = false,
       --   event = "BufReadPre",
       --   config = function()
       --     local lint = require "lint"
       --
       --     lint.linters_by_ft = {
-      --       typescriptreact = { "eslintd" },
-      --       typescript = { "eslintd" },
-      --       javascriptreact = { "eslintd" },
-      --       javascript = { "eslintd" },
+      --       -- typescriptreact = { "eslintd" },
+      --       -- typescript = { "eslintd" },
+      --       -- javascriptreact = { "eslintd" },
+      --       -- javascript = { "eslint_d" },
+      --       -- javascript = { "eslint" },
+      --       -- javascript = { "local_eslint" },
       --       -- ruby = { "rubocop" },
       --     }
       --   end,
@@ -53,6 +112,19 @@ return {
     },
     config = function()
       local lsp = require "utils.lsp"
+
+      local function safe_load_ruff_lsp()
+        local python_root = lsp.python_project_root_path()
+        local ruff_cmd
+
+        if python_root then
+          ruff_cmd = { python_root .. "/.venv/bin/ruff", "server" }
+        else
+          ruff_cmd = { "ruff", "server" } -- Fallback for non-python projects
+        end
+
+        return ruff_cmd
+      end
 
       vim.lsp.config["ruby_lsp"] = {
         cmd = { "ruby-lsp" },
@@ -119,50 +191,64 @@ return {
         },
       }
 
-      vim.lsp.config["efm"] = {
-        cmd = { "efm-langserver" },
-        on_attach = function(client, bufnr)
-          lsp.on_attach(client, bufnr)
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            callback = function()
-              vim.lsp.buf.format {
-                async = true,
-              }
-            end,
-          })
-        end,
+      -- vim.lsp.config["efm"] = {
+      --   cmd = { "efm-langserver" },
+      --   on_attach = function(client, bufnr)
+      --     lsp.on_attach(client, bufnr)
+      --     vim.api.nvim_create_autocmd("BufWritePre", {
+      --       buffer = bufnr,
+      --       callback = function()
+      --         vim.lsp.buf.format {
+      --           async = true,
+      --         }
+      --       end,
+      --     })
+      --   end,
+      --   capabilities = lsp.capabilities(),
+      --   on_init = lsp.on_init,
+      --   filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+      --   init_options = { documentFormatting = true, codeAction = true },
+      --   settings = {
+      --     rootMarkers = { ".git/" },
+      --     languages = {
+      --       javascript = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
+      --       typescript = { { formatCommand = 'prettierd "${INPUT}', formatStdin = true } },
+      --       javascriptreact = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
+      --       typescriptreact = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
+      --       -- lua = {
+      --       --   {
+      --       --     formatCommand = "stylua --search-parent-directories -",
+      --       --     formatStdin = true,
+      --       --     lintCommand = "luacheck -",
+      --       --     lintStdin = true,
+      --       --     lintIgnoreExitCode = true,
+      --       --     lintFormats = { "%f(%l): %m" },
+      --       --   },
+      --       -- },
+      --     },
+      --   },
+      -- }
+
+      vim.lsp.config["ruff"] = {
+        init_options = {
+          settings = {
+            args = {}
+          }
+        },
+        cmd = safe_load_ruff_lsp(),
+        filetypes = { "python" },
+        on_attach = lsp.on_attach,
         capabilities = lsp.capabilities(),
         on_init = lsp.on_init,
-        filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
-        init_options = { documentFormatting = true, codeAction = true },
-        settings = {
-          rootMarkers = { ".git/" },
-          languages = {
-            javascript = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
-            typescript = { { formatCommand = 'prettierd "${INPUT}', formatStdin = true } },
-            javascriptreact = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
-            typescriptreact = { { formatCommand = 'prettierd "${INPUT}"', formatStdin = true } },
-            -- lua = {
-            --   {
-            --     formatCommand = "stylua --search-parent-directories -",
-            --     formatStdin = true,
-            --     lintCommand = "luacheck -",
-            --     lintStdin = true,
-            --     lintIgnoreExitCode = true,
-            --     lintFormats = { "%f(%l): %m" },
-            --   },
-            -- },
-          },
-        },
       }
 
       vim.lsp.enable {
         "ruby_lsp",
         "eslint",
-        "efm",
+        -- "efm",
         "ts_ls",
         "lua_ls",
+        "ruff"
       }
 
       -- Customize diagnostics looks
@@ -175,7 +261,7 @@ return {
           header = "  ᵈⁱᵃᵍⁿᵒˢᵗⁱᶜˢ",
           source = true,
           prefix = " ",
-          border = "single",
+          border = "solid",
           suffix = "",
           format = function(diagnostic)
             return string.sub(diagnostic.message, 1, -2)
@@ -242,6 +328,7 @@ return {
           { name = "path" },
           { name = "nvim_lsp_signature_help" },
           { name = "lazydev",                group_index = 0 },
+          { name = "orgmonde" }
         },
         window = {
           completion = {

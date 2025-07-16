@@ -75,15 +75,15 @@ return {
   {
     "obsidian-nvim/obsidian.nvim",
     version = "*",
-    event = {
-      "BufReadPre " .. vim.fn.expand "~/" .. "Repos/second-brain/**/*",
-      "BufNewFile " .. vim.fn.expand "~/" .. "Repos/second-brain/**/*",
-    },
+    event = 'VeryLazy',
+    cond = function()
+      return vim.fn.getcwd() == vim.fn.expand('~/Repos/second-brain')
+    end,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
       "nvim-telescope/telescope.nvim",
-      "nvim-treesitter",
+      "nvim-treesitter/nvim-treesitter",
       "OXY2DEV/markview.nvim"
     },
     config = function()
@@ -96,12 +96,13 @@ return {
         },
         completion = {
           nvim_cmp = true,
+          blink = false,
           min_chars = 2,
         },
         mappings = {
           ["<leader>oft"] = {
             action = function()
-              return "<CMD> ObsidianTag <CR>"
+              return "<CMD>Obsidian tags<CR>"
             end,
             opts = { noremap = false, expr = true, buffer = true },
           },
@@ -115,17 +116,11 @@ return {
               end
 
               -- Create the new file
-              vim.cmd("ObsidianNew " .. task_name)
+              vim.cmd("Obsidian new " .. task_name)
 
               -- Applies the subtask template
               vim.cmd "ObsidianTemplate Subtask template"
             end,
-          },
-          ["<leader>off"] = {
-            action = function()
-              return "<CMD> ObsidianQuickSwitch <CR>"
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
           },
           ["<leader>ofl"] = {
             action = function()
@@ -145,17 +140,33 @@ return {
             end,
             opts = { noremap = false, expr = true, buffer = true },
           },
-          ["<leader>ot"] = {
-            action = function()
-              return "<CMD> ObsidianToday <CR>"
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
+          -- ["<leader>ot"] = {
+          --   action = function()
+          --     return "<CMD> ObsidianToday <CR>"
+          --   end,
+          --   opts = { noremap = false, expr = true, buffer = true },
+          -- },
+          -- ["<leader>oT"] = {
+          --   action = function()
+          --     return "<CMD> ObsidianTomorrow <CR>"
+          --   end,
+          --   opts = { noremap = false, expr = true, buffer = true },
+          -- },
+        },
+        picker = {
+          name = "telescope.nvim",
+          -- Not all pickers support all mappings.
+          note_mappings = {
+            -- Create a new note from your query.
+            new = "<C-x>",
+            -- Insert a link to the selected note.
+            insert_link = "<C-l>",
           },
-          ["<leader>oT"] = {
-            action = function()
-              return "<CMD> ObsidianTomorrow <CR>"
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
+          tag_mappings = {
+            -- Add tag(s) to current note.
+            tag_note = "<C-x>",
+            -- Insert a tag at the current location.
+            insert_tag = "<C-l>",
           },
         },
         ---@param spec { id: string, dir: obsidian.Path, title: string|? }
@@ -220,9 +231,40 @@ return {
     end,
   },
   {
-    "nvzone/typr",
-    dependencies = "nvzone/volt",
-    opts = {},
-    cmd = { "Typr", "TyprStats" },
-  },
+    'nvim-orgmode/orgmode',
+    event = 'VeryLazy',
+    -- cond = function()
+    --   return vim.fn.getcwd() == vim.fn.expand('~/Repos/second-brain')
+    -- end,
+    config = function()
+      -- Setup orgmode
+      require('orgmode').setup({
+        org_agenda_files = '~/Repos/second-brain/obsidian-vault/org-files/**/*',
+        org_default_notes_file = '~/Repos/second-brain/obsidian-vault/org-files/refile.org',
+        org_todo_keywords = { 'TODO', 'DOING', '|', 'DONE' },
+        org_todo_keyword_faces = {
+          TODO = ':foreground #8d9df2 :weight bold :slant italic',
+          DOING = ':foreground #2b7ab5 :weight bold :slant italic',
+          DONE = ':foreground #388024 :weight bold :slant italic',
+        },
+        org_startup_indented = false,
+        org_adapt_indentation = true,
+        win_split_mode = 'horizontal'
+      })
+
+      local wk = require "which-key"
+
+      wk.add {
+        { '<leader>ot', "<CMD> e ~/Repos/second-brain/obsidian-vault/org-files/refile.org <CR>", desc = "Open refile.org" },
+      }
+
+
+      -- NOTE: If you are using nvim-treesitter with ~ensure_installed = "all"~ option
+      -- add ~org~ to ignore_install
+      -- require('nvim-treesitter.configs').setup({
+        --   ensure_installed = 'all',
+        --   ignore_install = { 'org' },
+        -- })
+      end,
+    },
 }

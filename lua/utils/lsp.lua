@@ -122,4 +122,12 @@ M.on_attach = function(_, bufnr)
   }
 end
 
+M.python_project_root_path = function()
+  return vim.fs.root(vim.fs.joinpath(vim.env.PWD, 'main.py'), {'pyproject.toml', 'setup.py' })
+end
+
+M.ruby_project_root_path = function()
+  return vim.fs.root(vim.fs.joinpath(vim.env.PWD, 'Gemfile'), {'Gemfile.lock', 'Rakefile' })
+end
+
 return M
