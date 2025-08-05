@@ -136,10 +136,6 @@ return {
         endwise = {
           enable = true,
         },
-        -- matchup = {
-        --   enable = true,
-        --   disable_virtual_text = true,
-        -- },
         ensure_installed = require("general-opts").treesitter.ensure_installed,
         highlight = {
           enable = true,
@@ -451,18 +447,6 @@ return {
     end,
   },
   {
-    "andymass/vim-matchup",
-    enabled = false,
-    event = "VeryLazy",
-    config = function()
-      vim.g.matchup_matchparen_nomode = "i"
-      vim.g.matchup_matchparen_offscreen = {}
-
-      vim.api.nvim_set_hl(0, "MatchParen", { link = "Underlined" })
-      vim.api.nvim_set_hl(0, "MatchWord", { link = "Underlined" })
-    end,
-  },
-  {
     "folke/ts-comments.nvim", -- Helps define the correct comment string according to language
     event = "VeryLazy",
     config = true,
@@ -672,9 +656,9 @@ return {
                 -- For this to work, the autocmd from line 101 in the autocmds file is necessary
                 local function code_companion_spinner()
                   if _G.codecompanion_processing then
-                    return '󰟶 LLM thinking 󰟶 '
+                    return "󰟶 LLM thinking 󰟶 "
                   else
-                    return ' LLM done!  '
+                    return " LLM done!  "
                   end
                 end
 
@@ -725,6 +709,7 @@ return {
   },
   {
     "Bekaboo/dropbar.nvim",
+    enabled = false,
     event = "VeryLazy",
     opts = {
       icons = {
@@ -798,6 +783,7 @@ return {
   {
     "mcauley-penney/visual-whitespace.nvim",
     event = "VeryLazy",
+    enabled = false,
     opts = {
       highlight = { link = "Visual" },
       space_char = "·",
@@ -813,6 +799,7 @@ return {
   },
   {
     "Tyler-Barham/floating-help.nvim",
+    enabled = false,
     cmd = "FloatingHelp",
     keys = { "<leader>th" },
     opts = {
@@ -851,10 +838,8 @@ return {
     "folke/snacks.nvim",
     event = "VeryLazy",
     opts = {
-      -- notifier = {},
       image = {},
       bigfile = {},
-      scratch = {},
     },
     init = function()
       _G.dd = function(...)
@@ -868,6 +853,7 @@ return {
   },
   {
     "Chaitanyabsprip/fastaction.nvim",
+    enabled = false,
     lazy = false,
     opts = {
       dismiss_keys = { "j", "k", "<c-c>", "q" },

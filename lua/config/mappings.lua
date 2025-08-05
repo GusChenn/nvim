@@ -1,6 +1,5 @@
 local wc = require "which-key"
 local cmd = require("utils.plugin-helpers").cmd
-local pick_folder_files = require("utils.plugin-helpers").pick_folder_files
 
 local toggle_case = function()
   -- Get the word under cursor
@@ -73,15 +72,11 @@ local show_path = function()
   vim.notify('Path: "' .. path)
 end
 
-local pick_model = function()
-  pick_folder_files "app/models"
-end
-
 wc.add {
   { "<leader>n", toggle_line_numbers, desc = "Toggle line numbers" },
   { "<leader>s", "*", desc = "Highligh all instances of the word under the cursor" },
   { "<leader>q", safe_close, desc = "Close buffer safely" },
-  { "<leader>Q", cmd "qa!", desc = "Quit nvim" },
+  { "<leader>Q", cmd "wqa!", desc = "Quit nvim" },
   { "<leader>wh", cmd "split", desc = "Split window horizontally" },
   { "<leader>wv", cmd "vsplit", desc = "Split window vertically" },
   {

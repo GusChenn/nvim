@@ -108,10 +108,10 @@ M.on_attach = function(_, bufnr)
     {
       "ca",
       buffer = bufnr,
-      -- vim.lsp.buf.code_action, -- default code actions
-      require("fastaction").code_action,
-      desc = "Code action",
-      mode = { "n", "v" },
+      vim.lsp.buf.code_action, -- default code actions
+      -- require("fastaction").code_action,
+      -- desc = "Code action",
+      -- mode = { "n", "v" },
     },
     {
       "gr",
@@ -123,11 +123,11 @@ M.on_attach = function(_, bufnr)
 end
 
 M.python_project_root_path = function()
-  return vim.fs.root(vim.fs.joinpath(vim.env.PWD, 'main.py'), {'pyproject.toml', 'setup.py' })
+  return vim.fs.root(vim.fs.joinpath(vim.env.PWD, "main.py"), { "pyproject.toml", "setup.py" })
 end
 
 M.ruby_project_root_path = function()
-  return vim.fs.root(vim.fs.joinpath(vim.env.PWD, 'Gemfile'), {'Gemfile.lock', 'Rakefile' })
+  return vim.fs.root(vim.fs.joinpath(vim.env.PWD, "Gemfile"), { "Gemfile.lock", "Rakefile" })
 end
 
 return M

@@ -16,6 +16,8 @@ local constants = {
     efm = " ",
     eslint = "󰱺 ",
     ruff = python_icon,
+    css_ls = " ",
+    html = " ",
   },
   hl_map = {
     [vim.diagnostic.severity.ERROR] = "DiagnosticError",

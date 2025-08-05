@@ -25,42 +25,6 @@ return {
     end,
   },
   {
-    "kevinhwang91/nvim-ufo",
-    lazy = false,
-    dependencies = {
-      "kevinhwang91/promise-async",
-    },
-    opts = {
-      fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
-        local newVirtText = {}
-        local suffix = (" 󰁂 %d "):format(endLnum - lnum)
-        local sufWidth = vim.fn.strdisplaywidth(suffix)
-        local targetWidth = width - sufWidth
-        local curWidth = 0
-        for _, chunk in ipairs(virtText) do
-          local chunkText = chunk[1]
-          local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-          if targetWidth > curWidth + chunkWidth then
-            table.insert(newVirtText, chunk)
-          else
-            chunkText = truncate(chunkText, targetWidth - curWidth)
-            local hlGroup = chunk[2]
-            table.insert(newVirtText, { chunkText, hlGroup })
-            chunkWidth = vim.fn.strdisplaywidth(chunkText)
-            -- str width returned from truncate() may less than 2nd argument, need padding
-            if curWidth + chunkWidth < targetWidth then
-              suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-            end
-            break
-          end
-          curWidth = curWidth + chunkWidth
-        end
-        table.insert(newVirtText, { suffix, "MoreMsg" })
-        return newVirtText
-      end,
-    },
-  },
-  {
     "github/copilot.vim",
     event = "VeryLazy",
     init = function()
@@ -69,39 +33,6 @@ return {
       require("which-key").add {
         { "<leader>cd", cmd "Copilot disable", desc = "Disable copilot virtual text" },
         { "<leader>ce", cmd "Copilot enable", desc = "Enable copilot virtual text" },
-      }
-    end,
-  },
-  {
-    "nvim-pack/nvim-spectre",
-    event = "VeryLazy",
-    cmd = "Spectre",
-    opts = {
-      find_engine = {
-        ["rg"] = {
-          args = {
-            "--pcre2",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-          },
-        },
-      },
-      replace_engine = {
-        ["sed"] = {
-          cmd = "sed",
-          args = {
-            "-i",
-            "-E",
-          },
-        },
-      },
-    },
-    init = function()
-      require("which-key").add {
-        { "<A-F>", require("spectre").toggle, desc = "Toggle Spectre" },
       }
     end,
   },
@@ -120,55 +51,6 @@ return {
     end,
   },
   {
-    "Davidyz/VectorCode",
-    lazy = false,
-    version = "*", -- optional, depending on whether you're on nightly or release
-    build = "pipx upgrade vectorcode", -- optional but recommended if you set `version = "*"`
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("vectorcode").setup {
-        async_opts = {
-          debounce = 10,
-          events = { "BufWritePost", "InsertEnter", "BufReadPost" },
-          exclude_this = true,
-          n_query = 1,
-          notify = false,
-          query_cb = require("vectorcode.utils").make_surrounding_lines_cb(-1),
-          run_on_register = false,
-        },
-        async_backend = "default", -- or "lsp"
-        exclude_this = true,
-        n_query = 1,
-        notify = true,
-        timeout_ms = 5000,
-        on_setup = {
-          update = false, -- set to true to enable update when `setup` is called.
-        },
-      }
-    end,
-  },
-  {
-    "ravitemer/mcphub.nvim",
-    lazy = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    build = "npm install -g mcp-hub@latest",
-    config = function()
-      require("mcphub").setup {
-        port = 37373,
-        config = vim.fn.expand "~/.config/nvim/mcpservers.json",
-        shutdown_delay = 0, -- Wait 0ms before shutting down server after last client exits
-        log = {
-          level = vim.log.levels.WARN,
-          to_file = false,
-          file_path = nil,
-          prefix = "MCPHub",
-        },
-      }
-    end,
-  },
-  {
     "olimorris/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -177,7 +59,7 @@ return {
       "Davidyz/VectorCode",
       "ravitemer/mcphub.nvim",
       "banjo/contextfiles.nvim",
-      "ravitemer/codecompanion-history.nvim"
+      "ravitemer/codecompanion-history.nvim",
     },
     event = "VeryLazy",
     opts = function()
@@ -193,7 +75,7 @@ return {
                   " (" .. (adapter.schema.model.default or "unknown") .. ")"
                 )
               end,
-              user = "GusChenn"
+              user = "GusChenn",
             },
             slash_commands = {
               ["file"] = {
@@ -202,7 +84,6 @@ return {
                   contains_code = true,
                 },
               },
-              codebase = require("vectorcode.integrations").codecompanion.chat.make_slash_command(),
             },
           },
           inline = {
@@ -324,12 +205,6 @@ return {
           end,
         },
         extensions = {
-          contextfiles = {
-            opts = {
-              -- your contextfiles configuration here
-              -- or leave it empty to use the default configuration
-            },
-          },
           history = {
             enabled = true,
             opts = {
@@ -342,11 +217,11 @@ return {
               -- Number of days after which chats are automatically deleted (0 to disable)
               expiration_days = 10,
               -- Picker interface (auto resolved to a valid picker)
-              picker = "telescope", --- ("telescope", "snacks", "fzf-lua", or "default") 
+              picker = "telescope", --- ("telescope", "snacks", "fzf-lua", or "default")
               ---Automatically generate titles for new chats
               auto_generate_title = true,
               title_generation_opts = {
-                ---Adapter for generating titles (defaults to current chat adapter) 
+                ---Adapter for generating titles (defaults to current chat adapter)
                 adapter = nil, -- "copilot"
                 ---Model for generating titles (defaults to current chat model)
                 model = nil, -- "gpt-4o"
@@ -356,61 +231,22 @@ return {
               ---When chat is cleared with `gx` delete the chat from history
               delete_on_clearing_chat = false,
               ---Directory path to save the chats
-              dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+              dir_to_save = vim.fn.stdpath "data" .. "/codecompanion-history",
               ---Enable detailed logging for history extension
               enable_logging = false,
-            }
-          },
-          vectorcode = {
-          ---@type VectorCode.CodeCompanion.ExtensionOpts
-            opts = {
-              tool_group = {
-                -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
-                enabled = true,
-                -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
-                -- if you use @vectorcode_vectorise, it'll be very handy to include
-                -- `file_search` here.
-                extras = {},
-                collapse = false, -- whether the individual tools should be shown in the chat
-              },
-              tool_opts = {
-                ---@type VectorCode.CodeCompanion.LsToolOpts
-                ls = {},
-                ---@type VectorCode.CodeCompanion.VectoriseToolOpts
-                vectorise = {},
-                ---@type VectorCode.CodeCompanion.QueryToolOpts
-                query = {
-                  max_num = { chunk = -1, document = -1 },
-                  default_num = { chunk = 50, document = 10 },
-                  include_stderr = false,
-                  use_lsp = false,
-                  no_duplicate = true,
-                  chunk_mode = false,
-                }
-              }
-            }
-          },
-          mcphub = {
-            callback = "mcphub.extensions.codecompanion",
-            description = "Call tools and resources from the MCP Servers",
-            opts = {
-              requires_approval = true,
-              show_result_in_chat = true,  -- Show mcp tool results in chat
-              make_vars = true,            -- Convert resources to #variables
-              make_slash_commands = true,  -- Add prompts as /slash commands
             },
           },
-        }
+        },
       }
     end,
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
       -- Could not configure this mapping with which-key
-      vim.keymap.set('i', '<C-a>', 'copilot#Accept("\\<CR>")', {
+      vim.keymap.set("i", "<C-a>", 'copilot#Accept("\\<CR>")', {
         expr = true,
         replace_keycodes = false,
-        silent = true
+        silent = true,
       })
       vim.g.copilot_no_tab_map = true
 
