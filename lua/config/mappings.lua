@@ -29,6 +29,13 @@ local toggle_case = function()
   vim.cmd 'normal! viw"zp'
 end
 
+local type_today_date = function()
+  local date = os.date "%Y-%m-%d"
+  local time = os.date "%H:%M:%S"
+  local formatted_date = string.format("%s %s", date, time)
+  vim.cmd(string.format("normal! i%s", formatted_date))
+end
+
 local safe_close = function()
   local is_buffer_in_multiple_splits = function()
     local current_buf = vim.api.nvim_get_current_buf()
@@ -44,8 +51,28 @@ local safe_close = function()
 
   if is_buffer_in_multiple_splits() then
     vim.cmd "q"
+  elseif vim.wo.diff then
+    vim.rpcnotify(0, "Exit", 0)
+  elseif vim.bo.buftype == "terminal" then
+    vim.cmd "bdelete!"
   else
     vim.cmd "bd"
+  end
+end
+
+local safe_vsplit = function()
+  if vim.bo.buftype == "terminal" then
+    vim.cmd "vnew"
+  else
+    vim.cmd "vsplit"
+  end
+end
+
+local safe_split = function()
+  if vim.bo.buftype == "terminal" then
+    vim.cmd "new"
+  else
+    vim.cmd "split"
   end
 end
 
@@ -77,8 +104,8 @@ wc.add {
   { "<leader>s", "*", desc = "Highligh all instances of the word under the cursor" },
   { "<leader>q", safe_close, desc = "Close buffer safely" },
   { "<leader>Q", cmd "wqa!", desc = "Quit nvim" },
-  { "<leader>wh", cmd "split", desc = "Split window horizontally" },
-  { "<leader>wv", cmd "vsplit", desc = "Split window vertically" },
+  { "<leader>wh", safe_split, desc = "Split window horizontally" },
+  { "<leader>wv", safe_vsplit, desc = "Split window vertically" },
   {
     "J",
     ":m '>+1<CR>gv=gv",
@@ -104,16 +131,20 @@ wc.add {
   },
   { "cpp", copy_path, desc = "Copies the current file path to the clipboard" },
   { "spp", show_path, desc = "Shows the current file path" },
-  { "<leader>fm", pick_model, desc = "Pick model" },
   { "<leader>L", cmd "tabnext", desc = "Next tab" },
   { "<leader>H", cmd "tabprevious", desc = "Previous tab" },
   { "<leader>T", cmd "tabnew", desc = "New tab" },
   { "jk", "<ESC>", mode = "i", desc = "Quit insert mode with jk" },
   { "kj", "<ESC>", mode = "i", desc = "Quit insert mode with kj" },
+  { "jk", "<c-\\><c-n>", mode = "t", desc = "Quit insert mode with jk" },
+  { "kj", "<c-\\><c-n>", mode = "t", desc = "Quit insert mode with kj" },
+  { "<C-n>", "<down>", mode = "t", desc = "Down on terminal mode" },
+  { "<C-p>", "<up>", mode = "t", desc = "Up on terminal mode" },
   { "<leader>fs", "I# frozen_string_literal: true<CR><ESC>Doclass", desc = "Add frozen string magic comment" },
   { "<C-h>", "<C-o>h", mode = "i", desc = "Move left in insert mode" },
   { "<C-j>", "<C-o>j", mode = "i", desc = "Move down in insert mode" },
   { "<C-k>", "<C-o>k", mode = "i", desc = "Move up in insert mode" },
   { "<C-l>", "<C-o>l", mode = "i", desc = "Move right in insert mode" },
   { "<leader>cc", toggle_case, desc = "Toggle between camel case and snake case" },
+  { "<leader>td", type_today_date, desc = "Type todays date" },
 }

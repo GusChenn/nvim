@@ -111,7 +111,12 @@ autocmd({ "User" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'ruby',
-  command = 'setlocal indentkeys=',
+autocmd("FileType", {
+  pattern = "ruby",
+  command = "setlocal indentkeys=",
+})
+
+autocmd("FileType", {
+  pattern = "help",
+  command = "wincmd L",
 })

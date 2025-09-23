@@ -191,18 +191,21 @@ return {
           },
         },
         adapters = {
-          copilot = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "gemini-2.5-pro",
-                  -- default = "claude-3.7-sonnet",
-                  -- default = "o3-mini-2025-01-31",
-                  -- default = "gpt-4o-2024-08-06",
+          http = {
+            copilot = function()
+              return require("codecompanion.adapters").extend("copilot", {
+                schema = {
+                  model = {
+                    -- default = "gpt-5",
+                    default = "gemini-2.5-pro",
+                    -- default = "claude-3.7-sonnet",
+                    -- default = "o3-mini-2025-01-31",
+                    -- default = "gpt-4o-2024-08-06",
+                  },
                 },
-              },
-            })
-          end,
+              })
+            end,
+          },
         },
         extensions = {
           history = {

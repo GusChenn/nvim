@@ -75,16 +75,16 @@ return {
   {
     "obsidian-nvim/obsidian.nvim",
     version = "*",
-    event = 'VeryLazy',
+    event = "VeryLazy",
     cond = function()
-      return vim.fn.getcwd() == vim.fn.expand('~/Repos/second-brain')
+      return vim.fn.getcwd() == vim.fn.expand "~/Repos/second-brain"
     end,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
       "nvim-telescope/telescope.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "OXY2DEV/markview.nvim"
+      "OXY2DEV/markview.nvim",
     },
     config = function()
       require("obsidian").setup {
@@ -99,15 +99,28 @@ return {
           blink = false,
           min_chars = 2,
         },
-        mappings = {
-          ["<leader>oft"] = {
-            action = function()
-              return "<CMD>Obsidian tags<CR>"
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-          },
-          ["<leader>on"] = {
-            action = function()
+        callbacks = {
+          enter_note = function(_, note)
+            -- This is the new recommended way to set up buffer-local mappings.
+            --
+            -- See `:help obsidian.nvim-callbacks`
+
+            -- Passthrough "gf" to follow markdown links.
+            vim.keymap.set("n", "gf", function()
+              return require("obsidian").util.gf_passthrough()
+            end, {
+              buffer = note.bufnr,
+              noremap = false,
+              expr = true,
+              desc = "Follow link under cursor",
+            })
+
+            vim.keymap.set("n", "<leader>oft", "<CMD>Obsidian tags<CR>", {
+              buffer = note.bufnr,
+              desc = "Obsidian Tags",
+            })
+
+            vim.keymap.set("n", "<leader>on", function()
               -- Prompt the user for a task name
               local task_name = vim.fn.input "Enter task name: "
               if task_name == "" then
@@ -119,39 +132,22 @@ return {
               vim.cmd("Obsidian new " .. task_name)
 
               -- Applies the subtask template
-              vim.cmd "ObsidianTemplate Subtask template"
-            end,
-          },
-          ["<leader>ofl"] = {
-            action = function()
-              return "<CMD> ObsidianFollowLink <CR>"
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-          },
-          ["<leader>obl"] = {
-            action = function()
-              return "<CMD> ObsidianBacklinks <CR>"
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-          },
-          ["gf"] = {
-            action = function()
-              return require("obsidian").util.gf_passthrough()
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-          },
-          -- ["<leader>ot"] = {
-          --   action = function()
-          --     return "<CMD> ObsidianToday <CR>"
-          --   end,
-          --   opts = { noremap = false, expr = true, buffer = true },
-          -- },
-          -- ["<leader>oT"] = {
-          --   action = function()
-          --     return "<CMD> ObsidianTomorrow <CR>"
-          --   end,
-          --   opts = { noremap = false, expr = true, buffer = true },
-          -- },
+              vim.cmd "Obsidian template Subtask template"
+            end, {
+              buffer = note.bufnr,
+              desc = "Obsidian New Task",
+            })
+
+            vim.keymap.set("n", "<leader>ofl", "<CMD>Obsidian follow_link<CR>", {
+              buffer = note.bufnr,
+              desc = "Obsidian Follow Link",
+            })
+
+            vim.keymap.set("n", "<leader>obl", "<CMD>Obsidian backlinks<CR>", {
+              buffer = note.bufnr,
+              desc = "Obsidian Backlinks",
+            })
+          end,
         },
         picker = {
           name = "telescope.nvim",
@@ -231,40 +227,43 @@ return {
     end,
   },
   {
-    'nvim-orgmode/orgmode',
-    event = 'VeryLazy',
+    "nvim-orgmode/orgmode",
+    event = "VeryLazy",
     -- cond = function()
     --   return vim.fn.getcwd() == vim.fn.expand('~/Repos/second-brain')
     -- end,
     config = function()
       -- Setup orgmode
-      require('orgmode').setup({
-        org_agenda_files = '~/Repos/second-brain/obsidian-vault/org-files/**/*',
-        org_default_notes_file = '~/Repos/second-brain/obsidian-vault/org-files/refile.org',
-        org_todo_keywords = { 'TODO', 'DOING', '|', 'DONE' },
+      require("orgmode").setup {
+        org_agenda_files = "~/Repos/second-brain/obsidian-vault/org-files/**/*",
+        org_default_notes_file = "~/Repos/second-brain/obsidian-vault/org-files/refile.org",
+        org_todo_keywords = { "TODO", "DOING", "|", "DONE" },
         org_todo_keyword_faces = {
-          TODO = ':foreground #8d9df2 :weight bold :slant italic',
-          DOING = ':foreground #2b7ab5 :weight bold :slant italic',
-          DONE = ':foreground #388024 :weight bold :slant italic',
+          TODO = ":foreground #8d9df2 :weight bold :slant italic",
+          DOING = ":foreground #2b7ab5 :weight bold :slant italic",
+          DONE = ":foreground #388024 :weight bold :slant italic",
         },
         org_startup_indented = false,
         org_adapt_indentation = true,
-        win_split_mode = 'horizontal'
-      })
+        win_split_mode = "vertical",
+      }
 
       local wk = require "which-key"
 
       wk.add {
-        { '<leader>ot', "<CMD> e ~/Repos/second-brain/obsidian-vault/org-files/refile.org <CR>", desc = "Open refile.org" },
+        {
+          "<leader>ot",
+          "<CMD> e ~/Repos/second-brain/obsidian-vault/org-files/refile.org <CR>",
+          desc = "Open refile.org",
+        },
       }
-
 
       -- NOTE: If you are using nvim-treesitter with ~ensure_installed = "all"~ option
       -- add ~org~ to ignore_install
       -- require('nvim-treesitter.configs').setup({
-        --   ensure_installed = 'all',
-        --   ignore_install = { 'org' },
-        -- })
-      end,
-    },
+      --   ensure_installed = 'all',
+      --   ignore_install = { 'org' },
+      -- })
+    end,
+  },
 }

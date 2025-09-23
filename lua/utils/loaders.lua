@@ -110,10 +110,6 @@ loaders.load_colorscheme = function()
   -- require "config.themes.everfores"
   -- vim.cmd.colorscheme "everforest"
 
-  -- For gruvbox
-  -- require "config.themes.gruvbox"
-  -- vim.cmd.colorscheme "gruvbox-material"
-
   -- For oldworld
   -- require "config.themes.oldworld"
   -- vim.cmd.colorscheme "oldworld"
@@ -132,10 +128,6 @@ loaders.load_colorscheme = function()
   -- require "config.themes.github"
   -- vim.cmd.colorscheme "github_light_high_contrast"
 
-  -- For rose-pine
-  -- require "config.themes.rose-pine"
-  -- vim.cmd.colorscheme "rose-pine"
-
   -- For pfalseoimadres
   -- require "config.themes.poimadres"
   -- vim.cmd.colorscheme "poimadres"
@@ -150,8 +142,17 @@ loaders.load_colorscheme = function()
   else
     -- require "config.themes.catppuccin"
     -- vim.cmd.colorscheme "catppuccin"
-    require "config.themes.everfores"
-    vim.cmd.colorscheme "everforest"
+
+    -- require "config.themes.everfores"
+    -- vim.cmd.colorscheme "everforest"
+
+    -- For gruvbox
+    require "config.themes.gruvbox"
+    vim.cmd.colorscheme "gruvbox-material"
+
+    -- For rose-pine
+    -- require "config.themes.rose-pine"
+    -- vim.cmd.colorscheme "rose-pine"
   end
 end
 

@@ -129,7 +129,7 @@ o.relativenumber = false
 o.ruler = false
 
 -- disable nvim intro
-opt.shortmess:append "sI"
+opt.shortmess:append "sIA"
 
 o.signcolumn = "yes"
 o.synmaxcol = 1000
@@ -145,7 +145,7 @@ opt.breakindent = true
 o.breakindentopt = "list:-1"
 opt.timeoutlen = 200
 opt.scrolloff = 999
-opt.clipboard = ""
+opt.clipboard = "unnamedplus"
 opt.conceallevel = 2
 
 wo.number = false
