@@ -654,19 +654,19 @@ return {
 
                 -- Format CodeCompanion loader
                 -- For this to work, the autocmd from line 101 in the autocmds file is necessary
-                local function code_companion_spinner()
-                  if _G.codecompanion_processing then
-                    return "󰟶 LLM thinking 󰟶 "
-                  else
-                    return " LLM done!  "
-                  end
-                end
+                -- local function code_companion_spinner()
+                --   if _G.codecompanion_processing then
+                --     return "󰟶 LLM thinking 󰟶 "
+                --   else
+                --     return " LLM done!  "
+                --   end
+                -- end
 
                 return MiniStatusline.combine_groups {
                   { hl = "NormalNC", strings = { formatted_git_branch() } },
                   { hl = "NormalNC", strings = { diagnostics() } },
                   "%=",
-                  { hl = "NormalNC", strings = { code_companion_spinner() } },
+                  -- { hl = "NormalNC", strings = { code_companion_spinner() } },
                   { hl = "NormalNC", strings = { file_info() } },
                   { hl = "NormalNC", strings = { tab_indicator() } },
                   { hl = "NormalNC", strings = { lsp() } },
@@ -852,33 +852,9 @@ return {
     end,
   },
   {
-    "Chaitanyabsprip/fastaction.nvim",
-    enabled = false,
-    lazy = false,
-    opts = {
-      dismiss_keys = { "j", "k", "<c-c>", "q" },
-      override_function = function(_) end,
-      keys = "qwertyuiopasdfghlzxcvbnm",
-      popup = {
-        border = "rounded",
-        hide_cursor = true,
-        highlight = {
-          divider = "FloatBorder",
-          key = "MoreMsg",
-          title = "Title",
-          window = "NormalFloat",
-        },
-        title = "Select one of:",
-      },
-      priority = {
-        -- dart = {
-        --   { pattern = "organize import", key ="o", order = 1 },
-        --   { pattern = "extract method", key ="x", order = 2 },
-        --   { pattern = "extract widget", key ="e", order = 3 },
-        -- },
-      },
-      register_ui_select = false,
-      format_right_section = nil,
-    },
-  },
+    "lukas-reineke/headlines.nvim",
+    event = "VeryLazy",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
+  }
 }

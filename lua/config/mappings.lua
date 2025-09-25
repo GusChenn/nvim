@@ -99,6 +99,44 @@ local show_path = function()
   vim.notify('Path: "' .. path)
 end
 
+local function save_smart()
+  local uv = vim.uv or vim.loop
+  local buf = 0
+  local name = vim.api.nvim_buf_get_name(buf)
+
+  -- Determine size (prefer on-disk size; fallback to buffer content)
+  local size
+  if name ~= "" then
+    local stat = uv.fs_stat(name)
+    if stat and stat.size then
+      size = stat.size
+    end
+  end
+  if not size then
+    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, true)
+    local total = 0
+    for i = 1, #lines do
+      total = total + #lines[i]
+    end
+    if #lines > 0 then
+      total = total + (#lines - 1) -- newline bytes
+    end
+    size = total
+  end
+
+  local threshold = 10 * 1024 -- 10 KiB
+  if size > threshold then
+    vim.cmd "noautocmd write"
+    vim.notify(
+      string.format("Wrote large file (%d bytes) without autocmds", size),
+      vim.log.levels.INFO,
+      { title = "SaveSmart" }
+    )
+  else
+    vim.cmd "write"
+  end
+end
+
 wc.add {
   { "<leader>n", toggle_line_numbers, desc = "Toggle line numbers" },
   { "<leader>s", "*", desc = "Highligh all instances of the word under the cursor" },
@@ -120,7 +158,7 @@ wc.add {
   },
   { "<C-q>", cmd "noautocmd w", desc = "Save file without autocmds" },
   { "<C-s>", cmd "w", desc = "Save file with autocmds" },
-  { "<leader>w", cmd "w", desc = "Save file with autocmds" },
+  { "<leader>w", save_smart, desc = "Save file with autocmds" },
   { "cb", close_all_buffers, desc = "Close all buffers except the current one" },
   { "<C-l>", cmd "noh", desc = "Clear highlights" },
   {
@@ -147,4 +185,5 @@ wc.add {
   { "<C-l>", "<C-o>l", mode = "i", desc = "Move right in insert mode" },
   { "<leader>cc", toggle_case, desc = "Toggle between camel case and snake case" },
   { "<leader>td", type_today_date, desc = "Type todays date" },
+  { "<tab>", "za", mode = "n", desc = "Toggle fold" },
 }

@@ -19,7 +19,7 @@ return {
         },
         markdown = {
           code_blocks = {
-            style = "simple",
+            style = "block",
           },
           list_items = {
             shift_width = 2,
@@ -264,6 +264,26 @@ return {
       --   ensure_installed = 'all',
       --   ignore_install = { 'org' },
       -- })
+    end,
+  },
+  {
+    "chipsenkbeil/org-roam.nvim",
+    event = "VeryLazy",
+    tag = "0.2.0",
+    dependencies = {
+      {
+        "nvim-orgmode/orgmode",
+        tag = "0.7.0",
+      },
+    },
+    config = function()
+      require("org-roam").setup {
+        directory = "~/Documents/org-roam/",
+        -- optional
+        org_files = {
+          "~/Repos/second-brain/obsidian-vault/org-files",
+        },
+      }
     end,
   },
 }
