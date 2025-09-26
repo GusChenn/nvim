@@ -67,9 +67,9 @@ return {
       local wk = require "which-key"
       local cmd = require("utils.plugin-helpers").cmd
 
-      wk.add {
-        { "<C-Space>", cmd "Checkbox toggle", desc = "Toggle checkbox state" },
-      }
+      -- wk.add {
+      --   { "<C-Space>", cmd "Checkbox toggle", desc = "Toggle checkbox state" },
+      -- }
     end,
   },
   {
@@ -236,7 +236,7 @@ return {
       -- Setup orgmode
       require("orgmode").setup {
         org_agenda_files = "~/Repos/second-brain/obsidian-vault/org-files/**/*",
-        org_default_notes_file = "~/Repos/second-brain/obsidian-vault/org-files/refile.org",
+        org_default_notes_file = "~/Repos/second-brain/obsidian-vault/org-files/todo.org",
         org_todo_keywords = { "TODO", "DOING", "|", "DONE" },
         org_todo_keyword_faces = {
           TODO = ":foreground #8d9df2 :weight bold :slant italic",
@@ -246,6 +246,7 @@ return {
         org_startup_indented = false,
         org_adapt_indentation = true,
         win_split_mode = "vertical",
+        org_id_link_to_org_use_id = true,
       }
 
       local wk = require "which-key"
@@ -282,6 +283,54 @@ return {
         -- optional
         org_files = {
           "~/Repos/second-brain/obsidian-vault/org-files",
+        },
+      }
+    end,
+    init = function()
+      local wc = require "which-key"
+      local cmd = require("utils.plugin-helpers").cmd
+
+      wc.add {
+        { "<leader>nh", cmd "Org store_link", desc = "Create org id for nearest heading" },
+      }
+    end,
+  },
+  {
+    "hamidi-dev/org-list.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "tpope/vim-repeat", -- for repeatable actions with '.'
+    },
+    config = function()
+      require("org-list").setup {
+        mapping = {
+          key = "<leader>lt",
+          desc = "Toggle: Cycle through list types",
+        },
+        checkbox_toggle = {
+          enabled = true,
+          -- NOTE: for nvim-orgmode users, you should change the following mapping OR change the one from orgmode.
+          -- If both mapping stay the same, the one from nvim-orgmode will "win"
+          key = "<C-Space>",
+          desc = "Toggle checkbox state",
+          filetypes = { "org", "markdown" },
+        },
+      }
+    end,
+  },
+  {
+    "akinsho/org-bullets.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("org-bullets").setup {
+        symbols = {
+          headlines = {"󰛘", "󰛘", "󰛘", "󰛘"},
+          list = " ",
+          checkboxes = {
+            half = { " ", "@org.checkbox.halfchecked" },
+            done = { " ", "@org.keyword.done" },
+            todo = { " ", "@org.keyword.todo" },
+          },
         },
       }
     end,
