@@ -318,6 +318,51 @@ return {
             updateevents = "TextChanged,TextChangedI",
           }
         end,
+        init = function()
+          -- Declare custom snippets
+          local ls = require "luasnip"
+          local s = ls.snippet
+          local i = ls.insert_node
+          local t = ls.text_node
+
+          ls.add_snippets("org", {
+            s("src", {
+              t("#+BEGIN_SRC "), i(1, "language"), t { "", "" }, i(0), t { "", "#+END_SRC" },
+            }),
+          })
+
+          ls.add_snippets("eruby", {
+            s("<% block", {
+              t("<% "), i(1, "code"), t { " %>" }, i(0), t { "", "" }, t("<% end %>"),
+            }),
+            s("<%= block", {
+              t("<%= "), i(1, "code"), t { " %>" }, i(0), t { "", "" }, t("<% end %>"),
+            }),
+            s("<%=", {
+              t("<%= "), i(1, "code"), t { " %>" },
+            }),
+          })
+
+          -- Set keymaps for navigating placeholder values in snippets
+          local wk = require "which-key"
+
+          wk.add {
+            {
+              "<C-k>",
+              function()
+                if ls.expand_or_jumpable() then ls.expand_or_jump() end
+              end,
+              desc = "Expand or jump in snippet"
+            },
+            {
+              "<C-j>",
+              function()
+                if ls.jumpable(-1) then ls.jump(-1) end
+              end,
+              desc = "Jump backwards in snippet",
+            }
+          }
+        end
       },
     },
     config = function()
