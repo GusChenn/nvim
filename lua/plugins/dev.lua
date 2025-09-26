@@ -30,6 +30,11 @@ return {
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
+      -- Disable copilot on org roam search buffers
+      vim.g.copilot_filetypes = {
+        ["org-roam-select"] = false,
+      }
+
       require("which-key").add {
         { "<leader>cd", cmd "Copilot disable", desc = "Disable copilot virtual text" },
         { "<leader>ce", cmd "Copilot enable", desc = "Enable copilot virtual text" },
@@ -76,7 +81,7 @@ return {
                   " (" .. (adapter.schema.model.default or "unknown") .. ")"
                 )
               end,
-              user = "GusChenn",
+              user = "  GusChenn",
             },
             slash_commands = {
               ["file"] = {
@@ -174,8 +179,8 @@ return {
         display = {
           chat = {
             icons = {
-              pinned_buffer = "󰏫 ",
-              watched_buffer = "watch",
+              buffer_pin = "󰐃  ",
+              buffer_watch = "󰈈  ",
             },
             window = {
               position = "right",

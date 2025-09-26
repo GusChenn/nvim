@@ -389,6 +389,11 @@ return {
         }),
         matching = { disallow_symbol_nonprefix_matching = false },
       })
+
+      -- Disable cmp in org-roam-select filetype since it messes up selection
+      cmp.setup.filetype({ 'org-roam-select'}, {
+        enabled = false
+      })
     end,
   },
   {
