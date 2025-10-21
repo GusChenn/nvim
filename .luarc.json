@@ -3,7 +3,8 @@
         "vim",
         "vim",
         "MiniStatusline",
-        "MiniPick"
+        "MiniPick",
+        "Snacks"
     ],
     "diagnostics.disable": [
         "missing-fields"

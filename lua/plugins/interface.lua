@@ -321,23 +321,23 @@ return {
       local wk = require "which-key"
 
       wk.add {
-        { "ff", cmd "Telescope find_files", desc = "Pick files" },
-        { "fg", cmd "Telescope live_grep", desc = "Pick live grep" },
-        { "fh", cmd "Telescope oldfiles", desc = "Pick oldfiles" },
+        -- { "ff", cmd "Telescope find_files", desc = "Pick files" },
+        -- { "fg", cmd "Telescope live_grep", desc = "Pick live grep" },
+        -- { "fh", cmd "Telescope oldfiles", desc = "Pick oldfiles" },
         { "<leader>u", cmd "Telescope undo", desc = "Undo history" },
         { "<leader>b", cmd "Telescope buffers", desc = "Open bufferlist" },
-        {
-          "ff",
-          'y<ESC> <CMD> Telescope find_files<CR><C-r>"',
-          mode = "v",
-          desc = "Search for selected text in files",
-        },
-        {
-          "fg",
-          'y<ESC> <CMD> Telescope live_grep<CR><C-r>"',
-          mode = "v",
-          desc = "Search for selected text in live grep",
-        },
+        -- {
+        --   "ff",
+        --   'y<ESC> <CMD> Telescope find_files<CR><C-r>"',
+        --   mode = "v",
+        --   desc = "Search for selected text in files",
+        -- },
+        -- {
+        --   "fg",
+        --   'y<ESC> <CMD> Telescope live_grep<CR><C-r>"',
+        --   mode = "v",
+        --   desc = "Search for selected text in live grep",
+        -- },
       }
     end,
   },
@@ -840,6 +840,35 @@ return {
     opts = {
       image = {},
       bigfile = {},
+      picker = {
+        formatters = {
+          file = {
+            filename_first = true, -- display filename before the file path
+            truncate = 70, -- truncate the file path to (roughly) this length
+            filename_only = false, -- only show the filename
+            icon_width = 2, -- width of the icon (in characters)
+            git_status_hl = true, -- use the git status highlight group for the filename
+          },
+          selected = {
+            show_always = false, -- only show the selected column when there are multiple selections
+            unselected = true, -- use the unselected icon for unselected items
+          },
+          severity = {
+            icons = true, -- show severity icons
+            level = false, -- show severity level
+            ---@type "left"|"right"
+            pos = "left", -- position of the diagnostics
+          },
+        },
+        layout = {
+          layout = {
+            width = 0,
+            height = 0,
+            border = "solid",
+            title = "Good luck!"
+          }
+        }
+      },
     },
     init = function()
       _G.dd = function(...)
@@ -850,6 +879,42 @@ return {
       end
       vim.print = _G.dd
     end,
+    keys = {
+      {
+        "<leader>dd",
+        function()
+          Snacks.picker.diagnostics_buffer()
+        end,
+        desc = "Snacks Diagnostics Picker",
+      },
+      {
+        "ff",
+        function()
+          Snacks.picker.files {
+            cmd = "rg",
+            hidden = true,
+            ignored = true,
+            supports_live = true,
+          }
+        end,
+        desc = "Snacks Diagnostics Picker",
+      },
+      {
+        "fg",
+        function()
+          Snacks.picker.grep()
+        end,
+        desc = "Snacks Live Grep Picker",
+      },
+      {
+        "fg",
+        mode = "v",
+        function()
+          Snacks.picker.grep_word()
+        end,
+        desc = "Snacks Live Grep Picker",
+      },
+    },
   },
   {
     "folke/flash.nvim",
@@ -864,5 +929,5 @@ return {
       { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
       { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
     },
-  }
+  },
 }

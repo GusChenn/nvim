@@ -330,6 +330,11 @@ return {
               t("#+BEGIN_SRC "), i(1, "language"), t { "", "" }, i(0), t { "", "#+END_SRC" },
             }),
           })
+          ls.add_snippets("org", {
+            s("idea", {
+              t("#+BEGIN_IDEA "), t { "", "" }, i(0), t { "", "#+END_IDEA" },
+            }),
+          })
 
           ls.add_snippets("eruby", {
             s("<% block", {

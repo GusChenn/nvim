@@ -185,5 +185,5 @@ wc.add {
   { "<C-l>", "<C-o>l", mode = "i", desc = "Move right in insert mode" },
   { "<leader>cc", toggle_case, desc = "Toggle between camel case and snake case" },
   { "<leader>td", type_today_date, desc = "Type todays date" },
-  { "<tab>", "za", mode = "n", desc = "Toggle fold" },
+  { "<leader><tab>", "za", mode = "n", desc = "Toggle fold" },
 }
