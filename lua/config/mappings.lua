@@ -160,7 +160,7 @@ wc.add {
   { "<C-s>", cmd "w", desc = "Save file with autocmds" },
   { "<leader>w", save_smart, desc = "Save file with autocmds" },
   { "cb", close_all_buffers, desc = "Close all buffers except the current one" },
-  { "<C-l>", cmd "noh", desc = "Clear highlights" },
+  { "<leader>l", cmd "noh", desc = "Clear highlights" },
   {
     "Y",
     '"+y',

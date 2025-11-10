@@ -92,11 +92,6 @@ return {
       keymaps = {
         ["g?"] = "actions.show_help",
         ["<CR>"] = "actions.select",
-        ["<C-h>"] = {
-          "actions.select",
-          opts = { horizontal = true },
-          desc = "Open the entry in a horizontal split",
-        },
         ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
         ["<C-p>"] = "actions.preview",
         ["-"] = "actions.parent",
@@ -113,7 +108,6 @@ return {
           desc = "Open the entry in a vertical split",
         },
         ["q"] = "actions.close",
-        ["<C-l>"] = "actions.refresh",
       },
       use_default_keymaps = false,
     },
@@ -195,6 +189,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     event = "VeryLazy",
     config = function()
       local telescopeConfig = require "telescope.config"
@@ -759,6 +754,7 @@ return {
   },
   {
     "ptdewey/yankbank-nvim",
+    enabled = false,
     dependencies = "kkharji/sqlite.lua",
     event = "VeryLazy",
     opts = {

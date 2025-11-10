@@ -9,10 +9,10 @@ return {
       local cmd = require("utils.plugin-helpers").cmd
 
       require("which-key").add {
-        { "<A-k>", cmd "TmuxNavigateUp", desc = "Focus pane up" },
-        { "<A-j>", cmd "TmuxNavigateDown", desc = "Focus pane down" },
-        { "<A-h>", cmd "TmuxNavigateLeft", desc = "Focus pane left" },
-        { "<A-l>", cmd "TmuxNavigateRight", desc = "Focus pane right" },
+        { "<C-k>", cmd "TmuxNavigateUp", desc = "Focus pane up" },
+        { "<C-j>", cmd "TmuxNavigateDown", desc = "Focus pane down" },
+        { "<C-h>", cmd "TmuxNavigateLeft", desc = "Focus pane left" },
+        { "<C-l>", cmd "TmuxNavigateRight", desc = "Focus pane right" },
       }
     end,
   },

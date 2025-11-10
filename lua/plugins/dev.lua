@@ -61,7 +61,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "nvim-telescope/telescope.nvim",
-      "Davidyz/VectorCode",
+      -- "Davidyz/VectorCode",
       "ravitemer/mcphub.nvim",
       "banjo/contextfiles.nvim",
       "ravitemer/codecompanion-history.nvim",
