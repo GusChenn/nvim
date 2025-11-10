@@ -258,6 +258,7 @@ return {
         "html",
         "lua_ls",
         "ruff",
+        "pyright" -- i created an autocmd to try sourcing the correct venv on nvim start
       }
 
       -- Customize diagnostics looks

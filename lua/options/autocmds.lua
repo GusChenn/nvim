@@ -120,3 +120,14 @@ autocmd("FileType", {
   pattern = "help",
   command = "wincmd L",
 })
+
+autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
+    if vim.fn.filereadable(venv_path) == 1 then
+      vim.env.VIRTUAL_ENV = vim.fn.getcwd() .. "/.venv"
+      vim.env.PATH = vim.fn.getcwd() .. "/.venv/bin:" .. vim.env.PATH
+    end
+  end,
+})
