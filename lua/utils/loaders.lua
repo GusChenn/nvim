@@ -137,8 +137,11 @@ loaders.load_colorscheme = function()
 
   -- For nightfox
   if vim.o.background == "light" then
-    require "config.themes.nightfox"
-    vim.cmd.colorscheme "dawnfox"
+    -- require "config.themes.nightfox"
+    -- vim.cmd.colorscheme "dawnfox"
+
+    require "config.themes.gruvbox"
+    vim.cmd.colorscheme "gruvbox-material"
   else
     -- require "config.themes.catppuccin"
     -- vim.cmd.colorscheme "catppuccin"

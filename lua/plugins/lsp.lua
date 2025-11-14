@@ -353,20 +353,20 @@ return {
           local wk = require "which-key"
 
           wk.add {
-            {
-              "<C-k>",
-              function()
-                if ls.expand_or_jumpable() then ls.expand_or_jump() end
-              end,
-              desc = "Expand or jump in snippet"
-            },
-            {
-              "<C-j>",
-              function()
-                if ls.jumpable(-1) then ls.jump(-1) end
-              end,
-              desc = "Jump backwards in snippet",
-            }
+            -- {
+            --   "<C-k>",
+            --   function()
+            --     if ls.expand_or_jumpable() then ls.expand_or_jump() end
+            --   end,
+            --   desc = "Expand or jump in snippet"
+            -- },
+            -- {
+            --   "<C-j>",
+            --   function()
+            --     if ls.jumpable(-1) then ls.jump(-1) end
+            --   end,
+            --   desc = "Jump backwards in snippet",
+            -- }
           }
         end
       },
@@ -395,11 +395,11 @@ return {
             side_padding = 1,
             winhighlight = "Normal:MiniPickNormal,CursorLine:PmenuSel,Search:None",
             scrollbar = false,
-            border = "single",
+            border = "solid",
           },
           documentation = {
             winhighlight = "Normal:MiniPickNormal,CursorLine:PmenuSel,Search:None",
-            border = "single",
+            border = "solid",
           },
         },
         formatting = {

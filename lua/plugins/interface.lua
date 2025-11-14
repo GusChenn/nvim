@@ -214,8 +214,8 @@ return {
       end
 
       local base_mappings = {
-        ["<C-j>"] = telescope_actions.cycle_history_next,
-        ["<C-k>"] = telescope_actions.cycle_history_prev,
+        -- ["<C-j>"] = telescope_actions.cycle_history_next,
+        -- ["<C-k>"] = telescope_actions.cycle_history_prev,
       }
 
       require("telescope").setup {
