@@ -2,7 +2,8 @@
 
 -- Highlight group (background only so inner code colors are preserved).
 local function set_hl()
-  vim.api.nvim_set_hl(0, "OrgCodeBlock", { bg = "#242221" })
+  local bg = vim.o.background == "dark" and "#242221" or "#FFF2C6"
+  vim.api.nvim_set_hl(0, "OrgCodeBlock", { bg = bg })
 end
 
 set_hl()

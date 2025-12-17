@@ -832,7 +832,8 @@ return {
   },
   {
     "folke/snacks.nvim",
-    event = "VeryLazy",
+    lazy = false,
+    priority = 1000,
     opts = {
       image = {},
       bigfile = {},
@@ -863,7 +864,8 @@ return {
             border = "solid",
             title = "Good luck!"
           }
-        }
+        },
+        exclude = { "node_modules", ".git", ".venv" }
       },
     },
     init = function()

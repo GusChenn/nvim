@@ -35,6 +35,13 @@ return {
         ["org-roam-select"] = false,
       }
 
+      vim.keymap.set("i", "<C-a>", 'copilot#Accept("\\<CR>")', {
+        expr = true,
+        replace_keycodes = false,
+        silent = true,
+      })
+      vim.g.copilot_no_tab_map = true
+
       require("which-key").add {
         { "<leader>cd", cmd "Copilot disable", desc = "Disable copilot virtual text" },
         { "<leader>ce", cmd "Copilot enable", desc = "Enable copilot virtual text" },
@@ -60,16 +67,18 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "nvim-telescope/telescope.nvim",
+      -- "nvim-telescope/telescope.nvim",
+      "folke/snacks.nvim",
       -- "Davidyz/VectorCode",
       "ravitemer/mcphub.nvim",
       "banjo/contextfiles.nvim",
       "ravitemer/codecompanion-history.nvim",
       "franco-ruggeri/codecompanion-spinner.nvim",
     },
-    event = "VeryLazy",
+    lazy = false,
     opts = function()
       return {
+        ignore_warnings = true,
         strategies = {
           chat = {
             adapter = "copilot",
@@ -86,7 +95,7 @@ return {
             slash_commands = {
               ["file"] = {
                 opts = {
-                  provider = "telescope", -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
+                  provider = "snacks", -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
                   contains_code = true,
                 },
               },
@@ -193,20 +202,7 @@ return {
             },
           },
           action_palette = {
-            provider = "telescope",
-          },
-        },
-        adapters = {
-          http = {
-            copilot = function()
-              return require("codecompanion.adapters").extend("copilot", {
-                schema = {
-                  model = {
-                    default = "claude-sonnet-4.5",
-                  },
-                },
-              })
-            end,
+            provider = "snacks",
           },
         },
         extensions = {
@@ -215,51 +211,57 @@ return {
             opts = {
               -- Keymap to open history from chat buffer (default: gh)
               keymap = "gh",
-              -- Keymap to save the current chat manually (when auto_save is disabled)
-              save_chat_keymap = "sc",
-              -- Save all chats by default (disable to save only manually using 'sc')
               auto_save = true,
-              -- Number of days after which chats are automatically deleted (0 to disable)
               expiration_days = 10,
-              -- Picker interface (auto resolved to a valid picker)
-              picker = "telescope", --- ("telescope", "snacks", "fzf-lua", or "default")
-              ---Automatically generate titles for new chats
+              picker = "snacks",
               auto_generate_title = true,
               title_generation_opts = {
-                ---Adapter for generating titles (defaults to current chat adapter)
-                adapter = nil, -- "copilot"
-                ---Model for generating titles (defaults to current chat model)
-                model = nil, -- "gpt-4o"
+                adapter = nil,
+                model = nil,
               },
-              ---On exiting and entering neovim, loads the last chat on opening chat
-              continue_last_chat = true,
-              ---When chat is cleared with `gx` delete the chat from history
+              continue_last_chat = false,
               delete_on_clearing_chat = false,
-              ---Directory path to save the chats
               dir_to_save = vim.fn.stdpath "data" .. "/codecompanion-history",
-              ---Enable detailed logging for history extension
               enable_logging = false,
             },
           },
           spinner = {},
         },
+        interactions = {
+          chat = {
+            adapter = "copilot",
+            model = "gemini-3-pro-preview",
+          },
+          inline = {
+            adapter = "copilot",
+          },
+          cmd = {
+            adapter = "copilot",
+          }
+        },
+        adapters = {
+          http = {
+            copilot = function()
+              return require("codecompanion.adapters").extend("copilot", {
+                schema = {
+                  model = {
+                    default = "gemini-3-pro-preview",
+                  },
+                },
+              })
+            end,
+          }
+        }
       }
     end,
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      -- Could not configure this mapping with which-key
-      vim.keymap.set("i", "<C-a>", 'copilot#Accept("\\<CR>")', {
-        expr = true,
-        replace_keycodes = false,
-        silent = true,
-      })
-      vim.g.copilot_no_tab_map = true
-
       require("which-key").add {
         { "<A-T>", cmd "CodeCompanionChat Toggle", mode = { "n", "v" }, desc = "Toggle codecompanion chat" },
         { "<leader>ai", cmd "CodeCompanion", mode = { "n", "v" }, desc = "Inline codecompanion prompt" },
         { "<leader>aa", cmd "CodeCompanionActions", mode = { "n", "v" }, desc = "Open codecompanion actions" },
+        { "<C-s>", "<Plug>(copilot-accept-word)", mode = "i", desc = "Accept next word of copilot suggestion" },
       }
     end,
   },
@@ -273,6 +275,103 @@ return {
     },
     dependencies = {
       { "Bilal2453/luvit-meta", lazy = true },
+    },
+  },
+  {
+    "folke/sidekick.nvim",
+    lazy = false,
+    opts = {
+      nes = {
+        enabled = false,
+      },
+      cli = {
+        mux = {
+          backend = "tmux",
+          enabled = true,
+        },
+      },
+    },
+    keys = {
+      {
+        "<C-a>",
+        function()
+          if not require("sidekick").nes_jump_or_apply() then
+            return "<Tab>" -- fallback to normal tab
+          end
+        end,
+        expr = true,
+        desc = "Goto/Apply Next Edit Suggestion",
+      },
+      {
+        "<A-T>",
+        function()
+          require("sidekick.cli").toggle()
+        end,
+        desc = "Sidekick Toggle",
+        mode = { "n", "t", "i", "x" },
+      },
+      {
+        "<leader>aa",
+        function()
+          require("sidekick.cli").toggle()
+        end,
+        desc = "Sidekick Toggle CLI",
+      },
+      {
+        "<leader>as",
+        function()
+          require("sidekick.cli").select()
+        end,
+        -- Or to select only installed tools:
+        -- require("sidekick.cli").select({ filter = { installed = true } })
+        desc = "Select CLI",
+      },
+      {
+        "<leader>ad",
+        function()
+          require("sidekick.cli").close()
+        end,
+        desc = "Detach a CLI Session",
+      },
+      {
+        "<leader>at",
+        function()
+          require("sidekick.cli").send { msg = "{this}" }
+        end,
+        mode = { "x", "n" },
+        desc = "Send This",
+      },
+      {
+        "<leader>af",
+        function()
+          require("sidekick.cli").send { msg = "{file}" }
+        end,
+        desc = "Send File",
+      },
+      {
+        "<leader>av",
+        function()
+          require("sidekick.cli").send { msg = "{selection}" }
+        end,
+        mode = { "x" },
+        desc = "Send Visual Selection",
+      },
+      {
+        "<leader>ap",
+        function()
+          require("sidekick.cli").prompt()
+        end,
+        mode = { "n", "x" },
+        desc = "Sidekick Select Prompt",
+      },
+      -- Example of a keybinding to open Claude directly
+      {
+        "<leader>ac",
+        function()
+          require("sidekick.cli").toggle { name = "claude", focus = true }
+        end,
+        desc = "Sidekick Toggle Claude",
+      },
     },
   },
 }

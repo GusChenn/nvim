@@ -337,6 +337,18 @@ return {
             }),
           })
 
+          local styles = { "bold", "italic", "underline", "strike-through", "code", "mono" }
+          local markers = { "*", "/", "_", "+", "~", "=" }
+          for index, style in ipairs(styles) do
+            local marker = markers[index]
+
+            ls.add_snippets("org", {
+              s(style, {
+                t(marker), i(0), t(marker),
+              }),
+            })
+          end
+
           ls.add_snippets("eruby", {
             s("<% block", {
               t("<% "), i(1, "code"), t { " %>" }, i(0), t { "", "" }, t("<% end %>"),

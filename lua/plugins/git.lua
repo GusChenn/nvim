@@ -25,7 +25,8 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       -- "sindrets/diffview.nvim",
-      "nvim-telescope/telescope.nvim",
+      -- "nvim-telescope/telescope.nvim",
+      "folke/snacks.nvim",
     },
     opts = {
       auto_show_console = true,
@@ -41,7 +42,8 @@ return {
         section = { "➡", "⬇" },
       },
       integrations = {
-        telescope = true,
+        telescope = false,
+        snacks = true,
         mini_pick = false,
         diffview = false,
       },
@@ -83,6 +85,8 @@ return {
             { "<leader>hr", gs.reset_hunk, desc = "Reset hunk" },
             { "<leader>hP", gs.preview_hunk, desc = "Preview hunk" },
             { "<leader>gd", gs.diffthis, desc = "Diffthis" },
+            { "<leader>hs", gs.stage_hunk, desc = "Stage hunk" },
+            { "<leader>hu", gs.undo_stage_hunk, desc = "Unstage hunk" },
             { "gbb", gs.blame, desc = "Open git blame sidepanel" },
             {
               "<leader>hn",
