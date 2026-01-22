@@ -137,7 +137,31 @@ local function save_smart()
   end
 end
 
+local function stop_diff_mode()
+  if vim.wo.diff then
+    vim.cmd "diffoff!"
+  end
+end
+
+local function git_compare_file_to_main()
+  local filepath = vim.fn.expand "%"
+  local handle = io.popen("git show main:" .. filepath)
+  local result = handle:read "*a"
+  handle:close()
+  if result == "" then
+    vim.notify("No differences found between current file and main branch.", vim.log.levels.INFO)
+  else
+    local tempname = os.tmpname()
+    local tempfile = io.open(tempname, "w")
+    tempfile:write(result)
+    tempfile:close()
+    vim.cmd("vert diffsplit " .. tempname)
+  end
+end
+
 wc.add {
+  { "<leader>fd", git_compare_file_to_main, desc = "Compare current file to main" },
+  { "<leader>ds", stop_diff_mode, desc = "stop_diff_mode" },
   { "<leader>n", toggle_line_numbers, desc = "Toggle line numbers" },
   { "<leader>s", "*", desc = "Highligh all instances of the word under the cursor" },
   { "<leader>q", safe_close, desc = "Close buffer safely" },

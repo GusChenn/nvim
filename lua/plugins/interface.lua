@@ -912,6 +912,74 @@ return {
         end,
         desc = "Snacks Live Grep Picker",
       },
+      {
+        "<leader>aa",
+        function()
+          Snacks.picker.pick({
+            source = "ai_assistant_picker",
+            items = {
+              { text = "Sidekick", value = "sidekick" },
+              { text = "Codecompanion", value = "codecompanion" },
+            },
+            format = "text",
+            layout = { preset = "select" },
+            confirm = function(picker, item)
+              picker:close()
+              if not item then return end
+
+              if item.value == "sidekick" then
+                -- Run the Lua function for Sidekick
+                local ok, sidekick = pcall(require, "sidekick.cli")
+                if ok then
+                    sidekick.toggle()
+                else
+                    vim.notify("Sidekick not found", vim.log.levels.ERROR)
+                end
+              elseif item.value == "codecompanion" then
+                -- Run the Vim command for CodeCompanion
+                vim.cmd("CodeCompanionActions")
+              end
+            end,
+          })
+        end,
+        desc = "Select AI Assistant",
+      },
+      {
+        "<leader>sp",
+        function()
+          local repos_path = vim.fn.expand("$REPOS_PATH")
+          if repos_path == "" or repos_path == "$REPOS_PATH" then
+            vim.notify("Error: $REPOS_PATH is not set", vim.log.levels.ERROR)
+            return
+          end
+
+          Snacks.picker.pick({
+            title = "Select Repository",
+            finder = function()
+              local paths = vim.fn.globpath(repos_path, "*/", 0, 1)
+              local items = {}
+              for _, path in ipairs(paths) do
+                path = path:sub(1, -2)
+                table.insert(items, {
+                  text = vim.fn.fnamemodify(path, ":t"),
+                  value = path,
+                })
+              end
+              return items
+            end,
+            format = "text",
+            confirm = function(picker, item)
+              picker:close()
+              if item then
+                local path = item.value
+                vim.cmd("tabnew")
+                vim.api.nvim_set_current_dir(path)
+              end
+            end,
+          })
+        end,
+        desc = "Open Repo from $REPOS_PATH",
+      },
     },
   },
   {
