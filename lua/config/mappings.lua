@@ -159,11 +159,17 @@ local function git_compare_file_to_main()
   end
 end
 
+local function set_search_register()
+  vim.opt.hlsearch = true
+  local word = vim.fn.expand "<cword>"
+  vim.fn.setreg("/", "\\<" .. word .. "\\>")
+end
+
 wc.add {
   { "<leader>fd", git_compare_file_to_main, desc = "Compare current file to main" },
   { "<leader>ds", stop_diff_mode, desc = "stop_diff_mode" },
   { "<leader>n", toggle_line_numbers, desc = "Toggle line numbers" },
-  { "<leader>s", "*", desc = "Highligh all instances of the word under the cursor" },
+  { "<leader>s", set_search_register, desc = "Highligh all instances of the word under the cursor" },
   { "<leader>q", safe_close, desc = "Close buffer safely" },
   { "<leader>Q", cmd "wqa!", desc = "Quit nvim" },
   { "<leader>wh", safe_split, desc = "Split window horizontally" },

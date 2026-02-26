@@ -20,11 +20,29 @@ return {
     priority = 1000,
   },
   {
-    "neanias/everforest-nvim",
+    "sainnhe/everforest",
     enabled = true,
     version = false,
     lazy = false,
     priority = 1000,
+  },
+  {
+    "neanias/everforest-nvim",
+    enabled = false,
+    version = false,
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "zenbones-theme/zenbones.nvim",
+    dependencies = "rktjmp/lush.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.forestbones_darken_comments = 45
+      vim.g.forestbones_lightness = "dim"
+      vim.g.forestbones_solid_float_border = true
+    end,
   },
   {
     "sainnhe/gruvbox-material",
@@ -862,10 +880,10 @@ return {
             width = 0,
             height = 0,
             border = "solid",
-            title = "Good luck!"
-          }
+            title = "Good luck!",
+          },
         },
-        exclude = { "node_modules", ".git", ".venv" }
+        exclude = { "node_modules", ".git", ".venv" },
       },
     },
     init = function()
@@ -915,7 +933,7 @@ return {
       {
         "<leader>aa",
         function()
-          Snacks.picker.pick({
+          Snacks.picker.pick {
             source = "ai_assistant_picker",
             items = {
               { text = "Sidekick", value = "sidekick" },
@@ -925,35 +943,37 @@ return {
             layout = { preset = "select" },
             confirm = function(picker, item)
               picker:close()
-              if not item then return end
+              if not item then
+                return
+              end
 
               if item.value == "sidekick" then
                 -- Run the Lua function for Sidekick
                 local ok, sidekick = pcall(require, "sidekick.cli")
                 if ok then
-                    sidekick.toggle()
+                  sidekick.toggle()
                 else
-                    vim.notify("Sidekick not found", vim.log.levels.ERROR)
+                  vim.notify("Sidekick not found", vim.log.levels.ERROR)
                 end
               elseif item.value == "codecompanion" then
                 -- Run the Vim command for CodeCompanion
-                vim.cmd("CodeCompanionActions")
+                vim.cmd "CodeCompanionActions"
               end
             end,
-          })
+          }
         end,
         desc = "Select AI Assistant",
       },
       {
         "<leader>sp",
         function()
-          local repos_path = vim.fn.expand("$REPOS_PATH")
+          local repos_path = vim.fn.expand "$REPOS_PATH"
           if repos_path == "" or repos_path == "$REPOS_PATH" then
             vim.notify("Error: $REPOS_PATH is not set", vim.log.levels.ERROR)
             return
           end
 
-          Snacks.picker.pick({
+          Snacks.picker.pick {
             title = "Select Repository",
             finder = function()
               local paths = vim.fn.globpath(repos_path, "*/", 0, 1)
@@ -972,11 +992,11 @@ return {
               picker:close()
               if item then
                 local path = item.value
-                vim.cmd("tabnew")
+                vim.cmd "tabnew"
                 vim.api.nvim_set_current_dir(path)
               end
             end,
-          })
+          }
         end,
         desc = "Open Repo from $REPOS_PATH",
       },

@@ -14,9 +14,7 @@ M.custom_highlights = function()
     StatusLine = { link = "NormalNC" },
 
     -- Treesitter --
-    -- Define = { italic = true },
-    -- Keyword = { italic = true },
-    -- ["@variable.builtin"] = { italic = true },
+    -- ["@type.tsx"] = { link = "@type" },
   }
 end
 

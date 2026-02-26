@@ -116,6 +116,13 @@ autocmd("FileType", {
   command = "setlocal indentkeys=",
 })
 
+autocmd("ColorScheme", {
+  pattern = "*bones",
+  callback = function()
+    require "config.themes.forestbones"
+  end,
+})
+
 autocmd("FileType", {
   pattern = "help",
   command = "wincmd L",

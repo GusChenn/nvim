@@ -102,56 +102,24 @@ loaders.load_mappings = function()
 end
 
 loaders.load_colorscheme = function()
-  -- For catppuccin
-  -- require "config.themes.catppuccin"
-  -- vim.cmd.colorscheme "catppuccin"
-
-  -- For everfores
-  -- require "config.themes.everfores"
-  -- vim.cmd.colorscheme "everforest"
-
-  -- For oldworld
-  -- require "config.themes.oldworld"
-  -- vim.cmd.colorscheme "oldworld"
-
-  -- For eva01
-  -- vim.cmd.colorscheme "eva01-LCL"
-
-  -- For eva01-custom
-  -- require("config.themes.eva01-custom").setup()
-
-  -- For zenbones
-  -- require "config.themes.zenbones"
-  -- vim.cmd.colorscheme "forestbones"
-
-  -- For github theme
-  -- require "config.themes.github"
-  -- vim.cmd.colorscheme "github_light_high_contrast"
-
-  -- For pfalseoimadres
-  -- require "config.themes.poimadres"
-  -- vim.cmd.colorscheme "poimadres"
-
-  -- For noirbuddy
-  -- require "config.themes.noirbuddy"
-
-  -- For nightfox
   if vim.o.background == "light" then
     -- require "config.themes.nightfox"
     -- vim.cmd.colorscheme "dawnfox"
 
-    require "config.themes.gruvbox"
-    vim.cmd.colorscheme "gruvbox-material"
+    -- require "config.themes.gruvbox"
+    -- vim.cmd.colorscheme "gruvbox-material"
+
+    vim.cmd.colorscheme "forestbones"
   else
     -- require "config.themes.catppuccin"
     -- vim.cmd.colorscheme "catppuccin"
 
-    -- require "config.themes.everfores"
-    -- vim.cmd.colorscheme "everforest"
+    require "config.themes.everforest"
+    vim.cmd.colorscheme "everforest"
 
     -- For gruvbox
-    require "config.themes.gruvbox"
-    vim.cmd.colorscheme "gruvbox-material"
+    -- require "config.themes.gruvbox"
+    -- vim.cmd.colorscheme "gruvbox-material"
 
     -- For rose-pine
     -- require "config.themes.rose-pine"

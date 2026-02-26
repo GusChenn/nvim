@@ -280,9 +280,7 @@ return {
     "folke/sidekick.nvim",
     lazy = false,
     opts = {
-      nes = {
-        enabled = false,
-      },
+      nes = { enabled = false },
       cli = {
         mux = {
           backend = "tmux",
@@ -291,17 +289,16 @@ return {
       },
     },
     keys = {
-      -- Commented out because im not using NES
-      -- {
-      --   "<C-a>",
-      --   function()
-      --     if not require("sidekick").nes_jump_or_apply() then
-      --       return "<Tab>" -- fallback to normal tab
-      --     end
-      --   end,
-      --   expr = true,
-      --   desc = "Goto/Apply Next Edit Suggestion",
-      -- },
+      {
+        "<C-a>",
+        function()
+          if not require("sidekick").nes_jump_or_apply() then
+            return "<Tab>" -- fallback to normal tab
+          end
+        end,
+        expr = true,
+        desc = "Goto/Apply Next Edit Suggestion",
+      },
       -- Commented out because im using a custom picker. Check my snacks config
       -- {
       --   "<leader>aa",
