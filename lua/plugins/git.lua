@@ -1,25 +1,5 @@
 return {
   {
-    "f-person/git-blame.nvim",
-    enabled = false, -- Will try using gitsigns
-    cmd = { "GitBlameToggle" },
-    name = "gitblame",
-    opts = {
-      enabled = false,
-    },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").add {
-        { "gbb", cmd "GitBlameToggle", desc = "Toggle git blame" },
-      }
-    end,
-  },
-  {
-    "tpope/vim-fugitive",
-    cmd = { "G" },
-  },
-  {
     "NeogitOrg/neogit",
     cmd = { "Neogit" },
     dependencies = {

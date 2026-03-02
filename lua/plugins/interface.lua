@@ -206,161 +206,13 @@ return {
     },
   },
   {
-    "nvim-telescope/telescope.nvim",
-    enabled = false,
-    event = "VeryLazy",
-    config = function()
-      local telescopeConfig = require "telescope.config"
-      local telescope_actions = require "telescope.actions"
-
-      local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
-      table.insert(vimgrep_arguments, "--pcre2")
-
-      -- I want to search in hidden/dot files.
-      table.insert(vimgrep_arguments, "--hidden")
-      -- -- I don't want to search in the `.git` directory.
-      table.insert(vimgrep_arguments, "--glob")
-      table.insert(vimgrep_arguments, "!**/.git/*")
-
-      local function filenameFirst(_, path)
-        local tail = vim.fs.basename(path)
-        local parent = vim.fs.dirname(path)
-        if parent == "." then
-          return tail
-        end
-        return string.format("%s\t\t%s", tail, parent)
-      end
-
-      local base_mappings = {
-        -- ["<C-j>"] = telescope_actions.cycle_history_next,
-        -- ["<C-k>"] = telescope_actions.cycle_history_prev,
-      }
-
-      require("telescope").setup {
-        defaults = {
-          mappings = {
-            i = base_mappings,
-          },
-          -- borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
-          borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
-          results_title = false,
-          prompt_title = false,
-          preview_title = false,
-          prompt_prefix = "  ",
-          selection_caret = "  ",
-          layout_strategy = "vertical",
-          vimgrep_arguments = vimgrep_arguments,
-          layout_config = {
-            horizontal = {
-              height = vim.o.lines, -- Maximally available lines
-              width = vim.o.columns, -- Maximally available columns
-            },
-            vertical = {
-              height = vim.o.lines, -- Maximally available lines
-              width = vim.o.columns, -- Maximally available columns
-              prompt_position = "bottom",
-              preview_height = 0.5,
-              preview_cutoff = 1,
-            },
-          },
-        },
-        pickers = {
-          find_files = {
-            -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
-            find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-            path_display = filenameFirst,
-          },
-          git_status = {
-            path_display = filenameFirst,
-          },
-          live_grep = {
-            path_display = filenameFirst,
-          },
-        },
-        extensions = {
-          fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "respect_case", -- or "ignore_case" or "respect_case"
-          },
-          undo = {
-            use_delta = true,
-            use_custom_command = nil,
-            side_by_side = true,
-            vim_diff_opts = {
-              ctxlen = 10,
-            },
-            entry_format = "  $ID, $STAT, $TIME",
-            time_format = "",
-            saved_only = false,
-            mappings = {
-              i = {
-                ["<cr>"] = require("telescope-undo.actions").yank_additions,
-                ["<C-y>"] = require("telescope-undo.actions").yank_deletions,
-                ["<C-r>"] = require("telescope-undo.actions").restore,
-              },
-              n = {
-                ["y"] = require("telescope-undo.actions").yank_additions,
-                ["Y"] = require("telescope-undo.actions").yank_deletions,
-                ["u"] = require("telescope-undo.actions").restore,
-              },
-            },
-          },
-        },
-      }
-
-      require("telescope").load_extension "fzf"
-    end,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "debugloop/telescope-undo.nvim",
-      {
-        -- Replaced it while https://github.com/RRethy/nvim-treesitter-endwise/pull/42 is not merged
-        -- "RRethy/nvim-treesitter-endwise",
-        "metiulekm/nvim-treesitter-endwise",
-        lazy = false,
-        dependencies = {
-          "nvim-treesitter",
-        },
-      },
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
-      },
-    },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-      local wk = require "which-key"
-
-      wk.add {
-        -- { "ff", cmd "Telescope find_files", desc = "Pick files" },
-        -- { "fg", cmd "Telescope live_grep", desc = "Pick live grep" },
-        -- { "fh", cmd "Telescope oldfiles", desc = "Pick oldfiles" },
-        { "<leader>u", cmd "Telescope undo", desc = "Undo history" },
-        { "<leader>b", cmd "Telescope buffers", desc = "Open bufferlist" },
-        -- {
-        --   "ff",
-        --   'y<ESC> <CMD> Telescope find_files<CR><C-r>"',
-        --   mode = "v",
-        --   desc = "Search for selected text in files",
-        -- },
-        -- {
-        --   "fg",
-        --   'y<ESC> <CMD> Telescope live_grep<CR><C-r>"',
-        --   mode = "v",
-        --   desc = "Search for selected text in live grep",
-        -- },
-      }
-    end,
-  },
-  {
     "windwp/nvim-ts-autotag",
     event = "VeryLazy",
     config = true,
   },
   {
     "nvim-neotest/neotest",
+    enabled = false,
     event = "VeryLazy",
     dependencies = {
       "nvim-neotest/nvim-nio",
@@ -721,29 +573,6 @@ return {
     },
   },
   {
-    "Bekaboo/dropbar.nvim",
-    enabled = false,
-    event = "VeryLazy",
-    opts = {
-      icons = {
-        ui = {
-          bar = {
-            separator = " / ",
-          },
-        },
-      },
-      bar = {
-        hover = false,
-        sources = function()
-          local sources = require "dropbar.sources"
-          return {
-            sources.path,
-          }
-        end,
-      },
-    },
-  },
-  {
     "cdmill/focus.nvim",
     mappings = "<leader>f",
     config = true,
@@ -771,82 +600,11 @@ return {
     },
   },
   {
-    "ptdewey/yankbank-nvim",
-    enabled = false,
-    dependencies = "kkharji/sqlite.lua",
-    event = "VeryLazy",
-    opts = {
-      persist_type = "sqlite",
-      sep = "",
-    },
-    init = function()
-      local cmd = require("utils.plugin-helpers").cmd
-
-      require("which-key").add {
-        { "<leader>yb", cmd "YankBank", desc = "Open yankbank" },
-      }
-    end,
-  },
-  {
     "chrisgrieser/nvim-early-retirement",
     opts = {
       retirementAgeMins = 10,
     },
     event = "VeryLazy",
-  },
-  {
-    "mcauley-penney/visual-whitespace.nvim",
-    event = "VeryLazy",
-    enabled = false,
-    opts = {
-      highlight = { link = "Visual" },
-      space_char = "·",
-      tab_char = "→",
-      nl_char = "󱞥 ",
-      cr_char = "←",
-      enabled = true,
-      excluded = {
-        filetypes = {},
-        buftypes = {},
-      },
-    },
-  },
-  {
-    "Tyler-Barham/floating-help.nvim",
-    enabled = false,
-    cmd = "FloatingHelp",
-    keys = { "<leader>th" },
-    opts = {
-      width = 0.6, -- Whole numbers are columns/rows
-      height = 0.9, -- Decimals are a percentage of the editor
-      position = "C", -- NW,N,NW,W,C,E,SW,S,SE (C==center)
-      border = "rounded", -- rounded,double,single
-    },
-    init = function()
-      local fh = require "floating-help"
-
-      require("which-key").add {
-        { "<leader>th", fh.toggle, desc = "Toggle floating help" },
-      }
-
-      -- Only replace cmds, not search; only replace the first instance
-      local function cmd_abbrev(abbrev, expansion)
-        local cmd = "cabbr "
-          .. abbrev
-          .. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
-          .. expansion
-          .. '" : "'
-          .. abbrev
-          .. '")<CR>'
-        vim.cmd(cmd)
-      end
-
-      -- Redirect `:h` to `:FloatingHelp`
-      cmd_abbrev("h", "FloatingHelp")
-      cmd_abbrev("help", "FloatingHelp")
-      cmd_abbrev("helpc", "FloatingHelpClose")
-      cmd_abbrev("helpclose", "FloatingHelpClose")
-    end,
   },
   {
     "folke/snacks.nvim",

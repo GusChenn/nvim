@@ -72,6 +72,7 @@ return {
       "banjo/contextfiles.nvim",
       "ravitemer/codecompanion-history.nvim",
       "franco-ruggeri/codecompanion-spinner.nvim",
+      "OXY2DEV/markview.nvim",
     },
     lazy = false,
     opts = function()
@@ -109,76 +110,6 @@ return {
               reject_change = {
                 modes = { n = "gr" },
                 description = "Reject the suggested change",
-              },
-            },
-          },
-        },
-        prompt_library = {
-          ["Suggest Refactoring"] = {
-            strategy = "chat",
-            description = "Suggest refactoring for provided piece of code.",
-            opts = {
-              modes = { "v" },
-              short_name = "refactor",
-              auto_submit = false,
-              stop_context_insertion = true,
-              user_prompt = false,
-            },
-            prompts = {
-              {
-                role = "system",
-                content = function(context)
-                  return [[Act as a seasoned ]]
-                    .. context.filetype
-                    .. [[ programmer with over 20 years of commercial experience.
-      Your task is to suggest refactoring of a specified piece of code to improve its efficiency,
-      readability, and maintainability without altering its functionality. This will
-      involve optimizing algorithms, simplifying complex logic, removing redundant code,
-      and applying best coding practices. Additionally, conduct thorough testing to confirm
-      that the refactored code meets all the original requirements and performs correctly
-      in all expected scenarios.]]
-                end,
-              },
-              {
-                role = "user",
-                content = function(context)
-                  local text = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
-                  return "I have the following code:\n\n```" .. context.filetype .. "\n" .. text .. "\n```\n\n"
-                end,
-                opts = {
-                  contains_code = true,
-                },
-              },
-            },
-          },
-          ["Document last messages"] = {
-            strategy = "chat",
-            description = "Summarize the latest messages between the user and the AI for documentation purposes.",
-            opts = {
-              is_slash_cmd = true,
-              short_name = "doc",
-              auto_submit = true,
-              stop_context_insertion = true,
-              user_prompt = false,
-            },
-            prompts = {
-              {
-                role = "system",
-                content = function(_context)
-                  return [[Act as a seasoned project manager with over 20 years of experience in software development.
-                  Your task is to summarize the last few messages exchanged between you and the user. You just need to summarize messages
-                  that where not included in any summary yet. Avoid bein redundant or repetitive. Take into consideration the previously generated summaries that you are aware of.
-                  You can include code snippets in the summary if they are relevant to the context.]]
-                end,
-              },
-              {
-                role = "user",
-                content = function(_context)
-                  return "Can you summarize the last few messages exchanged between us? I need this for documentation purposes."
-                end,
-                opts = {
-                  contains_code = true,
-                },
               },
             },
           },
@@ -235,7 +166,7 @@ return {
           },
           cmd = {
             adapter = "copilot",
-          }
+          },
         },
         adapters = {
           http = {
@@ -243,13 +174,13 @@ return {
               return require("codecompanion.adapters").extend("copilot", {
                 schema = {
                   model = {
-                    default = "gemini-3-pro-preview",
+                    default = "gpt-5.3-codex",
                   },
                 },
               })
             end,
-          }
-        }
+          },
+        },
       }
     end,
     init = function()
@@ -307,21 +238,6 @@ return {
       --   end,
       --   desc = "Sidekick Toggle CLI",
       -- },
-      {
-        "<leader>ad",
-        function()
-          require("sidekick.cli").close()
-        end,
-        desc = "Detach a CLI Session",
-      },
-      {
-        "<leader>st",
-        function()
-          require("sidekick.cli").send { msg = "{this}" }
-        end,
-        mode = { "x", "n" },
-        desc = "Send This",
-      },
       {
         "<leader>sf",
         function()

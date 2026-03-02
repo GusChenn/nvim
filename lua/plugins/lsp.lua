@@ -80,8 +80,7 @@ return {
             format_on_save = {
               timeout_ms = 2000,
               lsp_format = "never",
-              -- async = true,
-              stop_after_first = true,
+              -- stop_after_first = true,
             },
           }
         end,
@@ -478,18 +477,5 @@ return {
         { "<leader>ge", require("garbage-day.utils").start_lsp, desc = "Start LSP servers" },
       }
     end,
-  },
-  {
-    "luckasRanarison/tailwind-tools.nvim",
-    enabled = false, -- disabled since it doesnt work well with stayfi
-    event = "VeryLazy",
-    name = "tailwind-tools",
-    build = ":UpdateRemotePlugins",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-telescope/telescope.nvim",
-      "neovim/nvim-lspconfig",
-    },
-    opts = {}, -- your configuration
   },
 }

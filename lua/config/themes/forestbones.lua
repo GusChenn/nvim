@@ -2,8 +2,6 @@ local lush = require "lush"
 local base = require "forestbones"
 local hsl = lush.hsl
 
-print(base.Normal.bg)
-
 local specs = lush.parse(function()
   return {
     Function { base.Function, fg = base.Function.fg.darken(40) },
