@@ -85,32 +85,6 @@ return {
           }
         end,
       },
-      -- {
-      --   "mfussenegger/nvim-lint",
-      --   enabled = false,
-      --   event = "BufReadPre",
-      --   config = function()
-      --     local lint = require "lint"
-      --
-      --     lint.linters_by_ft = {
-      --       -- typescriptreact = { "eslintd" },
-      --       -- typescript = { "eslintd" },
-      --       -- javascriptreact = { "eslintd" },
-      --       -- javascript = { "eslint_d" },
-      --       -- javascript = { "eslint" },
-      --       -- javascript = { "local_eslint" },
-      --       -- ruby = { "rubocop" },
-      --     }
-      --   end,
-      --
-      --   init = function()
-      --     vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave", "TextChanged" }, {
-      --       callback = function()
-      --         require("lint").try_lint()
-      --       end,
-      --     })
-      --   end,
-      -- },
     },
     config = function()
       local lsp = require "utils.lsp"
@@ -202,11 +176,7 @@ return {
 
           client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
             runtime = {
-              -- Tell the language server which version of Lua you're using (most
-              -- likely LuaJIT in the case of Neovim)
               version = "LuaJIT",
-              -- Tell the language server how to find Lua modules same way as Neovim
-              -- (see `:h lua-module-load`)
               path = {
                 "lua/?.lua",
                 "lua/?/init.lua",
@@ -216,18 +186,7 @@ return {
               checkThirdParty = false,
               library = {
                 vim.env.VIMRUNTIME,
-                -- Depending on the usage, you might want to add additional paths
-                -- here.
-                -- '${3rd}/luv/library'
-                -- '${3rd}/busted/library'
               },
-              -- Or pull in all of 'runtimepath'.
-              -- NOTE: this is a lot slower and will cause issues when working on
-              -- your own configuration.
-              -- See https://github.com/neovim/nvim-lspconfig/issues/3189
-              -- library = {
-              --   vim.api.nvim_get_runtime_file('', true),
-              -- }
             },
           })
         end,

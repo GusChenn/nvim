@@ -78,7 +78,7 @@ autocmd("FileType", {
 autocmd("FileType", {
   desc = "Enable spell checking for markdown files",
   pattern = { "markdown" },
-  command = "setlocal spell",
+  command = "setlocal spell spelllang=en,pt",
 })
 
 autocmd("LspProgress", {

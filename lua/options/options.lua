@@ -150,5 +150,7 @@ opt.conceallevel = 2
 
 wo.number = false
 
+opt.spell = false
+
 -- Set shell
 -- vim.api.nvim_set_option("shell", "/usr/bin/zsh")

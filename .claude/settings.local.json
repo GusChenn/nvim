@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(afplay /System/Library/Sounds/Glass.aiff)",
+      "Bash(afplay /System/Library/Sounds/Funk.aiff)"
+    ]
+  }
+}

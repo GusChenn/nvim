@@ -8,7 +8,6 @@ return {
     },
     config = function()
       require("markview").setup {
-        max_length = 99999,
         preview = {
           filetypes = {
             "markdown",
@@ -51,126 +50,39 @@ return {
           },
         },
       }
-
-      require("markview.extras.checkboxes").setup {
-        remove_markers = true,
-        exit = true,
-
-        default_marker = "-",
-        default_state = "x",
-
-        states = {
-          { " ", "x" },
-        },
-      }
-
-      local wk = require "which-key"
-      local cmd = require("utils.plugin-helpers").cmd
-
-      -- wk.add {
-      --   { "<C-Space>", cmd "Checkbox toggle", desc = "Toggle checkbox state" },
-      -- }
     end,
   },
   {
-    "nvim-orgmode/orgmode",
-    event = "VeryLazy",
-    -- cond = function()
-    --   return vim.fn.getcwd() == vim.fn.expand('~/Repos/second-brain')
-    -- end,
-    config = function()
-      -- Setup orgmode
-      require("orgmode").setup {
-        org_agenda_files = "~/Repos/second-brain/obsidian-vault/org-files/**/*",
-        org_default_notes_file = "~/Repos/second-brain/obsidian-vault/org-files/todo.org",
-        org_todo_keywords = { "TODO", "DOING", "|", "DONE" },
-        org_todo_keyword_faces = {
-          TODO = ":foreground #8d9df2 :weight bold :slant italic",
-          DOING = ":foreground #2b7ab5 :weight bold :slant italic",
-          DONE = ":foreground #388024 :weight bold :slant italic",
-        },
-        org_startup_indented = false,
-        org_adapt_indentation = true,
-        win_split_mode = "vertical",
-        org_id_link_to_org_use_id = true,
-      }
-
-      local wk = require "which-key"
-
-      wk.add {
+    "obsidian-nvim/obsidian.nvim",
+    version = "*",
+    ft = "markdown",
+    ---@module 'obsidian'
+    ---@type obsidian.config
+    opts = {
+      legacy_commands = false,
+      workspaces = {
         {
-          "<leader>ot",
-          "<CMD> e ~/Repos/second-brain/obsidian-vault/org-files/refile.org <CR>",
-          desc = "Open refile.org",
+          name = "personal",
+          path = "$REPOS_PATH/second-brain/obsidian-vault",
         },
-      }
-    end,
-  },
-  {
-    "chipsenkbeil/org-roam.nvim",
-    event = "VeryLazy",
-    tag = "0.2.0",
-    dependencies = {
-      {
-        "nvim-orgmode/orgmode",
-        tag = "0.7.0",
+      },
+      callbacks = {
+        enter_note = function()
+          -- remove the default mappings
+          vim.keymap.del("n", "<CR>", { buffer = true })
+
+          -- add your own
+          vim.keymap.set("n", "<leader><CR>", require("obsidian.api").smart_action, { buffer = true })
+        end,
       },
     },
-    config = function()
-      require("org-roam").setup {
-        directory = "~/Documents/org-roam/",
-        -- optional
-        org_files = {
-          "~/Repos/second-brain/obsidian-vault/org-files",
-        },
-      }
-    end,
-    init = function()
-      local wc = require "which-key"
+    keys = function()
       local cmd = require("utils.plugin-helpers").cmd
 
-      wc.add {
-        { "<leader>nh", cmd "Org store_link", desc = "Create org id for nearest heading" },
-      }
-    end,
-  },
-  {
-    "hamidi-dev/org-list.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "tpope/vim-repeat", -- for repeatable actions with '.'
-    },
-    config = function()
-      require("org-list").setup {
-        mapping = {
-          key = "<leader>lt",
-          desc = "Toggle: Cycle through list types",
-        },
-        checkbox_toggle = {
-          enabled = true,
-          -- NOTE: for nvim-orgmode users, you should change the following mapping OR change the one from orgmode.
-          -- If both mapping stay the same, the one from nvim-orgmode will "win"
-          key = "<C-Space>",
-          desc = "Toggle checkbox state",
-          filetypes = { "org", "markdown" },
-        },
-      }
-    end,
-  },
-  {
-    "akinsho/org-bullets.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("org-bullets").setup {
-        symbols = {
-          headlines = { "󰛘", "󰛘", "󰛘", "󰛘" },
-          list = " ",
-          checkboxes = {
-            half = { " ", "@org.checkbox.halfchecked" },
-            done = { " ", "@org.keyword.done" },
-            todo = { " ", "@org.keyword.todo" },
-          },
-        },
+      return {
+        { "<leader>of", cmd "Obsidian follow_link", desc = "Open Obsidian Vault" },
+        { "<leader>ob", cmd "Obsidian backlinks", desc = "Show Obsidian backlinks" },
+        { "<leader>op", cmd "Obsidian paste_img", desc = "Paste image from clipboard" },
       }
     end,
   },

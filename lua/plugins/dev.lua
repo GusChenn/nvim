@@ -174,7 +174,7 @@ return {
               return require("codecompanion.adapters").extend("copilot", {
                 schema = {
                   model = {
-                    default = "gpt-5.3-codex",
+                    default = "gpt-5.2-codex",
                   },
                 },
               })
