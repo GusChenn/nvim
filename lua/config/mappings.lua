@@ -216,4 +216,11 @@ wc.add {
   { "<leader>cc", toggle_case, desc = "Toggle between camel case and snake case" },
   { "<leader>td", type_today_date, desc = "Type todays date" },
   { "<leader><tab>", "za", mode = "n", desc = "Toggle fold" },
+  {
+    "<C-i>",
+    function()
+      vim.cmd "normal! \x01"
+    end,
+    desc = "Increment number under cursor",
+  },
 }
