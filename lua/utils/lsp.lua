@@ -43,7 +43,18 @@ M.on_attach = function(_, bufnr)
       "K",
       buffer = bufnr,
       function()
-        local max_width = 80
+        -- If a hover window is already open, toggle focus
+        local existing_win = vim.b[bufnr].hover_win
+        if existing_win and vim.api.nvim_win_is_valid(existing_win) then
+          if vim.api.nvim_get_current_win() == existing_win then
+            -- Already focused on hover, go back to original buffer
+            vim.cmd "wincmd p"
+          else
+            vim.api.nvim_set_current_win(existing_win)
+          end
+          return
+        end
+
         local params = vim.lsp.util.make_position_params()
 
         vim.lsp.buf_request_all(0, "textDocument/hover", params, function(results)
@@ -51,30 +62,104 @@ M.on_attach = function(_, bufnr)
             return
           end
 
-          local contents = {}
+          -- Extract plain text from hover results (strip markdown fences)
+          local lines = {}
           for _, resp in pairs(results) do
             if resp.result and resp.result.contents then
-              vim.list_extend(contents, vim.lsp.util.convert_input_to_markdown_lines(resp.result.contents))
+              local value = resp.result.contents.value or resp.result.contents
+              if type(value) == "string" then
+                for _, line in ipairs(vim.split(value, "\n", { trimempty = true })) do
+                  if not line:match "^```" then
+                    table.insert(lines, line)
+                  end
+                end
+              end
             end
           end
 
-          contents = vim.lsp.util.trim_empty_lines(contents)
-          if vim.tbl_isempty(contents) then
+          if #lines == 0 then
             vim.notify("No information available", vim.log.levels.INFO)
             return
           end
 
-          -- Calculate wrapped height: how many display rows each line needs at max_width
-          local height = 0
-          for _, line in ipairs(contents) do
-            local w = vim.fn.strdisplaywidth(line)
-            height = height + math.max(1, math.ceil(w / max_width))
+          local max_height = 5
+          local truncated = #lines > max_height
+
+          local hover_buf = vim.api.nvim_create_buf(false, true)
+          vim.api.nvim_buf_set_lines(hover_buf, 0, -1, false, lines)
+          vim.bo[hover_buf].modifiable = false
+
+          -- Show overflow indicator on the last visible line
+          if truncated then
+            local ns = vim.api.nvim_create_namespace "hover_overflow"
+            vim.api.nvim_buf_set_extmark(hover_buf, ns, max_height - 1, 0, {
+              virt_text = { { "   ", "DiagnosticInfo" } },
+              virt_text_pos = "eol",
+            })
           end
 
-          vim.lsp.util.open_floating_preview(contents, "markdown", {
-            max_width = max_width,
-            height = math.min(height, 40),
-            focus_id = "textDocument/hover",
+          -- Calculate width from content, capped at 80
+          local width = 0
+          for _, line in ipairs(lines) do
+            width = math.max(width, vim.fn.strdisplaywidth(line))
+          end
+          width = math.min(width, 80)
+
+          -- Open floating window anchored below the cursor
+          local win = vim.api.nvim_open_win(hover_buf, false, {
+            relative = "cursor",
+            anchor = "NW",
+            row = 1,
+            col = 0,
+            width = width,
+            height = math.min(#lines, max_height),
+            style = "minimal",
+            border = "solid",
+          })
+
+          -- Store reference so second K press can focus it
+          vim.b[bufnr].hover_win = win
+
+          -- Map q to close and K to jump back when focused
+          local function close_hover()
+            if vim.api.nvim_win_is_valid(win) then
+              vim.api.nvim_win_close(win, true)
+            end
+            if vim.api.nvim_buf_is_valid(hover_buf) then
+              vim.api.nvim_buf_delete(hover_buf, { force = true })
+            end
+            vim.b[bufnr].hover_win = nil
+          end
+
+          vim.api.nvim_buf_set_keymap(hover_buf, "n", "q", "", {
+            noremap = true,
+            silent = true,
+            callback = close_hover,
+          })
+
+          vim.api.nvim_buf_set_keymap(hover_buf, "n", "K", "", {
+            noremap = true,
+            silent = true,
+            callback = function()
+              vim.cmd "wincmd p"
+            end,
+          })
+
+          -- Close on cursor move in the original buffer
+          local augroup = vim.api.nvim_create_augroup("hover_close_" .. win, { clear = true })
+          vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertCharPre" }, {
+            group = augroup,
+            buffer = bufnr,
+            once = true,
+            callback = function()
+              if vim.api.nvim_win_is_valid(win) then
+                vim.api.nvim_win_close(win, true)
+              end
+              if vim.api.nvim_buf_is_valid(hover_buf) then
+                vim.api.nvim_buf_delete(hover_buf, { force = true })
+              end
+              vim.b[bufnr].hover_win = nil
+            end,
           })
         end)
       end,
