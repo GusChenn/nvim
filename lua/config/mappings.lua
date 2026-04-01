@@ -94,6 +94,11 @@ local copy_path = function()
   vim.fn.setreg("+", path)
 end
 
+local copy_absolute_path = function()
+  local path = vim.fn.expand "%:p"
+  vim.fn.setreg("+", path)
+end
+
 local show_path = function()
   local path = vim.fn.expand "%:."
   vim.notify('Path: "' .. path)
@@ -198,6 +203,7 @@ wc.add {
     desc = "Copy to system clipboard",
   },
   { "cpp", copy_path, desc = "Copies the current file path to the clipboard" },
+  { "cpa", copy_absolute_path, desc = "Copies the current file absolute path to the clipboard" },
   { "spp", show_path, desc = "Shows the current file path" },
   { "<leader>L", cmd "tabnext", desc = "Next tab" },
   { "<leader>H", cmd "tabprevious", desc = "Previous tab" },

@@ -26,7 +26,7 @@ return {
   },
   {
     "github/copilot.vim",
-    event = "VeryLazy",
+    lazy = false,
     init = function()
       local cmd = require("utils.plugin-helpers").cmd
 
