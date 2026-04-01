@@ -55,7 +55,9 @@ M.on_attach = function(_, bufnr)
           return
         end
 
-        local params = vim.lsp.util.make_position_params()
+        local clients = vim.lsp.get_clients({ bufnr = bufnr })
+        if #clients == 0 then return end
+        local params = vim.lsp.util.make_position_params(0, clients[1].offset_encoding)
 
         vim.lsp.buf_request_all(0, "textDocument/hover", params, function(results)
           if not vim.api.nvim_buf_is_valid(bufnr) or vim.api.nvim_get_current_buf() ~= bufnr then
