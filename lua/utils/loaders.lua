@@ -114,8 +114,8 @@ loaders.load_colorscheme = function()
     -- require "config.themes.catppuccin"
     -- vim.cmd.colorscheme "catppuccin"
 
-    require "config.themes.everforest"
-    vim.cmd.colorscheme "everforest"
+    -- require "config.themes.everforest"
+    -- vim.cmd.colorscheme "everforest"
 
     -- For gruvbox
     -- require "config.themes.gruvbox"
@@ -124,6 +124,10 @@ loaders.load_colorscheme = function()
     -- For rose-pine
     -- require "config.themes.rose-pine"
     -- vim.cmd.colorscheme "rose-pine"
+
+    -- For onedark
+    require "config.themes.onedark"
+    require("onedark").load()
   end
 end
 

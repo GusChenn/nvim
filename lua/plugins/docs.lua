@@ -65,6 +65,10 @@ return {
           name = "personal",
           path = "$REPOS_PATH/second-brain/obsidian-vault",
         },
+        {
+          name = "claude_memory",
+          path = "$REPOS_PATH/claude-second-brain",
+        },
       },
       callbacks = {
         enter_note = function()

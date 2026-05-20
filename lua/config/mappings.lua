@@ -223,7 +223,7 @@ wc.add {
   { "<leader>td", type_today_date, desc = "Type todays date" },
   { "<leader><tab>", "za", mode = "n", desc = "Toggle fold" },
   {
-    "<C-i>",
+    "<C-m>",
     function()
       vim.cmd "normal! \x01"
     end,
