@@ -2,7 +2,7 @@ require("onedark").setup {
   style = "darker",
 
   code_style = {
-    comments = "none",
+    comments = "italic",
     keywords = "italic",
     functions = "bold",
     strings = "none",
