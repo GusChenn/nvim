@@ -152,11 +152,10 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    branch = "master",
+    branch = "main",
     build = ":TSUpdate",
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require("nvim-treesitter.configs").setup {
+      require("nvim-treesitter").setup {
         endwise = {
           enable = true,
         },
@@ -167,6 +166,20 @@ return {
         },
       }
     end,
+    -- nvim 0.11.5 config
+    -- config = function()
+    --   ---@diagnostic disable-next-line: missing-fields
+    --   require("nvim-treesitter.configs").setup {
+    --     endwise = {
+    --       enable = true,
+    --     },
+    --     ensure_installed = require("general-opts").treesitter.ensure_installed,
+    --     highlight = {
+    --       enable = true,
+    --       additional_vim_regex_highlighting = false,
+    --     },
+    --   }
+    -- end,
   },
   {
     -- Provides treesitter hl to erb files. Not declared as treesitter dependecy so it can be lazy loaded
