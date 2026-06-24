@@ -1,0 +1,2 @@
+WRN 2026-06-24T11:01:16.938 ?.54644    server_start:197: Failed to start server: operation not permitted: /var/folders/x3/k5fhjg3d5rbd6npk7_sk3yg00000gn/T/nvim.manor/ykgp7U/nvim.54644.0
+WRN 2026-06-24T11:01:30.064 ?.54724    server_start:197: Failed to start server: operation not permitted: /var/folders/x3/k5fhjg3d5rbd6npk7_sk3yg00000gn/T/nvim.manor/lX9ZkV/nvim.54724.0
