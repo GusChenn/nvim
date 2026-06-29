@@ -1,3 +1,8 @@
-vim.pack.add({
-    'https://github.com/stevearc/oil.nvim',
-})
+require("plugins.copilot")
+require("plugins.oil")
+require("plugins.onedark")
+require("plugins.vim-tmux-navigator")
+require("plugins.fzf")
+require("plugins.mini")
+require("plugins.full-visual-line")
+require("plugins.vim-fugitive")

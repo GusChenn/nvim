@@ -1,16 +1,4 @@
--- HELPER FUNCTIONS --
-local cmd = function(cmd)
-    return string.format("<CMD> %s <CR>", cmd)
-end
-
-local map = function(mode, lhs, rhs, opts)
-    opts = opts or {}
-    if type(rhs) == "string" then
-        rhs = cmd(rhs)
-    end
-    vim.keymap.set(mode, lhs, rhs, opts)
-end
-----------------------
+local map = require("core.helpers.map")
 
 -- MAPPED FUNCTIONS --
 local function set_search_register()
@@ -39,6 +27,7 @@ vim.keymap.set("i", "jk", "<ESC>", { desc = "Quit insert mode with jk" })
 vim.keymap.set("i", "kj", "<ESC>", { desc = "Quit insert mode with kj" })
 
 map("n", "<leader>Q", "wqa!", { desc = "Quit nvim" })
+map("n", "<leader>q", "wq!", { desc = "Quit nvim" })
 map("n", "<leader>s", set_search_register, { desc = "Highligh all instances of the word under the cursor" })
 map("n", "<leader>wh", "split", { desc = "Split window horizontally" })
 map("n", "<leader>wv", "vsplit", { desc = "Split window vertically" })

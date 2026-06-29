@@ -1,15 +1,35 @@
 local opt = vim.opt
-local g = vim.g
 local o = vim.o
-local wo = vim.wo
-
-g.mapleader = " "
-g.localleader = " "
 
 opt.fillchars = {
-    vert = " ",
-    eob = " ",
-    foldclose = "▶", -- For closed folds
-    foldopen = "▼", -- For open folds
-    fold = " ", -- For the rest of the fold column
+  vert = " ",
+  eob = " ",
+  foldclose = "▶",
+  foldopen = "▼",
+  fold = " ",
 }
+
+o.cursorline = true
+o.cursorlineopt = "screenline,number"
+
+opt.scrolloff = 999
+opt.clipboard = "unnamedplus"
+
+opt.timeoutlen = 200
+
+opt.shiftwidth = 2
+opt.tabstop = 2
+opt.expandtab = true
+
+opt.splitright = true
+opt.splitbelow = true
+
+opt.signcolumn = "yes"
+opt.foldcolumn = "2"
+
+require("vim._core.ui2").enable({
+  enable = true,
+  msg = {
+    target = "msg",
+  }
+})

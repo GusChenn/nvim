@@ -4,7 +4,8 @@
         "vim",
         "MiniStatusline",
         "MiniPick",
-        "Snacks"
+        "Snacks",
+        "FzfLua"
     ],
     "diagnostics.disable": [
         "missing-fields"
