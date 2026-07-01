@@ -11,11 +11,12 @@ opt.fillchars = {
 
 o.cursorline = true
 o.cursorlineopt = "screenline,number"
+o.autocomplete = false
 
 opt.scrolloff = 999
 opt.clipboard = "unnamedplus"
 
-opt.timeoutlen = 200
+opt.timeoutlen = 300
 
 opt.shiftwidth = 2
 opt.tabstop = 2
@@ -25,11 +26,5 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.signcolumn = "yes"
-opt.foldcolumn = "2"
-
-require("vim._core.ui2").enable({
-  enable = true,
-  msg = {
-    target = "msg",
-  }
-})
+opt.foldcolumn = "auto:9"
+vim.opt.foldlevelstart = 99

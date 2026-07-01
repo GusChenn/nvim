@@ -2,24 +2,24 @@ local map = require("core.helpers.map")
 
 -- MAPPED FUNCTIONS --
 local function set_search_register()
-    vim.opt.hlsearch = true
-    local word = vim.fn.expand "<cword>"
-    vim.fn.setreg("/", "\\<" .. word .. "\\>")
+  vim.opt.hlsearch = true
+  local word = vim.fn.expand "<cword>"
+  vim.fn.setreg("/", "\\<" .. word .. "\\>")
 end
 
 local copy_path = function()
-    local path = vim.fn.expand "%:."
-    vim.fn.setreg("+", path)
+  local path = vim.fn.expand "%:."
+  vim.fn.setreg("+", path)
 end
 
 local copy_absolute_path = function()
-    local path = vim.fn.expand "%:p"
-    vim.fn.setreg("+", path)
+  local path = vim.fn.expand "%:p"
+  vim.fn.setreg("+", path)
 end
 
 local show_path = function()
-    local path = vim.fn.expand "%:."
-    vim.notify('Path: "' .. path)
+  local path = vim.fn.expand "%:."
+  vim.notify('Path: "' .. path)
 end
 ----------------------
 
@@ -40,11 +40,13 @@ map("n", "spp", show_path, { desc = "Shows the current file path" })
 map("n", "<leader>L", "tabnext", { desc = "Next tab" })
 map("n", "<leader>H", "tabprevious", { desc = "Previous tab" })
 map("n", "<leader>T", "tabnew", { desc = "New tab" })
-map("n", "<leader><tab>", "za", { desc = "Toggle fold" })
+vim.keymap.set("n", "<leader><tab>", "za", { desc = "Toggle fold" })
 map("n", "<C-m>",
-    function()
-        vim.cmd "normal! \x01"
-    end,
-    { desc = "Increment number under cursor" }
+  function()
+    vim.cmd "normal! \x01"
+  end,
+  {
+    desc = "Increment number under cursor",
+  }
 )
 map("v", "Y", '"+y', { desc = "Copy to system clipboard" })

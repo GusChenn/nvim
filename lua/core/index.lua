@@ -1,2 +1,5 @@
 require("core.lsp")
 require("core.autocomplete")
+require("core.autoformat")
+require("core.treesitter")
+require("core.foldtext")
