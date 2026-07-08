@@ -41,12 +41,4 @@ map("n", "<leader>L", "tabnext", { desc = "Next tab" })
 map("n", "<leader>H", "tabprevious", { desc = "Previous tab" })
 map("n", "<leader>T", "tabnew", { desc = "New tab" })
 vim.keymap.set("n", "<leader><tab>", "za", { desc = "Toggle fold" })
-map("n", "<C-m>",
-  function()
-    vim.cmd "normal! \x01"
-  end,
-  {
-    desc = "Increment number under cursor",
-  }
-)
-map("v", "Y", '"+y', { desc = "Copy to system clipboard" })
+vim.keymap.set("n", "<leader>n", "<cmd>set number!<cr>", { desc = "Toggle line numbers" })

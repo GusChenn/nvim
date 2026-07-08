@@ -7,6 +7,7 @@ opt.fillchars = {
   foldclose = "▶",
   foldopen = "▼",
   fold = " ",
+  foldsep = " ", -- blank instead of the default "│" so the foldcolumn only shows arrows, no vertical lines
 }
 
 o.cursorline = true
@@ -25,6 +26,7 @@ opt.expandtab = true
 opt.splitright = true
 opt.splitbelow = true
 
+vim.opt.showbreak = "~ "
+
 opt.signcolumn = "yes"
-opt.foldcolumn = "auto:9"
 vim.opt.foldlevelstart = 99

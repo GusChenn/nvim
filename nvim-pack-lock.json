@@ -13,6 +13,10 @@
       "rev": "a12fd5672110c8aa7e3c8419e28c96943ca179be",
       "src": "https://github.com/github/copilot.vim"
     },
+    "focus.nvim": {
+      "rev": "0f51cb7ff2640737858249015b6af0ea6cb28904",
+      "src": "https://github.com/cdmill/focus.nvim"
+    },
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
@@ -28,6 +32,10 @@
     "gitsigns.nvim": {
       "rev": "eb60cc7b94c46005237fd34170d76f3a089a90aa",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "hlchunk.nvim": {
+      "rev": "06f51922ca43d5cdacf96725c106405fe064c59e",
+      "src": "https://github.com/shellraining/hlchunk.nvim"
     },
     "mini.ai": {
       "rev": "cb20f298ebf5ae91924cd0c6c310712de2ef4086",
@@ -72,6 +80,10 @@
     "vim-fugitive": {
       "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
       "src": "https://github.com/tpope/vim-fugitive"
+    },
+    "vim-rails": {
+      "rev": "b0a5c76f86ea214ade36ab0b811e730c3f0add67",
+      "src": "https://github.com/tpope/vim-rails"
     },
     "vim-tmux-navigator": {
       "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",

@@ -1,3 +1,14 @@
+vim.diagnostic.config({
+  float = {
+    border = "solid",
+    source = true,
+    header = "",
+    prefix = "-",
+  }
+})
+
+vim.o.winborder = "solid"
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('my.lsp.mappings', {}),
 
