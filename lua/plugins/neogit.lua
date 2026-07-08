@@ -16,7 +16,8 @@ require("neogit").setup({
     section = { "➡", "⬇" },
   },
   integrations = {
-    fzf_lua = false
+    fzf_lua = false,
+    mini_pick = true
   },
   mappings = {
     popup = {

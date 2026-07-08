@@ -13,7 +13,6 @@ require("plugins.gitsigns")
 require("plugins.copilot")
 
 -- QoL
-require("plugins.fzf")
 require("plugins.mini")
 require("plugins.treesj")
 require("plugins.rails")
