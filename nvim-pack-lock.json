@@ -1,7 +1,11 @@
 {
   "plugins": {
+    "FixCursorHold.nvim": {
+      "rev": "1900f89dc17c603eec29960f57c00bd9ae696495",
+      "src": "https://github.com/antoinemadec/FixCursorHold.nvim"
+    },
     "artio.nvim": {
-      "rev": "52a074e6a15780df350c03b5c7ab47f706fe6da8",
+      "rev": "19d71f8d9c721872e97aa0e5f094041c96f3feca",
       "src": "https://codeberg.org/comfysage/artio.nvim"
     },
     "blink.cmp": {
@@ -26,11 +30,11 @@
       "src": "https://github.com/0xAdk/full_visual_line.nvim"
     },
     "fzf-lua": {
-      "rev": "ed4059deb9237f7f4cc8832ffef69779ffe2e265",
+      "rev": "532d463f5c83595192fe740572d8fd6902b2217a",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "eb60cc7b94c46005237fd34170d76f3a089a90aa",
+      "rev": "31d6fb2d618bca1482b9f274751ead5f03461408",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "hlchunk.nvim": {
@@ -38,7 +42,7 @@
       "src": "https://github.com/shellraining/hlchunk.nvim"
     },
     "mini.ai": {
-      "rev": "2f763720771e192bdf9d2e25bfae339930ba4231",
+      "rev": "25248c6aa002391936a6200f12d1466015987133",
       "src": "https://github.com/nvim-mini/mini.ai"
     },
     "mini.icons": {
@@ -55,16 +59,28 @@
       "version": "'stable'"
     },
     "mini.surround": {
-      "rev": "19b44c1bbe4eecaf191896b8bec657d5fdd549e4",
+      "rev": "8d5d0c5aa92449368ac251e85451d79d8f69d296",
       "src": "https://github.com/nvim-mini/mini.surround"
     },
     "neogit": {
-      "rev": "6fc2fa890bd2031ed999c074daab0fb4feff20a5",
+      "rev": "f8674ec894315c02449b61c9de9a116c5aafeb90",
       "src": "https://github.com/neogitorg/neogit"
     },
+    "neotest": {
+      "rev": "4e2cd42c4252ee9d2435571d9adcdbc1d47931fe",
+      "src": "https://github.com/nvim-neotest/neotest"
+    },
+    "neotest-minitest": {
+      "rev": "4d1c19f80be0efff7656dea76a589c02bf418b68",
+      "src": "https://github.com/zidhuss/neotest-minitest"
+    },
     "nvim-lspconfig": {
-      "rev": "d224a1920728ba129880efc700d4a0180ac4ecbb",
+      "rev": "b386c50cd7816f8c8a2b13b298a218af1f5a75c6",
       "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-nio": {
+      "rev": "edcc181a875301dd21840189aa2f2f9ad69fc172",
+      "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",

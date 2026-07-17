@@ -8,8 +8,12 @@ vim.pack.add({
 require("mini.pick").setup()
 
 -- vim.keymap.set("n", "ff", MiniPick.builtin.files, { desc = "Find files" })
-vim.keymap.set("n", "fg", MiniPick.builtin.grep_live, { desc = "Live grep" })
+-- vim.keymap.set("n", "fg", MiniPick.builtin.grep_live, { desc = "Live grep" })
+vim.keymap.set('n', 'fg', function()
+  MiniPick.builtin.grep_live({}, { pattern = 'hello' })
+end, { desc = 'Search word' })
 vim.keymap.set("n", "fb", MiniPick.builtin.buffers, { desc = "List open buffers" })
+
 
 local smart_pick = require('core.custom_pickers.smart_pick')
 

@@ -48,4 +48,4 @@ vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig'
 })
 
-vim.lsp.enable({ 'lua_ls', 'ruby_lsp' })
+vim.lsp.enable({ 'lua_ls', 'ruby_lsp', 'ts_ls' })
